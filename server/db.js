@@ -29,8 +29,18 @@ export const initDb = async () => {
       last_login_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
+    CREATE TABLE IF NOT EXISTS fleets (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      region VARCHAR(100),
+      manager_id INTEGER REFERENCES users(id),
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      archived_at TIMESTAMP
+    );
+
     CREATE TABLE IF NOT EXISTS vehicles (
       id SERIAL PRIMARY KEY,
+      fleet_id INTEGER REFERENCES fleets(id),
       registration_number VARCHAR(50) UNIQUE NOT NULL,
       name_model VARCHAR(255),
       type VARCHAR(50),
@@ -47,6 +57,8 @@ export const initDb = async () => {
 
     CREATE TABLE IF NOT EXISTS drivers (
       id SERIAL PRIMARY KEY,
+      fleet_id INTEGER REFERENCES fleets(id),
+      user_id INTEGER REFERENCES users(id),
       name VARCHAR(255) NOT NULL,
       license_number VARCHAR(100) UNIQUE NOT NULL,
       license_category VARCHAR(50),
@@ -57,6 +69,18 @@ export const initDb = async () => {
       image TEXT,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE TABLE IF NOT EXISTS invites (
+      id SERIAL PRIMARY KEY,
+      fleet_id INTEGER REFERENCES fleets(id),
+      code VARCHAR(50) UNIQUE NOT NULL,
+      email VARCHAR(255),
+      role VARCHAR(50) DEFAULT 'driver',
+      created_by INTEGER REFERENCES users(id),
+      expires_at TIMESTAMP,
+      used_at TIMESTAMP,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
     CREATE TABLE IF NOT EXISTS trips (
@@ -145,8 +169,44 @@ export const initDb = async () => {
   `;
   
   try {
+    // Add columns if they don't exist (handles pre-existing tables before the updated schema above)
     await pool.query(schemaText);
-    console.log("Database schema initialized.");
+    
+    // Add columns dynamically for existing DBs
+    await pool.query(`
+      ALTER TABLE vehicles ADD COLUMN IF NOT EXISTS fleet_id INTEGER REFERENCES fleets(id);
+      ALTER TABLE drivers ADD COLUMN IF NOT EXISTS fleet_id INTEGER REFERENCES fleets(id);
+      ALTER TABLE drivers ADD COLUMN IF NOT EXISTS user_id INTEGER REFERENCES users(id);
+    `);
+
+    // Backfill missing fleets
+    const managersResult = await pool.query(`
+      SELECT u.id, u.name FROM users u
+      JOIN roles r ON u.role_id = r.id
+      WHERE r.name = 'Fleet Manager'
+    `);
+    
+    for (const manager of managersResult.rows) {
+      // Check if manager has a fleet
+      const fleetCheck = await pool.query('SELECT id FROM fleets WHERE manager_id = $1', [manager.id]);
+      let fleetId;
+      if (fleetCheck.rows.length === 0) {
+        const insertFleet = await pool.query(
+          'INSERT INTO fleets (name, region, manager_id) VALUES ($1, $2, $3) RETURNING id',
+          [\`\${manager.name}'s Default Fleet\`, 'Default Region', manager.id]
+        );
+        fleetId = insertFleet.rows[0].id;
+      } else {
+        fleetId = fleetCheck.rows[0].id;
+      }
+
+      // Backfill vehicles that have no fleet
+      await pool.query('UPDATE vehicles SET fleet_id = $1 WHERE fleet_id IS NULL', [fleetId]);
+      // Backfill drivers that have no fleet
+      await pool.query('UPDATE drivers SET fleet_id = $1 WHERE fleet_id IS NULL', [fleetId]);
+    }
+
+    console.log("Database schema initialized and backfilled.");
     
     // Seeding logic
     const rolesResult = await pool.query("SELECT COUNT(*) FROM roles");
