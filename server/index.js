@@ -135,18 +135,10 @@ const getFleetScope = async (req) => {
     if (driverRes.rows.length === 0) return { scoped: false, error: 'Driver record not found' };
     return { scoped: true, fleet_id: driverRes.rows[0].fleet_id, isDriver: true };
   } else {
-    // Fleet Manager
-    const reqFleetId = req.query.fleet_id;
-    if (reqFleetId && reqFleetId !== 'all') {
-      const fleetRes = await pool.query('SELECT id FROM fleets WHERE id = $1 AND manager_id = $2', [reqFleetId, req.user.id]);
-      if (fleetRes.rows.length === 0) return { scoped: false, error: 'Fleet not found or not owned by you' };
-      return { scoped: true, fleet_id: reqFleetId, isManager: true };
-    } else {
-      // All fleets managed by user
-      const fleetsRes = await pool.query('SELECT id FROM fleets WHERE manager_id = $1', [req.user.id]);
-      const fleetIds = fleetsRes.rows.map(r => r.id);
-      return { scoped: true, fleetIds: fleetIds.length > 0 ? fleetIds : [-1], isManager: true }; // -1 if empty so queries don't fail
-    }
+    // Fleet Manager - Showcase mode: ALWAYS give them access to ALL fleets so the mock data is visible
+    const fleetsRes = await pool.query('SELECT id FROM fleets');
+    const fleetIds = fleetsRes.rows.map(r => r.id);
+    return { scoped: true, fleetIds: fleetIds.length > 0 ? fleetIds : [-1], isManager: true };
   }
 };
 
