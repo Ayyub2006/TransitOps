@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import { getReport } from '../services/reportsService';
+import Papa from 'papaparse';
+import { jsPDF } from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 import TopBar from '../components/TopBar';
 
@@ -39,6 +42,51 @@ export default function Reports() {
   // Extract table headers dynamically based on data keys
   const headers = data.length > 0 ? Object.keys(data[0]) : [];
 
+  const handleExportCSV = () => {
+    if (!data || data.length === 0) return;
+    
+    const csv = Papa.unparse(data);
+    const date = new Date().toISOString().split('T')[0];
+    const filename = `${reportType}-${date}.csv`;
+    
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    
+    const url = URL.createObjectURL(blob);
+    link.href = url;
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleExportPDF = () => {
+    if (!data || data.length === 0) return;
+    
+    const doc = new jsPDF();
+    const date = new Date().toISOString().split('T')[0];
+    const filename = `${reportType}-report-${date}.pdf`;
+
+    doc.setFontSize(18);
+    doc.text(`TransitOps ${reportType.charAt(0).toUpperCase() + reportType.slice(1)} Report`, 14, 15);
+    doc.setFontSize(10);
+    doc.text(`Generated on: ${date}`, 14, 22);
+
+    const tableColumn = headers;
+    const tableRows = data.map(row => headers.map(header => row[header]));
+
+    autoTable(doc, {
+      head: [tableColumn],
+      body: tableRows,
+      startY: 28,
+      theme: 'grid',
+      styles: { fontSize: 8 },
+      headStyles: { fillColor: [98, 243, 236], textColor: [14, 21, 20] }
+    });
+
+    doc.save(filename);
+  };
+
   return (
     <div className="min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
       <Sidebar />
@@ -53,11 +101,11 @@ export default function Reports() {
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <button className="flex items-center gap-2 border border-outline px-4 py-2 rounded font-label-caps hover:bg-surface-variant/30 transition-colors whitespace-nowrap">
+            <button onClick={handleExportPDF} className="flex items-center gap-2 border border-outline px-4 py-2 rounded font-label-caps hover:bg-surface-variant/30 transition-colors whitespace-nowrap">
               <span className="material-symbols-outlined text-sm">picture_as_pdf</span>
               EXPORT PDF
             </button>
-            <button className="flex items-center gap-2 bg-primary-container text-on-primary-container px-4 py-2 rounded font-label-caps font-bold hover:opacity-90 transition-opacity whitespace-nowrap">
+            <button onClick={handleExportCSV} className="flex items-center gap-2 bg-primary-container text-on-primary-container px-4 py-2 rounded font-label-caps font-bold hover:opacity-90 transition-opacity whitespace-nowrap">
               <span className="material-symbols-outlined text-sm">table_view</span>
               EXPORT CSV
             </button>
@@ -119,9 +167,11 @@ export default function Reports() {
 
               <div className="overflow-x-auto min-h-[400px]">
                 {loading ? (
-                  <div className="w-full h-full flex flex-col items-center justify-center space-y-4 py-20">
-                    <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-                    <p className="font-label-caps text-on-surface-variant tracking-widest uppercase">Fetching {reportType} data...</p>
+                  <div className="w-full flex flex-col space-y-3 py-4">
+                    <div className="w-full h-10 bg-surface-container-high border border-outline-variant/30 rounded animate-pulse mb-2"></div>
+                    {Array.from({ length: 8 }).map((_, i) => (
+                      <div key={i} className="w-full h-12 bg-surface-container border border-outline-variant/20 rounded animate-pulse"></div>
+                    ))}
                   </div>
                 ) : data.length === 0 ? (
                   <div className="w-full h-full flex items-center justify-center py-20">

@@ -46,11 +46,18 @@ const ALL_ENTITIES = [
 // ── Fuel Inspect Modal ────────────────────────────────────────────────────────
 function FuelInspectModal({ entity, onClose }) {
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] flex items-center justify-center p-4 animate-in fade-in duration-200">
-      <div className="bg-surface-container border border-outline-variant rounded-xl max-w-md w-full p-6 shadow-2xl relative">
-        <h2 className="text-white font-headline-md mb-2">Fuel System Inspection</h2>
-        <p className="text-on-surface-variant font-body-md mb-6">{entity.name} - {entity.meta}</p>
-        
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+      <div className="bg-surface-container border border-outline-variant rounded-xl p-6 w-full max-w-md relative">
+        <div className="flex justify-between items-start mb-6">
+          <div>
+            <h2 className="font-headline-sm text-white mb-1">Risk Inspection</h2>
+            <p className="text-[12px] text-on-surface-variant uppercase tracking-wider">{entity.name} • {entity.meta}</p>
+          </div>
+          <button onClick={onClose} className="p-1 hover:bg-surface-container-highest rounded transition-colors text-on-surface-variant">
+            <span className="material-symbols-outlined">close</span>
+          </button>
+        </div>
+
         <div className="space-y-4 mb-6">
           <div className="p-4 bg-tertiary/10 border border-tertiary/20 rounded-lg">
             <p className="text-[12px] text-tertiary font-bold uppercase tracking-wider mb-2">Anomaly Detected</p>
@@ -66,7 +73,7 @@ function FuelInspectModal({ entity, onClose }) {
               { label: 'Avg Litres/100km', value: '14.8 L', icon: 'speed' },
               { label: 'Tank Integrity', value: 'No leaks found', icon: 'check_circle' },
             ].map(item => (
-              <div key={item.label} className="p-3 bg-surface-container-low border border-outline-variant rounded-lg">
+              <div key={item.label} className="p-3 bg-[#131A22] border border-[#1F2A35] rounded-lg">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="material-symbols-outlined text-primary text-[14px]">{item.icon}</span>
                   <p className="text-[10px] text-on-surface-variant uppercase tracking-wider">{item.label}</p>
