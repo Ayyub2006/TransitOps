@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TransitOps - Fleet Risk Radar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&amp;family=Inter:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#2f3635",
+                        "primary-fixed": "#68f8f1",
+                        "on-secondary-fixed": "#151c24",
+                        "on-error": "#690005",
+                        "surface-dim": "#0e1514",
+                        "on-tertiary": "#482900",
+                        "error": "#ffb4ab",
+                        "on-tertiary-container": "#724500",
+                        "secondary-fixed": "#dce3ee",
+                        "on-secondary-fixed-variant": "#404750",
+                        "secondary-fixed-dim": "#c0c7d2",
+                        "secondary-container": "#434a53",
+                        "surface-tint": "#44dbd5",
+                        "on-tertiary-fixed-variant": "#673d00",
+                        "inverse-on-surface": "#2b3231",
+                        "surface-container-low": "#161d1c",
+                        "secondary": "#c0c7d2",
+                        "on-surface": "#dde4e2",
+                        "on-primary": "#003735",
+                        "error-container": "#93000a",
+                        "inverse-primary": "#006a67",
+                        "on-surface-variant": "#bbc9c8",
+                        "primary": "#62f3ec",
+                        "on-primary-container": "#005956",
+                        "outline": "#859492",
+                        "tertiary-fixed": "#ffddba",
+                        "surface-bright": "#343a3a",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-container": "#b2b9c4",
+                        "primary-fixed-dim": "#44dbd5",
+                        "tertiary": "#ffd7ad",
+                        "tertiary-fixed-dim": "#ffb865",
+                        "inverse-surface": "#dde4e2",
+                        "surface": "#0e1514",
+                        "surface-container-high": "#252b2b",
+                        "surface-container": "#1a2120",
+                        "outline-variant": "#3c4948",
+                        "tertiary-container": "#ffb254",
+                        "on-primary-fixed-variant": "#00504d",
+                        "on-secondary": "#2a313a",
+                        "on-primary-fixed": "#00201f",
+                        "surface-variant": "#2f3635",
+                        "surface-container-lowest": "#090f0f",
+                        "primary-container": "#3dd6d0",
+                        "background": "#0e1514",
+                        "on-tertiary-fixed": "#2b1700",
+                        "on-background": "#dde4e2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "container-margin": "24px",
+                        "sidebar-width": "260px",
+                        "unit": "4px",
+                        "topbar-height": "64px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Space Grotesk"],
+                        "headline-sm": ["Space Grotesk"],
+                        "label-caps": ["Inter"],
+                        "display-lg": ["Space Grotesk"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "kpi-value": ["Inter"],
+                        "headline-md": ["Space Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "500"}],
+                        "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "kpi-value": ["28px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>body {
+    background-color: #0b0f14;
+    /* Level 0 Background per style guidance */
+    color: #dde4e2;
+    font-family: "Inter", sans-serif
+    }
+.technical-bg {
+    background-image: linear-gradient(rgba(11, 15, 20, 0.95), rgba(11, 15, 20, 0.95)), url(https://lh3.googleusercontent.com/aida-public/AB6AXuCnPZ3o8WBSxdJE9777Q5_EwFdf19wbrBSmeZM4U7wneQNNW4KgcKpxoD3p1iD_ELp7zz799ejFHXfUanXaK7ic-Nm-MtfPaWnrCfAQMZdwWFE1sbXOr8b9qIOeY-ySPP1nVnSA24YznUGNKYxbDn9ACueefgDnlL0_y7hZB2EI0kLiseAwc8PfvztkvVK_PO31hmkRAGVWDZEOuD9kyA-UthpvjnDnFd79uspQhyUcCPxxsEt_WqD68Q);
+    background-size: cover;
+    background-position: center
+    }
+.risk-ring {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center
+    }
+.risk-ring svg {
+    position: absolute;
+    transform: rotate(-90deg)
+    }
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px
+    }
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #0b0f14
+    }
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #1f2a35
+    }
+.glass-panel {
+    background: #131a22;
+    /* Level 1 Background */
+    border: 1px solid #1f2a35;
+    transition: all 0.2s ease
+    }
+.glass-panel:hover {
+    border-color: rgba(61, 214, 208, 0.3);
+    box-shadow: 0 0 15px rgba(61, 214, 208, 0.05)
+    }
+.tag-amber {
+    color: #ffd7ad;
+    background: rgba(255, 215, 173, 0.1);
+    border: 1px solid rgba(255, 215, 173, 0.2)
+    }
+.tag-red {
+    color: #ffb4ab;
+    background: rgba(255, 180, 171, 0.1);
+    border: 1px solid rgba(255, 180, 171, 0.2)
+    }
+.tag-cyan {
+    color: #3dd6d0;
+    background: rgba(61, 214, 208, 0.1);
+    border: 1px solid rgba(61, 214, 208, 0.2)
+    }</style>
+</head>
+<body class="flex min-h-screen overflow-hidden">
+<!-- SideNavBar (Authority: JSON & Style Guidance) -->
+<aside class="fixed left-0 top-0 h-screen w-sidebar-width z-40 bg-surface-container border-r border-outline-variant flex flex-col pt-[64px] pb-4">
+<div class="px-6 mb-8 mt-4">
+<h2 class="font-headline-sm text-headline-sm text-primary uppercase tracking-widest">Fleet Command</h2>
+<p class="font-label-caps text-label-caps text-on-surface-variant opacity-70">Level 4 Clearance</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all duration-200" href="dashboard.html">
+<span class="material-symbols-outlined mr-4">dashboard_customize</span>
+<span class="font-label-caps text-label-caps uppercase">Command Center</span>
+</a>
+<a class="flex items-center px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all duration-200" href="trips.html">
+<span class="material-symbols-outlined mr-4">settings_input_component</span>
+<span class="font-label-caps text-label-caps uppercase">Operations</span>
+</a>
+<a class="flex items-center px-6 py-3 text-primary bg-primary/10 border-l-4 border-primary font-bold" href="risk.html">
+<span class="material-symbols-outlined mr-4">security</span>
+<span class="font-label-caps text-label-caps uppercase">Safety</span>
+</a>
+<a class="flex items-center px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all duration-200" href="maintenance.html">
+<span class="material-symbols-outlined mr-4">engineering</span>
+<span class="font-label-caps text-label-caps uppercase">Maintenance</span>
+</a>
+<a class="flex items-center px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all duration-200" href="registry.html">
+<span class="material-symbols-outlined mr-4">inventory_2</span>
+<span class="font-label-caps text-label-caps uppercase">Vehicles</span>
+</a>
+<a class="flex items-center px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all duration-200" href="drivers.html">
+<span class="material-symbols-outlined mr-4">badge</span>
+<span class="font-label-caps text-label-caps uppercase">Drivers</span>
+</a>
+<a class="flex items-center px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all duration-200" href="expenses.html">
+<span class="material-symbols-outlined mr-4">account_balance_wallet</span>
+<span class="font-label-caps text-label-caps uppercase">Expenses</span>
+</a>
+<a class="flex items-center px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all duration-200" href="reports.html">
+<span class="material-symbols-outlined mr-4">analytics</span>
+<span class="font-label-caps text-label-caps uppercase">Reports</span>
+</a>
+</nav>
+<div class="mt-auto px-6 space-y-1">
+<a class="flex items-center py-2 text-on-surface-variant hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined mr-4">help_outline</span>
+<span class="font-label-caps text-label-caps">Support</span>
+</a>
+<a class="flex items-center py-2 text-on-surface-variant hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined mr-4">logout</span>
+<span class="font-label-caps text-label-caps">Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Workspace -->
+<main class="flex-1 ml-sidebar-width h-screen overflow-hidden flex flex-col technical-bg">
+<!-- TopNavBar (Authority: JSON & Style Guidance) -->
+<header class="fixed top-0 right-0 left-sidebar-width h-[64px] z-50 bg-surface border-b border-outline-variant flex justify-between items-center px-container-margin">
+<div class="flex items-center gap-6">
+<span class="font-headline-md text-headline-md font-bold text-primary tracking-tight">TransitOps</span>
+<div class="h-6 w-px bg-outline-variant"></div>
+<div class="flex items-center bg-surface-container-high px-4 py-1.5 rounded border border-outline-variant gap-3 w-[400px]">
+<span class="material-symbols-outlined text-outline text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md font-body-md w-full placeholder:text-outline-variant" placeholder="Search Risk Nodes..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<!-- Risk Alert Ticker -->
+<div class="hidden xl:flex items-center gap-3 bg-error-container/20 px-4 py-1 rounded border border-error/30 animate-pulse">
+<span class="material-symbols-outlined text-error text-[18px]">warning</span>
+<span class="text-error font-label-caps text-label-caps uppercase">3 Critical Anomalies Detected</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-highest rounded transition-colors active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-highest rounded transition-colors active:scale-95">
+<span class="material-symbols-outlined">emergency_home</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-highest rounded transition-colors active:scale-95">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="flex items-center gap-3 ml-2 pl-4 border-l border-outline-variant">
+<div class="text-right">
+<p class="text-body-md font-bold leading-none">Ops. Center</p>
+<p class="text-label-caps text-[10px] text-primary">AUTHORIZED</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary/20 border border-primary flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait of a professional transit operations manager in a high-tech command center. He is wearing a modern headset and dark apparel, with soft cyan lighting reflecting off his face from the dashboard monitors. The background is a blurred array of digital displays and glowing status indicators." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhty8NTj5XEtqFNZ1cWoAwLuSIEkOqw2sLlD9jJeV1GhjxVIp2Zaypz-zg2NEn1fe-jlI2xXbBWkn_bSoJdz8lw3W4v_99qeH26PBMcSPymuJQWaRUS9r8qfTKK8L_QVhPro-wlbl5mgp9YeIK7dlUwTq-6EqXTdjw_lZIPKNJ-_FZoXeP9DooHmecSEX3TaJ0neKA_4-R9idQofaG2040fVzcbk2JTYW8DVV748w6_fU-w0x0kvEOQg"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="mt-[64px] p-container-margin h-[calc(100vh-64px)] overflow-hidden flex gap-gutter">
+<!-- Left Column: Main List -->
+<div class="flex-1 flex flex-col gap-gutter overflow-hidden">
+<!-- Header & Metric Bar -->
+<section class="flex flex-col gap-6">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-white mb-1">Fleet Risk Radar</h1>
+<p class="text-on-surface-variant font-body-md">Composite risk scoring across licenses, maintenance, safety, and fuel anomalies.</p>
+</div>
+<!-- Health Distribution Bar -->
+<div class="glass-panel p-6 rounded-lg">
+<div class="flex justify-between items-end mb-3">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Fleet Health Distribution</span>
+<div class="flex gap-4">
+<span class="flex items-center gap-1.5 text-error font-label-caps text-[11px]"><span class="w-2 h-2 rounded-full bg-error"></span> 12% HIGH</span>
+<span class="flex items-center gap-1.5 text-tertiary font-label-caps text-[11px]"><span class="w-2 h-2 rounded-full bg-tertiary"></span> 23% MEDIUM</span>
+<span class="flex items-center gap-1.5 text-primary font-label-caps text-[11px]"><span class="w-2 h-2 rounded-full bg-primary"></span> 65% LOW</span>
+</div>
+</div>
+<div class="h-3 w-full flex rounded-full overflow-hidden bg-surface-container-lowest">
+<div class="h-full bg-error transition-all duration-1000" style="width: 12%"></div>
+<div class="h-full bg-tertiary transition-all duration-1000" style="width: 23%"></div>
+<div class="h-full bg-primary transition-all duration-1000" style="width: 65%"></div>
+</div>
+</div>
+</section>
+<!-- Risk Entities List -->
+<section class="flex-1 glass-panel rounded-lg overflow-hidden flex flex-col">
+<div class="p-4 border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
+<h3 class="font-label-caps text-label-caps text-white uppercase">Highest Risk Entities (Ranked)</h3>
+<div class="flex gap-2">
+<button class="p-1.5 hover:bg-surface-container-highest transition-colors rounded"><span class="material-symbols-outlined text-[20px]">sort</span></button>
+<button class="p-1.5 hover:bg-surface-container-highest transition-colors rounded"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar p-1">
+<!-- List Item: Marcus Sterling -->
+<div class="flex items-center gap-6 p-4 border-b border-outline-variant hover:bg-surface-container-highest/50 transition-colors group">
+<div class="risk-ring">
+<svg class="w-full h-full">
+<circle cx="24" cy="24" fill="none" r="21" stroke="#2a313a" stroke-width="3"></circle>
+<circle cx="24" cy="24" fill="none" r="21" stroke="#ffb4ab" stroke-dasharray="131.95" stroke-dashoffset="15.83" stroke-width="3"></circle>
+</svg>
+<span class="text-error font-kpi-value text-body-md font-bold">88</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-outline text-[20px]">person</span>
+<span class="font-headline-sm text-white">Marcus Sterling</span>
+<span class="font-label-caps text-[10px] px-2 py-0.5 rounded border border-outline-variant text-outline bg-surface-container-lowest">ID: DR-4402</span>
+</div>
+<div class="flex gap-2">
+<span class="tag-red font-label-caps text-[10px] px-2 py-0.5 rounded uppercase">License expires in 4 days</span>
+<span class="tag-amber font-label-caps text-[10px] px-2 py-0.5 rounded uppercase">Safety score dropped 12pts</span>
+</div>
+</div>
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-sm font-label-caps text-label-caps uppercase font-bold hover:brightness-110 active:scale-95 transition-all">
+                                Renew License
+                            </button>
+</div>
+<!-- List Item: VX-901 -->
+<div class="flex items-center gap-6 p-4 border-b border-outline-variant hover:bg-surface-container-highest/50 transition-colors group">
+<div class="risk-ring">
+<svg class="w-full h-full">
+<circle cx="24" cy="24" fill="none" r="21" stroke="#2a313a" stroke-width="3"></circle>
+<circle cx="24" cy="24" fill="none" r="21" stroke="#ffb4ab" stroke-dasharray="131.95" stroke-dashoffset="23.75" stroke-width="3"></circle>
+</svg>
+<span class="text-error font-kpi-value text-body-md font-bold">82</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-outline text-[20px]">directions_bus</span>
+<span class="font-headline-sm text-white">VX-901</span>
+<span class="font-label-caps text-[10px] px-2 py-0.5 rounded border border-outline-variant text-outline bg-surface-container-lowest">Heavy Transit</span>
+</div>
+<div class="flex gap-2">
+<span class="tag-red font-label-caps text-[10px] px-2 py-0.5 rounded uppercase">Overdue maintenance 18 days</span>
+<span class="tag-cyan font-label-caps text-[10px] px-2 py-0.5 rounded uppercase">Brake Pad Wear: 92%</span>
+</div>
+</div>
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-sm font-label-caps text-label-caps uppercase font-bold hover:brightness-110 active:scale-95 transition-all">
+                                Schedule Maintenance
+                            </button>
+</div>
+<!-- List Item: Elena Rodriguez -->
+<div class="flex items-center gap-6 p-4 border-b border-outline-variant hover:bg-surface-container-highest/50 transition-colors group">
+<div class="risk-ring">
+<svg class="w-full h-full">
+<circle cx="24" cy="24" fill="none" r="21" stroke="#2a313a" stroke-width="3"></circle>
+<circle cx="24" cy="24" fill="none" r="21" stroke="#ffb865" stroke-dasharray="131.95" stroke-dashoffset="60.69" stroke-width="3"></circle>
+</svg>
+<span class="text-tertiary font-kpi-value text-body-md font-bold">54</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-outline text-[20px]">person</span>
+<span class="font-headline-sm text-white">Elena Rodriguez</span>
+<span class="font-label-caps text-[10px] px-2 py-0.5 rounded border border-outline-variant text-outline bg-surface-container-lowest">ID: DR-9912</span>
+</div>
+<div class="flex gap-2">
+<span class="tag-amber font-label-caps text-[10px] px-2 py-0.5 rounded uppercase">Excessive Idling Detected</span>
+<span class="tag-cyan font-label-caps text-[10px] px-2 py-0.5 rounded uppercase">Route Variance Alert</span>
+</div>
+</div>
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-sm font-label-caps text-label-caps uppercase font-bold hover:brightness-110 active:scale-95 transition-all">
+                                Reassign Trip
+                            </button>
+</div>
+<!-- List Item: BX-224 -->
+<div class="flex items-center gap-6 p-4 border-b border-outline-variant hover:bg-surface-container-highest/50 transition-colors group">
+<div class="risk-ring">
+<svg class="w-full h-full">
+<circle cx="24" cy="24" fill="none" r="21" stroke="#2a313a" stroke-width="3"></circle>
+<circle cx="24" cy="24" fill="none" r="21" stroke="#ffb865" stroke-dasharray="131.95" stroke-dashoffset="66.00" stroke-width="3"></circle>
+</svg>
+<span class="text-tertiary font-kpi-value text-body-md font-bold">50</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-outline text-[20px]">directions_bus</span>
+<span class="font-headline-sm text-white">BX-224</span>
+<span class="font-label-caps text-[10px] px-2 py-0.5 rounded border border-outline-variant text-outline bg-surface-container-lowest">Logistics Van</span>
+</div>
+<div class="flex gap-2">
+<span class="tag-amber font-label-caps text-[10px] px-2 py-0.5 rounded uppercase">Fuel Anomaly Detected (+15%)</span>
+</div>
+</div>
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-sm font-label-caps text-label-caps uppercase font-bold hover:brightness-110 active:scale-95 transition-all">
+                                Inspect Fuel System
+                            </button>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Sidebar Filter -->
+<aside class="w-[300px] flex flex-col gap-gutter">
+<!-- Filter Panel -->
+<section class="glass-panel rounded-lg flex flex-col p-6">
+<h3 class="font-headline-sm text-white mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">filter_list</span>
+                        Radar Controls
+                    </h3>
+<div class="space-y-8">
+<!-- Entity Toggle -->
+<div>
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-3 block">Entity Filter</label>
+<div class="flex bg-surface-container-lowest p-1 rounded border border-outline-variant">
+<button class="flex-1 py-1.5 font-label-caps text-label-caps bg-primary text-on-primary rounded-sm transition-all">ALL</button>
+<button class="flex-1 py-1.5 font-label-caps text-label-caps text-on-surface-variant hover:text-white transition-all">VEHICLES</button>
+<button class="flex-1 py-1.5 font-label-caps text-label-caps text-on-surface-variant hover:text-white transition-all">DRIVERS</button>
+</div>
+</div>
+<!-- Threshold Slider -->
+<div>
+<div class="flex justify-between items-center mb-3">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Risk Threshold</label>
+<span class="text-primary font-bold font-body-md">75+</span>
+</div>
+<input class="w-full h-1 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-primary" max="100" min="0" type="range" value="75"/>
+<div class="flex justify-between mt-2">
+<span class="text-[10px] text-outline">Low</span>
+<span class="text-[10px] text-outline">Extreme</span>
+</div>
+</div>
+<!-- Contributing Factors -->
+<div>
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-3 block">Contributing Factors</label>
+<div class="space-y-2">
+<label class="flex items-center gap-3 group cursor-pointer">
+<input checked="" class="rounded bg-surface-container-lowest border-outline-variant text-primary focus:ring-primary focus:ring-offset-0" type="checkbox"/>
+<span class="text-body-md text-on-surface group-hover:text-primary transition-colors">Licensing Status</span>
+</label>
+<label class="flex items-center gap-3 group cursor-pointer">
+<input checked="" class="rounded bg-surface-container-lowest border-outline-variant text-primary focus:ring-primary focus:ring-offset-0" type="checkbox"/>
+<span class="text-body-md text-on-surface group-hover:text-primary transition-colors">Safety Violations</span>
+</label>
+<label class="flex items-center gap-3 group cursor-pointer">
+<input checked="" class="rounded bg-surface-container-lowest border-outline-variant text-primary focus:ring-primary focus:ring-offset-0" type="checkbox"/>
+<span class="text-body-md text-on-surface group-hover:text-primary transition-colors">Maintenance Delays</span>
+</label>
+<label class="flex items-center gap-3 group cursor-pointer">
+<input class="rounded bg-surface-container-lowest border-outline-variant text-primary focus:ring-primary focus:ring-offset-0" type="checkbox"/>
+<span class="text-body-md text-on-surface group-hover:text-primary transition-colors">Fuel Anomalies</span>
+</label>
+</div>
+</div>
+</div>
+<button class="mt-8 w-full border border-outline-variant text-on-surface font-label-caps text-label-caps uppercase py-3 rounded hover:bg-surface-container-highest transition-all active:scale-95">
+                        Apply System Filter
+                    </button>
+</section>
+<!-- Mini Map / Insight Card -->
+<section class="flex-1 glass-panel rounded-lg overflow-hidden relative">
+<div class="absolute inset-0 bg-cover bg-center opacity-40 grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A dark, stylized tactical map of a metropolitan city with glowing teal lines representing bus routes and vehicle traffic flow. The map has a high-contrast blueprint aesthetic with technical grid overlays and pinpoint markers showing current vehicle locations. The lighting is low-key, emphasizing the neon-cyan data points." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCNJa9SSD5C_wT5TBFyad_hfs5gzOfXjZuHRYw1b-BvcIE7YsiPqa2BNGcWIksKo_aWoItu4CFY3p1venS64rKPPplgLQpKBJKiJpzzbQpwUpRJ_bp1kdFuESxP1FxB8kyM-H0zRx0Zw4i7ZhDeiWBywVlGSOGLgrPPbAq2m-wLpHm11sKLh5lV8WCrEbxHhfCgeq6Pfv_56XpJqeAz9kRnmW-eNgMHUszCqsnj0RFjAIYUJpeU4uUXXg')"></div>
+<div class="relative z-10 p-6 flex flex-col h-full">
+<h4 class="font-label-caps text-label-caps text-white uppercase mb-1">Geospatial Risk Cluster</h4>
+<p class="text-[10px] text-primary font-bold uppercase mb-4">Central District Hub</p>
+<div class="mt-auto bg-surface/80 backdrop-blur-md p-4 rounded border border-outline-variant">
+<p class="text-body-md leading-relaxed">
+<span class="text-error font-bold">! CRITICAL:</span> Cluster of brake maintenance alerts identified in vehicles servicing the <span class="text-primary">North Ridge Line</span>. Potential systemic component failure.
+                            </p>
+</div>
+</div>
+</section>
+</aside></div>
+</main>
+<script>
+        // Micro-interaction for the Distribution Bar
+        window.addEventListener('DOMContentLoaded', () => {
+            const barItems = document.querySelectorAll('.h-full');
+            barItems.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 500);
+            });
+        });
+    </script>
+</body></html>
