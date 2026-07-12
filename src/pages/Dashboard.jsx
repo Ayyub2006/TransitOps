@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
+import TopBar from '../components/TopBar';
 import { getKPIs } from '../services/dashboardService';
 import { getVehicleStatus, getTripsData, getFuelTrend, getExpenseDistribution } from '../services/analyticsService';
 import {
@@ -30,6 +31,7 @@ const markersData = [
 ];
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [kpis, setKpis] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -78,33 +80,23 @@ export default function Dashboard() {
 {/*  MAIN WRAPPER  */}
 <div className="ml-0 lg:ml-[var(--spacing-sidebar-width)] flex flex-col">
 {/*  TOP APP BAR  */}
-<header className="fixed top-0 right-0 h-topbar-height w-full lg:w-[calc(100%-var(--spacing-sidebar-width))] bg-surface border-b border-outline-variant z-40 flex justify-between items-center px-gutter">
-<div className="flex items-center gap-4 flex-wrap">
-<div className="flex items-center gap-2">
-<span className="font-headline-sm text-headline-sm font-bold text-primary">TransitOps Fleet</span>
-</div>
-<div className="flex items-center gap-6">
-<a className="font-label-caps text-label-caps text-primary border-b-2 border-primary pb-1" href="#" onClick={(e) => e.preventDefault()}>Live Tracking</a>
-<a className="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#" onClick={(e) => e.preventDefault()}>Schedules</a>
-</div>
-</div>
-<div className="flex items-center gap-6">
-<div className="px-3 py-1 bg-surface-container-high border border-outline-variant rounded-full flex items-center gap-2">
-<div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
-<span className="font-label-caps text-label-caps text-on-surface">Clearance: L3</span>
-</div>
-<div className="flex items-center gap-4">
-<button className="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer">notifications</button>
-<div className="flex items-center gap-3 pl-4 border-l border-outline-variant">
-<div className="text-right">
-<p className="text-xs font-bold leading-none">A. VANCE</p>
-<p className="text-[10px] text-on-surface-variant uppercase tracking-widest">Chief Operator</p>
-</div>
-<img className="w-8 h-8 rounded-full border border-primary/50 object-cover" data-alt="A portrait of a professional transit operations manager wearing a modern technical headset, sitting in a dimly lit control room with blue accent lighting, high-contrast cinematic photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBImUdIJ2cbWxmgbwjGu7ZcZYQ8Ks_TS0XeJzWE8ATcaGY_N0idqDs1T13SG_jXZFjQ7aRR6j74AsL5LNKK0nyp94BiLwqK83ywZcmMDH9l8Rd5Zo076oAvvGKrWy5mN5ti_qu66uY72pu51hpK5mIC_ODdPiC4LNL6IvAh6CuFkZ00MpK3tuW8gAFxYKkrVCip6VxI6iGcW5EH-i8xHD438ceI9D2UQXPzIGjhDYE2xg2-xm_qbkm6Ww"/>
-</div>
-</div>
-</div>
-</header>
+<TopBar>
+  <div className="flex items-center gap-4 flex-wrap">
+    <div className="flex items-center gap-2">
+      <span className="font-headline-sm text-headline-sm font-bold text-primary">TransitOps Fleet</span>
+    </div>
+    <div className="flex items-center gap-6 hidden md:flex">
+      <a className="font-label-caps text-label-caps text-primary border-b-2 border-primary pb-1" href="#" onClick={(e) => e.preventDefault()}>Live Tracking</a>
+      <a className="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#" onClick={(e) => e.preventDefault()}>Schedules</a>
+    </div>
+  </div>
+  <div className="flex items-center gap-6 hidden sm:flex ml-4">
+    <div className="px-3 py-1 bg-surface-container-high border border-outline-variant rounded-full flex items-center gap-2">
+      <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+      <span className="font-label-caps text-label-caps text-on-surface">Clearance: L3</span>
+    </div>
+  </div>
+</TopBar>
 {/*  CONTENT CANVAS  */}
 <main className="mt-topbar-height p-gutter pb-20 space-y-6">
 {/*  KPI STRIP  */}
@@ -221,8 +213,8 @@ export default function Dashboard() {
 <div className="relative rounded-xl border border-outline-variant bg-surface-container-lowest overflow-hidden h-[480px] z-0">
   <MapContainer center={[19.0760, 72.8777]} zoom={12} style={{ height: '100%', width: '100%', background: '#0e1514' }} zoomControl={false}>
     <TileLayer
-      url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+      url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+      attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
     />
     {markersData.map(m => (
       <Marker key={m.id} position={m.pos} icon={createMarkerIcon(m.color, m.shadow)}>

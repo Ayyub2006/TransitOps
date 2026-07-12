@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 
+import TopBar from '../components/TopBar';
+
 export default function Expenses() {
   return (
     <div className="min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
@@ -9,39 +11,18 @@ export default function Expenses() {
 {/*  SideNavBar  */}
 <Sidebar />
 {/*  TopNavBar  */}
-<header className="h-topbar-height fixed top-0 right-0 left-[260px] bg-surface-dim border-b border-outline-variant flex items-center justify-between px-gutter z-40">
-<div className="flex items-center flex-1 max-w-xl">
-<div className="relative w-full">
-<span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
-<input className="w-full bg-surface-container-lowest border border-outline-variant rounded-full py-1.5 pl-10 pr-4 text-body-md focus:outline-none focus:border-primary/50 transition-colors" placeholder="Search mission, driver or vehicle..." type="text"/>
-</div>
-</div>
-<div className="flex items-center gap-6">
-<div className="flex items-center gap-2 px-3 py-1 bg-surface-container-high border border-outline-variant rounded-full">
-<span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-<span className="text-[11px] font-bold uppercase tracking-wider text-primary">Operator Status: Active</span>
-</div>
-<div className="flex items-center gap-4 text-on-surface-variant">
-<button className="hover:text-primary transition-colors relative">
-<span className="material-symbols-outlined">notifications</span>
-<span className="absolute -top-1 -right-1 w-2 h-2 bg-error rounded-full"></span>
-</button>
-<button className="hover:text-primary transition-colors">
-<span className="material-symbols-outlined">admin_panel_settings</span>
-</button>
-<div className="w-[1px] h-6 bg-outline-variant"></div>
-<div className="flex items-center gap-3">
-<div className="text-right">
-<p className="text-body-md font-bold text-on-surface leading-none">J. Sharma</p>
-<p className="text-[10px] text-on-surface-variant uppercase tracking-tighter">Senior Controller</p>
-</div>
-<div className="w-8 h-8 rounded-lg bg-primary-container/20 border border-primary/30 overflow-hidden">
-<img className="w-full h-full object-cover" data-alt="A professional headshot of a senior logistics operator in a dark blue technical uniform, set against a blurred background of a high-tech command center with glowing turquoise monitors and data displays. The lighting is crisp and modern with a cinematic quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQH1n1ZPVLbYKb5hdlHJahY8Tr4vYv0jVQWs2SLArp5DHVbDd6u30je5GGOMqm615d1QfGiRcdlWQBpQUmWG16kuHfRx0bM5wvLt-FOuwF_n00vqz7R-UmsNiwkn8AYfW4vOA81V4D--Ipx5Q06t-4dh68OlVIqPuxy8cj9ax8NN9JdwGt6WCqpaU05merPuSwvfG1DiYGS7PgpSSfWKzyl7m9661kQxMPszpPEfNbUTRXN0FyizZ4QQ"/>
-</div>
-</div>
-</div>
-</div>
-</header>
+<TopBar>
+  <div className="flex items-center flex-1 max-w-xl">
+    <div className="relative w-full">
+      <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+      <input className="w-full bg-surface-container-lowest border border-outline-variant rounded-full py-1.5 pl-10 pr-4 text-body-md focus:outline-none focus:border-primary/50 transition-colors" placeholder="Search mission, driver or vehicle..." type="text"/>
+    </div>
+  </div>
+  <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-surface-container-high border border-outline-variant rounded-full ml-4">
+    <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+    <span className="text-[11px] font-bold uppercase tracking-wider text-primary">Operator Status: Active</span>
+  </div>
+</TopBar>
 {/*  Main Content Canvas  */}
 <main className="ml-[260px] pt-[64px] min-h-screen p-gutter bg-background relative overflow-hidden">
 {/*  Atmospheric Background Element  */}

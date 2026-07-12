@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import { getReport } from '../services/reportsService';
 
+import TopBar from '../components/TopBar';
+
 export default function Reports() {
   const [reportType, setReportType] = useState('vehicle');
   const [data, setData] = useState([]);
@@ -61,14 +63,14 @@ export default function Reports() {
             </button>
             <div className="h-6 w-[1px] bg-outline-variant mx-2"></div>
             <div className="w-8 h-8 rounded-full border border-primary/50 p-0.5 overflow-hidden">
-              <img className="w-full h-full object-cover rounded-full" alt="Commander Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH-f-Ds0EHTxC76Ef1c3mL0gDYwpt3DUl3DFk1DUnhSXteG5KuvrKJGFCKZObmYRY0PLpxqYEOkwW3b4XBF78trJBAglB0FdLCdASJBqfMmeQg2iXTj0Z9V3TmEyQZxUN4JqQATOJ3FtGZ6VsFqLWC2anTcklvklPcxq8I5OvU4wmUQA1e0zqtfELmHNZ06RHyekOojACvBieToc45Q30jTVSFTZHK-xJl7q2DczvOm7xwcGBFuF6fiQ"/>
+              <img className="w-full h-full object-cover rounded-full" alt="Commander Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH-f-Ds0EHTxC76Ef1c3mL0gDYwpt3DUl3DFk1DUnhSXteG5KuvrKJGFCKZObmYRY0PLpxqYEOkwW3b4XBF78trJBAglB0FdLCdASJBqfMmeQg2iXTj0Z9V3TmEyQZxUN4JqQATOJ3FtGZ6VsFqLWC2anTcklvklPcxq8I5OvU4wmUQA1e0zqtfELmHNZ06RHyekOojACvBieToc45Q30jTVSFTZHK-xJl7q2DczvOm7xwcGBFuF6fiQ" />
             </div>
           </div>
         </header>
 
         <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
           <div className="max-w-[1600px] mx-auto space-y-6">
-            
+
             <div className="bg-surface-container border border-outline-variant rounded p-5 flex flex-col card-glow transition-all">
               <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
                 <div>
@@ -76,8 +78,8 @@ export default function Reports() {
                   <p className="text-xs text-on-surface-variant font-label-caps opacity-60">SELECT A REPORT TYPE TO VIEW DATA</p>
                 </div>
                 <div className="flex flex-wrap items-center gap-4">
-                  <select 
-                    value={reportType} 
+                  <select
+                    value={reportType}
                     onChange={handleTypeChange}
                     className="bg-surface border border-outline-variant text-on-surface text-sm font-label-caps rounded px-4 py-2 focus:ring-1 focus:ring-primary outline-none"
                   >
@@ -88,11 +90,11 @@ export default function Reports() {
                     <option value="fuel">Fuel Report</option>
                     <option value="expense">Expense Report</option>
                   </select>
-                  
+
                   {['vehicle', 'driver', 'trip'].includes(reportType) && (
-                    <select 
+                    <select
                       name="status"
-                      value={filters.status} 
+                      value={filters.status}
                       onChange={handleFilterChange}
                       className="bg-surface border border-outline-variant text-on-surface text-sm font-label-caps rounded px-4 py-2 focus:ring-1 focus:ring-primary outline-none"
                     >
@@ -103,9 +105,9 @@ export default function Reports() {
                       <option value="In Shop">In Shop</option>
                     </select>
                   )}
-                  
-                  <input 
-                    type="text" 
+
+                  <input
+                    type="text"
                     name="vehicle"
                     value={filters.vehicle === 'All' ? '' : filters.vehicle}
                     onChange={(e) => handleFilterChange({ target: { name: 'vehicle', value: e.target.value || 'All' } })}
@@ -114,7 +116,7 @@ export default function Reports() {
                   />
                 </div>
               </div>
-              
+
               <div className="overflow-x-auto min-h-[400px]">
                 {loading ? (
                   <div className="w-full h-full flex flex-col items-center justify-center space-y-4 py-20">
@@ -151,7 +153,7 @@ export default function Reports() {
                 )}
               </div>
             </div>
-            
+
           </div>
         </div>
       </main>
