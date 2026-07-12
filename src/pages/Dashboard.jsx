@@ -2,11 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import { getKPIs } from '../services/dashboardService';
+import { getVehicleStatus, getTripsData, getFuelTrend, getExpenseDistribution } from '../services/analyticsService';
+import {
+  PieChart, Pie, Cell, Tooltip as RechartsTooltip, Legend, ResponsiveContainer,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid,
+  LineChart, Line
+} from 'recharts';
 
 export default function Dashboard() {
   const [kpis, setKpis] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [analytics, setAnalytics] = useState({
+    vehicleStatus: [], tripsData: [], fuelTrend: [], expenseDistribution: []
+  });
+  const [analyticsLoading, setAnalyticsLoading] = useState(true);
 
   useEffect(() => {
     const fetchKPIs = async () => {
@@ -20,7 +31,23 @@ export default function Dashboard() {
         setLoading(false);
       }
     };
+
+    const fetchAnalyticsData = async () => {
+      try {
+        setAnalyticsLoading(true);
+        const [vs, td, ft, ed] = await Promise.all([
+          getVehicleStatus(), getTripsData(), getFuelTrend(), getExpenseDistribution()
+        ]);
+        setAnalytics({ vehicleStatus: vs, tripsData: td, fuelTrend: ft, expenseDistribution: ed });
+      } catch (err) {
+        console.error("Failed to fetch analytics:", err);
+      } finally {
+        setAnalyticsLoading(false);
+      }
+    };
+
     fetchKPIs();
+    fetchAnalyticsData();
   }, []);
 
   return (
@@ -280,104 +307,96 @@ export default function Dashboard() {
 </div>
 </div>
 {/*  BOTTOM CHARTS SECTION  */}
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-{/*  Utilization Chart  */}
-<div className="bg-surface-container border border-outline-variant p-6 rounded-xl">
-<div className="flex items-center justify-between mb-6">
-<h3 className="font-headline-sm text-headline-sm">Fleet Utilization Trend</h3>
-<span className="text-[10px] font-label-caps text-on-surface-variant">LAST 7 DAYS</span>
-</div>
-<div className="h-48 w-full flex items-end gap-2 px-2 relative">
-{/*  Simplified SVG Chart  */}
-<svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-<path className="opacity-50" d="M0 160 Q 50 120, 100 140 T 200 80 T 300 110 T 400 60 T 500 90 T 600 40 T 700 70" fill="none" stroke="#62f3ec" strokeWidth="2"></path>
-<path className="opacity-10" d="M0 160 Q 50 120, 100 140 T 200 80 T 300 110 T 400 60 T 500 90 T 600 40 T 700 70 L 700 192 L 0 192 Z" fill="url(#grad)"></path>
-<defs>
-<lineargradient id="grad" x1="0%" x2="0%" y1="0%" y2="100%">
-<stop offset="0%" style={{stopColor: "#62f3ec", stopOpacity: "1", }}></stop>
-<stop offset="100%" style={{stopColor: "#62f3ec", stopOpacity: "0", }}></stop>
-</lineargradient>
-</defs>
-</svg>
-{/*  Grid Lines  */}
-<div className="absolute inset-0 flex flex-col justify-between opacity-10 pointer-events-none">
-<div className="border-b border-white w-full"></div>
-<div className="border-b border-white w-full"></div>
-<div className="border-b border-white w-full"></div>
-<div className="border-b border-white w-full"></div>
-</div>
-{/*  Hover Interaction Layer  */}
-<div className="absolute inset-0 flex">
-<div className="flex-1 hover:bg-primary/5 transition-colors border-r border-white/5"></div>
-<div className="flex-1 hover:bg-primary/5 transition-colors border-r border-white/5"></div>
-<div className="flex-1 hover:bg-primary/5 transition-colors border-r border-white/5"></div>
-<div className="flex-1 hover:bg-primary/5 transition-colors border-r border-white/5"></div>
-<div className="flex-1 hover:bg-primary/5 transition-colors border-r border-white/5"></div>
-<div className="flex-1 hover:bg-primary/5 transition-colors border-r border-white/5"></div>
-<div className="flex-1 hover:bg-primary/5 transition-colors"></div>
-</div>
-</div>
-<div className="flex justify-between mt-4 text-[10px] text-on-surface-variant font-bold">
-<span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
-</div>
-</div>
-{/*  Breakdown Chart  */}
-<div className="bg-surface-container border border-outline-variant p-6 rounded-xl flex flex-col">
-<div className="flex items-center justify-between mb-6">
-<h3 className="font-headline-sm text-headline-sm">Trip Status Breakdown</h3>
-<span className="material-symbols-outlined text-on-surface-variant cursor-pointer">more_horiz</span>
-</div>
-<div className="flex items-center justify-between flex-1">
-{/*  Donut Chart  */}
-<div className="relative w-32 h-32">
-<svg className="w-full h-full -rotate-90">
-{/*  Completed  */}
-<circle className="text-primary" cx="64" cy="64" fill="transparent" r="50" stroke="currentColor" strokeDasharray="314" strokeDashoffset="100" strokeWidth="12"></circle>
-{/*  Dispatched  */}
-<circle className="text-amber-400" cx="64" cy="64" fill="transparent" r="50" stroke="currentColor" strokeDasharray="314" strokeDashoffset="240" strokeWidth="12"></circle>
-{/*  Draft  */}
-<circle className="text-slate-400" cx="64" cy="64" fill="transparent" r="50" stroke="currentColor" strokeDasharray="314" strokeDashoffset="280" strokeWidth="12"></circle>
-{/*  Cancelled  */}
-<circle className="text-red-400" cx="64" cy="64" fill="transparent" r="50" stroke="currentColor" strokeDasharray="314" strokeDashoffset="305" strokeWidth="12"></circle>
-</svg>
-<div className="absolute inset-0 flex flex-col items-center justify-center">
-<span className="text-xl font-bold">428</span>
-<span className="text-[8px] text-on-surface-variant uppercase tracking-widest">TOTAL</span>
-</div>
-</div>
-{/*  Legend  */}
-<div className="flex-1 pl-12 space-y-3">
-<div className="flex items-center justify-between text-xs">
-<div className="flex items-center gap-2">
-<span className="w-2 h-2 rounded-full bg-primary"></span>
-<span>Completed</span>
-</div>
-<span className="font-bold">65%</span>
-</div>
-<div className="flex items-center justify-between text-xs">
-<div className="flex items-center gap-2">
-<span className="w-2 h-2 rounded-full bg-amber-400"></span>
-<span>Dispatched</span>
-</div>
-<span className="font-bold">22%</span>
-</div>
-<div className="flex items-center justify-between text-xs">
-<div className="flex items-center gap-2">
-<span className="w-2 h-2 rounded-full bg-slate-400"></span>
-<span>Draft</span>
-</div>
-<span className="font-bold">9%</span>
-</div>
-<div className="flex items-center justify-between text-xs">
-<div className="flex items-center gap-2">
-<span className="w-2 h-2 rounded-full bg-red-400"></span>
-<span>Cancelled</span>
-</div>
-<span className="font-bold">4%</span>
-</div>
-</div>
-</div>
-</div>
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  
+  {/* Chart 1: Vehicle Status Pie Chart */}
+  <div className="bg-surface-container border border-outline-variant p-6 rounded-xl h-[360px] flex flex-col">
+    <h3 className="font-headline-sm text-headline-sm mb-4">Vehicle Status</h3>
+    <div className="flex-1 w-full min-h-0">
+      {analyticsLoading ? (
+        <div className="w-full h-full flex items-center justify-center text-primary animate-pulse font-bold">Loading Chart...</div>
+      ) : (
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie data={analytics.vehicleStatus} cx="50%" cy="50%" innerRadius={70} outerRadius={100} paddingAngle={5} dataKey="value">
+              {analytics.vehicleStatus.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.color} />
+              ))}
+            </Pie>
+            <RechartsTooltip contentStyle={{ backgroundColor: '#1a2120', borderColor: '#3c4948', color: '#dde4e2', borderRadius: '8px' }} itemStyle={{ color: '#dde4e2' }} />
+            <Legend verticalAlign="bottom" height={36} wrapperStyle={{ fontSize: '12px', color: '#dde4e2', paddingTop: '10px' }} />
+          </PieChart>
+        </ResponsiveContainer>
+      )}
+    </div>
+  </div>
+
+  {/* Chart 2: Trips Bar Chart */}
+  <div className="bg-surface-container border border-outline-variant p-6 rounded-xl h-[360px] flex flex-col">
+    <h3 className="font-headline-sm text-headline-sm mb-4">Trips per Day</h3>
+    <div className="flex-1 w-full min-h-0">
+      {analyticsLoading ? (
+        <div className="w-full h-full flex items-center justify-center text-primary animate-pulse font-bold">Loading Chart...</div>
+      ) : (
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={analytics.tripsData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#3c4948" vertical={false} />
+            <XAxis dataKey="day" stroke="#859492" fontSize={12} tickLine={false} axisLine={false} />
+            <YAxis stroke="#859492" fontSize={12} tickLine={false} axisLine={false} />
+            <RechartsTooltip contentStyle={{ backgroundColor: '#1a2120', borderColor: '#3c4948', color: '#dde4e2', borderRadius: '8px' }} cursor={{ fill: '#2f3635' }} />
+            <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
+            <Bar dataKey="completed" name="Completed" fill="#62f3ec" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="cancelled" name="Cancelled" fill="#f87171" radius={[4, 4, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      )}
+    </div>
+  </div>
+
+  {/* Chart 3: Fuel Trend Line Chart */}
+  <div className="bg-surface-container border border-outline-variant p-6 rounded-xl h-[360px] flex flex-col">
+    <h3 className="font-headline-sm text-headline-sm mb-4">Fuel Consumption Trend</h3>
+    <div className="flex-1 w-full min-h-0">
+      {analyticsLoading ? (
+        <div className="w-full h-full flex items-center justify-center text-primary animate-pulse font-bold">Loading Chart...</div>
+      ) : (
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={analytics.fuelTrend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#3c4948" vertical={false} />
+            <XAxis dataKey="time" stroke="#859492" fontSize={12} tickLine={false} axisLine={false} />
+            <YAxis stroke="#859492" fontSize={12} tickLine={false} axisLine={false} />
+            <RechartsTooltip contentStyle={{ backgroundColor: '#1a2120', borderColor: '#3c4948', color: '#dde4e2', borderRadius: '8px' }} />
+            <Line type="monotone" dataKey="consumption" name="Consumption (L)" stroke="#fbbf24" strokeWidth={3} dot={{ r: 4, fill: '#fbbf24', strokeWidth: 0 }} activeDot={{ r: 6 }} />
+          </LineChart>
+        </ResponsiveContainer>
+      )}
+    </div>
+  </div>
+
+  {/* Chart 4: Expense Distribution Bar Chart */}
+  <div className="bg-surface-container border border-outline-variant p-6 rounded-xl h-[360px] flex flex-col">
+    <h3 className="font-headline-sm text-headline-sm mb-4">Expense Distribution</h3>
+    <div className="flex-1 w-full min-h-0">
+      {analyticsLoading ? (
+        <div className="w-full h-full flex items-center justify-center text-primary animate-pulse font-bold">Loading Chart...</div>
+      ) : (
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart layout="vertical" data={analytics.expenseDistribution} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#3c4948" horizontal={false} />
+            <XAxis type="number" stroke="#859492" fontSize={12} tickLine={false} axisLine={false} />
+            <YAxis dataKey="category" type="category" stroke="#859492" fontSize={12} tickLine={false} axisLine={false} width={80} />
+            <RechartsTooltip contentStyle={{ backgroundColor: '#1a2120', borderColor: '#3c4948', color: '#dde4e2', borderRadius: '8px' }} cursor={{ fill: '#2f3635' }} />
+            <Bar dataKey="amount" name="Amount ($)" radius={[0, 4, 4, 0]}>
+              {analytics.expenseDistribution.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.color} />
+              ))}
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      )}
+    </div>
+  </div>
+
 </div>
 </main>
 </div>
