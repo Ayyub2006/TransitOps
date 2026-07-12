@@ -1,32 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
-
 import TopBar from '../components/TopBar';
-
-const indianNames = ['Mahesh Sharma', 'Anita Verma', 'Ravi Kumar', 'Priya Singh', 'Amit Desai', 'Neha Gupta', 'Vikram Singh', 'Kavita Joshi', 'Rahul Verma', 'Sneha Reddy'];
-const driversData = Array.from({ length: 248 }, (_, i) => {
-  const isCritical = i % 15 === 0;
-  return {
-    id: i + 1,
-    initials: indianNames[i % indianNames.length].split(' ').map(n => n[0]).join(''),
-    name: indianNames[i % indianNames.length] + (i > 9 ? ` ${i+1}` : ''),
-    status: ['Available', 'On Trip', 'Suspended', 'Off Duty'][i % 4],
-    statusColor: ['emerald-400', 'amber-400', 'error', 'secondary'][i % 4],
-    license: `MH-${String((i % 50) + 1).padStart(2, '0')}-20${15 + (i % 8)}-${String.fromCharCode(65 + (i % 26))}`,
-    category: ['HEAVY DUTY', 'PASSENGER', 'HAZMAT', 'STANDARD'][i % 4],
-    expires: i % 10 === 0 ? `EXPIRED: Oct 02, 2024` : `Oct ${10 + (i % 20)}, 202${5 + (i % 3)}`,
-    safety: Math.floor(Math.random() * 50) + 50,
-    phone: `+91 ${90000 + i}-${10000 + i}`,
-    isCritical,
-    icon: isCritical ? 'emergency' : (i % 5 === 0 ? 'warning' : 'calendar_today'),
-    image: null
-  };
-});
+import { fetchApi } from '../utils/api';
+import DriverProfileModal from '../components/DriverProfileModal';
 
 export default function Drivers() {
   const [viewMode, setViewMode] = useState('grid');
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drivers, setDrivers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedDriver, setSelectedDriver] = useState(null);
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const data = await fetchApi('/drivers');
+        setDrivers(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadData();
+  }, []);
+
+  const openProfile = (driver) => {
+    setSelectedDriver(driver);
+    setProfileModalOpen(true);
+  };
 
   return (
     <div className="min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
@@ -103,22 +107,34 @@ export default function Drivers() {
         {/* Drivers Display */}
         {viewMode === 'grid' ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {driversData.map((driver) => (
-              <div key={driver.id} className={`lustrous-border bg-surface-container-low rounded-xl p-5 flex flex-col h-full group ${driver.isCritical ? 'border-l-2 border-l-error' : ''}`}>
+            {loading ? (
+              <div className="col-span-full py-12 text-center text-outline-variant animate-pulse">Loading drivers...</div>
+            ) : drivers.map((driver) => {
+              const isExpired = new Date(driver.license_expiry_date) < new Date();
+              const isCritical = driver.status === 'Suspended' || isExpired;
+              const initials = driver.name.split(' ').map(n => n[0]).join('');
+              const statusColors = {'Available': 'emerald-400', 'On Trip': 'amber-400', 'Suspended': 'error', 'Off Duty': 'secondary'};
+              const statusColor = statusColors[driver.status] || 'outline';
+              const icon = isCritical ? 'emergency' : 'calendar_today';
+              const expiresDate = new Date(driver.license_expiry_date).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
+              const expires = isExpired ? `EXPIRED: ${expiresDate}` : `License Expires: ${expiresDate}`;
+
+              return (
+              <div key={driver.id} className={`lustrous-border bg-surface-container-low rounded-xl p-5 flex flex-col h-full group ${isCritical ? 'border-l-2 border-l-error' : ''}`}>
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex gap-4">
                     <div className="w-12 h-12 rounded-full border border-outline-variant bg-surface-container flex items-center justify-center overflow-hidden shrink-0">
                       {driver.image ? (
                         <img className="w-full h-full object-cover" src={driver.image} alt={driver.name} />
                       ) : (
-                        <span className={`font-headline-sm ${driver.isCritical ? 'text-error' : driver.initials === 'PS' ? 'text-outline' : 'text-primary'}`}>{driver.initials}</span>
+                        <span className={`font-headline-sm ${isCritical ? 'text-error' : initials === 'PS' ? 'text-outline' : 'text-primary'}`}>{initials}</span>
                       )}
                     </div>
                     <div>
                       <h3 className="font-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-1">{driver.name}</h3>
                       <div className="flex items-center gap-1.5">
-                        <div className={`w-1.5 h-1.5 rounded-full bg-${driver.statusColor}`}></div>
-                        <span className={`text-[10px] font-label-caps text-${driver.statusColor} uppercase`}>{driver.status}</span>
+                        <div className={`w-1.5 h-1.5 rounded-full bg-${statusColor}`}></div>
+                        <span className={`text-[10px] font-label-caps text-${statusColor} uppercase`}>{driver.status}</span>
                       </div>
                     </div>
                   </div>
@@ -127,49 +143,58 @@ export default function Drivers() {
                 
                 <div className="space-y-3 mb-6">
                   <div className="flex justify-between items-center">
-                    <span className="text-[11px] font-mono text-outline">{driver.license}</span>
-                    <span className={`text-[10px] px-2 py-0.5 rounded font-label-caps ${driver.isCritical ? 'bg-error/10 border border-error/20 text-error' : 'bg-outline-variant/30 text-on-surface-variant'}`}>{driver.category}</span>
+                    <span className="text-[11px] font-mono text-outline">{driver.license_number}</span>
+                    <span className={`text-[10px] px-2 py-0.5 rounded font-label-caps ${isCritical ? 'bg-error/10 border border-error/20 text-error' : 'bg-outline-variant/30 text-on-surface-variant'}`}>{driver.license_category}</span>
                   </div>
-                  <div className={`flex items-center gap-2 text-xs ${driver.isCritical ? 'text-error font-bold' : driver.icon ? 'text-amber-400 font-medium' : 'text-on-surface-variant'}`}>
-                    <span className="material-symbols-outlined text-xs">{driver.icon || 'calendar_today'}</span>
-                    <span>{driver.expires.includes('EXPIRED') ? driver.expires : `License Expires: ${driver.expires}`}</span>
+                  <div className={`flex items-center gap-2 text-xs ${isCritical ? 'text-error font-bold' : icon ? 'text-amber-400 font-medium' : 'text-on-surface-variant'}`}>
+                    <span className="material-symbols-outlined text-xs">{icon || 'calendar_today'}</span>
+                    <span>{expires}</span>
                   </div>
                 </div>
                 
                 <div className="mt-auto">
                   <div className="flex justify-between items-center mb-1.5">
                     <span className="text-[10px] font-label-caps text-outline uppercase">Safety Score</span>
-                    <span className={`text-xs font-bold text-${driver.statusColor}`}>{driver.safety}/100</span>
+                    <span className={`text-xs font-bold text-${statusColor}`}>{driver.safety_score}/100</span>
                   </div>
                   <div className="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
-                    <div className={`h-full bg-${driver.statusColor}`} style={{ width: `${driver.safety}%` }}></div>
+                    <div className={`h-full bg-${statusColor}`} style={{ width: `${driver.safety_score}%` }}></div>
                   </div>
                   <div className="flex justify-between items-center mt-6 pt-4 border-t border-outline-variant/30">
-                    <span className="text-xs text-outline">{driver.phone}</span>
-                    <button className="text-xs text-primary font-label-caps hover:underline">VIEW PROFILE</button>
+                    <span className="text-xs text-outline">{driver.contact_number}</span>
+                    <button onClick={() => openProfile(driver)} className="text-xs text-primary font-label-caps hover:underline">VIEW PROFILE</button>
                   </div>
                 </div>
               </div>
-            ))}
+            )})}
           </div>
         ) : (
           <div className="flex flex-col gap-4">
-            {driversData.map((driver) => (
-              <div key={driver.id} className={`bg-surface-container-low border border-outline-variant rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 group hover:bg-surface-container transition-colors ${driver.isCritical ? 'border-l-4 border-l-error' : ''}`}>
+            {loading ? (
+              <div className="py-12 text-center text-outline-variant animate-pulse">Loading drivers...</div>
+            ) : drivers.map((driver) => {
+              const isExpired = new Date(driver.license_expiry_date) < new Date();
+              const isCritical = driver.status === 'Suspended' || isExpired;
+              const initials = driver.name.split(' ').map(n => n[0]).join('');
+              const statusColors = {'Available': 'emerald-400', 'On Trip': 'amber-400', 'Suspended': 'error', 'Off Duty': 'secondary'};
+              const statusColor = statusColors[driver.status] || 'outline';
+
+              return (
+              <div key={driver.id} className={`bg-surface-container-low border border-outline-variant rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 group hover:bg-surface-container transition-colors ${isCritical ? 'border-l-4 border-l-error' : ''}`}>
                 
                 <div className="flex items-center gap-4 min-w-[250px]">
                   <div className="w-10 h-10 rounded-full border border-outline-variant bg-surface-container flex items-center justify-center overflow-hidden shrink-0">
                     {driver.image ? (
                       <img className="w-full h-full object-cover" src={driver.image} alt={driver.name} />
                     ) : (
-                      <span className={`text-sm font-bold ${driver.isCritical ? 'text-error' : driver.initials === 'PS' ? 'text-outline' : 'text-primary'}`}>{driver.initials}</span>
+                      <span className={`text-sm font-bold ${isCritical ? 'text-error' : initials === 'PS' ? 'text-outline' : 'text-primary'}`}>{initials}</span>
                     )}
                   </div>
                   <div>
                     <h3 className="font-headline-sm text-on-surface group-hover:text-primary transition-colors">{driver.name}</h3>
                     <div className="flex items-center gap-1.5">
-                      <div className={`w-1.5 h-1.5 rounded-full bg-${driver.statusColor}`}></div>
-                      <span className={`text-[10px] font-label-caps text-${driver.statusColor} uppercase`}>{driver.status}</span>
+                      <div className={`w-1.5 h-1.5 rounded-full bg-${statusColor}`}></div>
+                      <span className={`text-[10px] font-label-caps text-${statusColor} uppercase`}>{driver.status}</span>
                     </div>
                   </div>
                 </div>
@@ -177,29 +202,29 @@ export default function Drivers() {
                 <div className="grid grid-cols-2 md:grid-cols-4 flex-1 gap-4 items-center">
                   <div>
                     <p className="text-[10px] font-label-caps text-outline mb-1">LICENSE</p>
-                    <p className="text-xs font-mono text-on-surface-variant">{driver.license}</p>
+                    <p className="text-xs font-mono text-on-surface-variant">{driver.license_number}</p>
                   </div>
                   <div>
                     <p className="text-[10px] font-label-caps text-outline mb-1">CATEGORY</p>
-                    <span className={`text-[10px] px-2 py-0.5 rounded font-label-caps inline-block ${driver.isCritical ? 'bg-error/10 border border-error/20 text-error' : 'bg-outline-variant/30 text-on-surface-variant'}`}>{driver.category}</span>
+                    <span className={`text-[10px] px-2 py-0.5 rounded font-label-caps inline-block ${isCritical ? 'bg-error/10 border border-error/20 text-error' : 'bg-outline-variant/30 text-on-surface-variant'}`}>{driver.license_category}</span>
                   </div>
                   <div>
                     <p className="text-[10px] font-label-caps text-outline mb-1">SAFETY SCORE</p>
                     <div className="flex items-center gap-2">
                       <div className="flex-1 h-1 bg-surface-container-highest rounded-full overflow-hidden max-w-[60px]">
-                        <div className={`h-full bg-${driver.statusColor}`} style={{ width: `${driver.safety}%` }}></div>
+                        <div className={`h-full bg-${statusColor}`} style={{ width: `${driver.safety_score}%` }}></div>
                       </div>
-                      <span className={`text-xs font-bold text-${driver.statusColor}`}>{driver.safety}</span>
+                      <span className={`text-xs font-bold text-${statusColor}`}>{driver.safety_score}</span>
                     </div>
                   </div>
                   <div>
                     <p className="text-[10px] font-label-caps text-outline mb-1">CONTACT</p>
-                    <p className="text-xs text-on-surface-variant">{driver.phone}</p>
+                    <p className="text-xs text-on-surface-variant">{driver.contact_number}</p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2 justify-end shrink-0 border-t md:border-t-0 border-outline-variant pt-3 md:pt-0">
-                  <button className="px-4 py-1.5 bg-primary/10 text-primary hover:bg-primary/20 rounded font-label-caps text-xs transition-colors">
+                  <button onClick={() => openProfile(driver)} className="px-4 py-1.5 bg-primary/10 text-primary hover:bg-primary/20 rounded font-label-caps text-xs transition-colors">
                     PROFILE
                   </button>
                   <button className="p-1.5 text-outline-variant hover:text-on-surface rounded transition-colors">
@@ -207,7 +232,7 @@ export default function Drivers() {
                   </button>
                 </div>
               </div>
-            ))}
+            )})}
           </div>
         )}
       </main>
@@ -324,6 +349,8 @@ export default function Drivers() {
         </div>
       </div>
 
+      {/* Modals */}
+      <DriverProfileModal isOpen={profileModalOpen} onClose={() => setProfileModalOpen(false)} driver={selectedDriver} />
     </div>
   );
 }
