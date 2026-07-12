@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import { getKPIs } from '../services/dashboardService';
 import { getVehicleStatus, getTripsData, getFuelTrend, getExpenseDistribution } from '../services/analyticsService';
@@ -30,9 +30,20 @@ const markersData = [
 ];
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [kpis, setKpis] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  
+  const userString = localStorage.getItem('user');
+  const user = userString ? JSON.parse(userString) : null;
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    navigate('/login');
+  };
 
   const [analytics, setAnalytics] = useState({
     vehicleStatus: [], tripsData: [], fuelTrend: [], expenseDistribution: []
@@ -93,15 +104,47 @@ export default function Dashboard() {
 <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
 <span className="font-label-caps text-label-caps text-on-surface">Clearance: L3</span>
 </div>
-<div className="flex items-center gap-4">
+<div className="flex items-center gap-4 relative">
 <button className="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer">notifications</button>
-<div className="flex items-center gap-3 pl-4 border-l border-outline-variant">
+<div 
+  className="flex items-center gap-3 pl-4 border-l border-outline-variant cursor-pointer hover:opacity-80 transition-opacity"
+  onClick={() => setDropdownOpen(!dropdownOpen)}
+>
 <div className="text-right">
-<p className="text-xs font-bold leading-none">A. VANCE</p>
-<p className="text-[10px] text-on-surface-variant uppercase tracking-widest">Chief Operator</p>
+<p className="text-xs font-bold leading-none truncate max-w-[120px]">{user ? user.name : 'Operator'}</p>
+<p className="text-[10px] text-on-surface-variant uppercase tracking-widest">{user ? user.role : 'Chief Operator'}</p>
 </div>
-<img className="w-8 h-8 rounded-full border border-primary/50 object-cover" data-alt="A portrait of a professional transit operations manager wearing a modern technical headset, sitting in a dimly lit control room with blue accent lighting, high-contrast cinematic photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBImUdIJ2cbWxmgbwjGu7ZcZYQ8Ks_TS0XeJzWE8ATcaGY_N0idqDs1T13SG_jXZFjQ7aRR6j74AsL5LNKK0nyp94BiLwqK83ywZcmMDH9l8Rd5Zo076oAvvGKrWy5mN5ti_qu66uY72pu51hpK5mIC_ODdPiC4LNL6IvAh6CuFkZ00MpK3tuW8gAFxYKkrVCip6VxI6iGcW5EH-i8xHD438ceI9D2UQXPzIGjhDYE2xg2-xm_qbkm6Ww"/>
+{user && user.picture ? (
+  <img className="w-8 h-8 rounded-full border border-primary/50 object-cover" src={user.picture} alt="Profile" />
+) : (
+  <div className="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold">
+    {user && user.name ? user.name.charAt(0) : 'U'}
+  </div>
+)}
+<span className="material-symbols-outlined text-on-surface-variant text-sm">expand_more</span>
 </div>
+
+{/* Dropdown Menu */}
+{dropdownOpen && (
+  <div className="absolute top-full right-0 mt-2 w-48 bg-surface-container border border-outline-variant rounded-lg shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+    <button className="w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-container-highest transition-colors flex items-center gap-2">
+      <span className="material-symbols-outlined text-[18px]">person</span>
+      Profile
+    </button>
+    <button className="w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-container-highest transition-colors flex items-center gap-2">
+      <span className="material-symbols-outlined text-[18px]">settings</span>
+      Settings
+    </button>
+    <div className="h-[1px] bg-outline-variant/30 my-1"></div>
+    <button 
+      onClick={handleLogout}
+      className="w-full text-left px-4 py-2 text-sm text-error hover:bg-error/10 transition-colors flex items-center gap-2"
+    >
+      <span className="material-symbols-outlined text-[18px]">logout</span>
+      Logout
+    </button>
+  </div>
+)}
 </div>
 </div>
 </header>
