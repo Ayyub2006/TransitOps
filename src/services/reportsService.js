@@ -2,50 +2,65 @@ export const getReport = (type, filters) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       let data = [];
+      const indianNames = ['Mahesh Sharma', 'Pooja Patil', 'Ravi Kumar', 'Priya Singh', 'Amit Desai', 'Neha Gupta', 'Vikram Singh', 'Kavita Joshi', 'Rahul Verma', 'Sneha Reddy'];
+      const locations = ['JNPT Port', 'Andheri East', 'Bhiwandi Hub', 'Thane West', 'Navi Mumbai', 'Pune Station', 'Dadar', 'Borivali', 'Vashi', 'Kalyan'];
+      const statuses = ['Active', 'In Shop', 'Available', 'En Route', 'Pending', 'Completed', 'Suspended', 'Off Duty'];
+      const vehicleTypes = ['Heavy Truck', 'Light Van', 'Bus', 'SUV', 'Minivan'];
+      
       switch (type) {
         case 'vehicle':
-          data = [
-            { id: 'MH-01-VX', type: 'Heavy Truck', status: 'Active', mileage: '42,390 km' },
-            { id: 'MH-02-TL', type: 'Light Van', status: 'In Shop', mileage: '12,012 km' },
-            { id: 'MH-03-BU', type: 'Bus', status: 'Active', mileage: '89,420 km' },
-            { id: 'MH-04-MX', type: 'Heavy Truck', status: 'Retired', mileage: '242,390 km' }
-          ];
+          data = Array.from({ length: 200 }, (_, i) => ({
+            id: `MH-${String((i % 50) + 1).padStart(2, '0')}-V${i+1}`,
+            type: vehicleTypes[i % vehicleTypes.length],
+            status: ['Active', 'In Shop', 'Available', 'Retired'][i % 4],
+            mileage: `${Math.floor(Math.random() * 300000 + 5000)} km`,
+            last_service: `2023-${String((i % 12) + 1).padStart(2, '0')}-${String((i % 28) + 1).padStart(2, '0')}`
+          }));
           break;
         case 'driver':
-          data = [
-            { id: 'DR-MH-4402', name: 'Mahesh Sharma', license: 'Heavy Duty', status: 'Available' },
-            { id: 'DR-MH-9912', name: 'Pooja Patil', license: 'Passenger', status: 'On Trip' },
-            { id: 'DR-MH-1102', name: 'Ravi Kumar', license: 'Hazmat', status: 'Suspended' },
-            { id: 'DR-MH-5520', name: 'Priya Singh', license: 'Standard', status: 'Off Duty' }
-          ];
+          data = Array.from({ length: 200 }, (_, i) => ({
+            id: `DR-MH-${4000 + i}`,
+            name: indianNames[i % indianNames.length] + (i > 9 ? ` ${i}` : ''),
+            license: ['Heavy Duty', 'Passenger', 'Hazmat', 'Standard'][i % 4],
+            status: ['Available', 'On Trip', 'Suspended', 'Off Duty'][i % 4],
+            rating: (Math.random() * 2 + 3).toFixed(1) // 3.0 to 5.0
+          }));
           break;
         case 'trip':
-          data = [
-            { id: 'TRP-MH-01', origin: 'JNPT Port', destination: 'Andheri East', status: 'En Route', driver: 'Mahesh Sharma' },
-            { id: 'TRP-MH-02', origin: 'Bhiwandi Hub', destination: 'Thane West', status: 'Pending', driver: 'Smita Jadhav' },
-            { id: 'TRP-MH-03', origin: 'Navi Mumbai', destination: 'Pune Station', status: 'Completed', driver: 'Manish Varma' }
-          ];
+          data = Array.from({ length: 200 }, (_, i) => ({
+            id: `TRP-MH-${String(i+1).padStart(3, '0')}`,
+            origin: locations[i % locations.length],
+            destination: locations[(i + 3) % locations.length],
+            status: ['En Route', 'Pending', 'Completed', 'Cancelled'][i % 4],
+            driver: indianNames[i % indianNames.length],
+            distance: `${Math.floor(Math.random() * 500 + 10)} km`
+          }));
           break;
         case 'maintenance':
-          data = [
-            { id: 'MNT-01', vehicle: 'MH-01-VX', type: 'Oil Change', date: '2023-10-24', cost: '₹18,500' },
-            { id: 'MNT-02', vehicle: 'MH-02-TL', type: 'Repair', date: '2023-10-25', cost: '₹1,24,000' },
-            { id: 'MNT-03', vehicle: 'MH-03-FR', type: 'Tire Rotation', date: '2023-10-18', cost: '₹8,500' }
-          ];
+          data = Array.from({ length: 200 }, (_, i) => ({
+            id: `MNT-${String(i+1).padStart(3, '0')}`,
+            vehicle: `MH-${String((i % 50) + 1).padStart(2, '0')}-V${i+1}`,
+            type: ['Oil Change', 'Repair', 'Tire Rotation', 'Engine Overhaul'][i % 4],
+            date: `2023-10-${String((i % 30) + 1).padStart(2, '0')}`,
+            cost: `₹${(Math.floor(Math.random() * 50) + 5) * 1000}`
+          }));
           break;
         case 'fuel':
-          data = [
-            { date: '2023-10-24', vehicle: 'MH-01-VX', volume: '124.5 L', cost: '₹18,675' },
-            { date: '2023-10-24', vehicle: 'MH-02-TL', volume: '98.0 L', cost: '₹14,700' },
-            { date: '2023-10-23', vehicle: 'MH-03-BU', volume: '150.2 L', cost: '₹22,530' }
-          ];
+          data = Array.from({ length: 200 }, (_, i) => ({
+            date: `2023-10-${String((i % 30) + 1).padStart(2, '0')}`,
+            vehicle: `MH-${String((i % 50) + 1).padStart(2, '0')}-V${i+1}`,
+            volume: `${(Math.random() * 100 + 20).toFixed(1)} L`,
+            cost: `₹${Math.floor(Math.random() * 10000 + 2000)}`,
+            station: locations[i % locations.length] + ' Pump'
+          }));
           break;
         case 'expense':
-          data = [
-            { date: '2023-10-24', category: 'Toll', description: 'Bandra Worli Sea Link', amount: '₹1,250' },
-            { date: '2023-10-23', category: 'Repair', description: 'Alternator replacement', amount: '₹45,000' },
-            { date: '2023-10-22', category: 'Software', description: 'FleetControl Pro Subscription', amount: '₹1,20,000' }
-          ];
+          data = Array.from({ length: 200 }, (_, i) => ({
+            date: `2023-10-${String((i % 30) + 1).padStart(2, '0')}`,
+            category: ['Toll', 'Repair', 'Software', 'Insurance', 'Wages'][i % 5],
+            description: `Operational expense #${i+1}`,
+            amount: `₹${(Math.floor(Math.random() * 100) + 1) * 500}`
+          }));
           break;
         default:
           data = [];

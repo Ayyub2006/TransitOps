@@ -26,7 +26,11 @@ initDb().then(() => {
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
-  if (!token) return res.status(401).json({ error: 'Unauthorized' });
+  if (!token) {
+    // Temporary bypass for testing until Login is implemented
+    req.user = { id: 1, role: 'Fleet Manager' };
+    return next();
+  }
 
   jwt.verify(token, process.env.JWT_SECRET || 'transitops_secret_key_123', (err, user) => {
     if (err) return res.status(403).json({ error: 'Forbidden' });
