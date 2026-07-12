@@ -35,6 +35,7 @@ export default function Dashboard() {
   const [kpis, setKpis] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [mapView, setMapView] = useState('satellite');
 
   const [analytics, setAnalytics] = useState({
     vehicleStatus: [], tripsData: [], fuelTrend: [], expenseDistribution: []
@@ -205,6 +206,10 @@ export default function Dashboard() {
 <button className="px-4 py-1.5 rounded-full text-xs font-bold bg-surface-container border border-outline-variant text-on-surface-variant hover:border-primary transition-colors">Region: Central</button>
 </div>
 <div className="text-[10px] text-on-surface-variant flex items-center gap-4">
+<div className="flex items-center gap-1 bg-surface-container border border-outline-variant rounded p-1 mr-2">
+<button onClick={() => setMapView('satellite')} className={`px-3 py-1 rounded text-xs font-bold transition-colors ${mapView === 'satellite' ? 'bg-primary text-on-primary-container' : 'text-on-surface-variant hover:text-primary'}`}>Satellite</button>
+<button onClick={() => setMapView('street')} className={`px-3 py-1 rounded text-xs font-bold transition-colors ${mapView === 'street' ? 'bg-primary text-on-primary-container' : 'text-on-surface-variant hover:text-primary'}`}>Street</button>
+</div>
 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-400"></span> Online</span>
 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-400"></span> Delayed</span>
 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-400"></span> Warning</span>
@@ -212,10 +217,17 @@ export default function Dashboard() {
 </div>
 <div className="relative rounded-xl border border-outline-variant bg-surface-container-lowest overflow-hidden h-[480px] z-0">
   <MapContainer center={[19.0760, 72.8777]} zoom={12} style={{ height: '100%', width: '100%', background: '#0e1514' }} zoomControl={false}>
-    <TileLayer
-      url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-      attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-    />
+    {mapView === 'satellite' ? (
+      <TileLayer
+        url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+        attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+      />
+    ) : (
+      <TileLayer
+        url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+        attribution='&copy; OpenStreetMap contributors &copy; CARTO'
+      />
+    )}
     {markersData.map(m => (
       <Marker key={m.id} position={m.pos} icon={createMarkerIcon(m.color, m.shadow)}>
         <Popup>
