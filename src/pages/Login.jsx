@@ -22,7 +22,7 @@ const ROLE_CONFIG = {
     description: 'Full access to fleet analytics, dispatch management, risk monitoring, and reporting.',
     icon: 'admin_panel_settings',
     accentColor: '#3dd6d0',
-    redirectTo: '/dashboard',
+    redirectTo: '/manager/dashboard',
   },
   'Driver': {
     label: 'Driver',
@@ -30,7 +30,7 @@ const ROLE_CONFIG = {
     description: 'View assigned trips, update delivery status, and access vehicle information.',
     icon: 'local_shipping',
     accentColor: '#fbbf24',
-    redirectTo: '/trips',
+    redirectTo: '/driver/dashboard',
   },
 };
 

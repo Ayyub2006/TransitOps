@@ -193,7 +193,7 @@ export const initDb = async () => {
       if (fleetCheck.rows.length === 0) {
         const insertFleet = await pool.query(
           'INSERT INTO fleets (name, region, manager_id) VALUES ($1, $2, $3) RETURNING id',
-          [\`\${manager.name}'s Default Fleet\`, 'Default Region', manager.id]
+          [`${manager.name}'s Default Fleet`, 'Default Region', manager.id]
         );
         fleetId = insertFleet.rows[0].id;
       } else {

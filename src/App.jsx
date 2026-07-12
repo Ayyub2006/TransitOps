@@ -12,12 +12,30 @@ import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 
-// Auth Guard Component
-const ProtectedRoute = ({ children }) => {
+// Auth Guard Components
+const ProtectedRoute = ({ children, allowedRoles }) => {
   const token = localStorage.getItem('token');
-  if (!token) {
+  const userStr = localStorage.getItem('user');
+  
+  if (!token || !userStr) {
     return <Navigate to="/login" replace />;
   }
+
+  try {
+    const user = JSON.parse(userStr);
+    
+    // Role-based redirection if accessing the wrong portal
+    if (allowedRoles && !allowedRoles.includes(user.role)) {
+      if (user.role === 'Driver') {
+        return <Navigate to="/driver/dashboard" replace />;
+      } else {
+        return <Navigate to="/manager/dashboard" replace />;
+      }
+    }
+  } catch (e) {
+    return <Navigate to="/login" replace />;
+  }
+
   return children;
 };
 
@@ -27,21 +45,29 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         
-        <Route path="/" element={<Navigate to="/dashboard" />} />
+        {/* Redirect root based on role if logged in, else login */}
+        <Route path="/" element={<ProtectedRoute><Navigate to="/manager/dashboard" replace /></ProtectedRoute>} />
         
-        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-        <Route path="/trips" element={<ProtectedRoute><Trips /></ProtectedRoute>} />
-        <Route path="/registry" element={<ProtectedRoute><Registry /></ProtectedRoute>} />
-        <Route path="/drivers" element={<ProtectedRoute><Drivers /></ProtectedRoute>} />
-        <Route path="/maintenance" element={<ProtectedRoute><Maintenance /></ProtectedRoute>} />
-        <Route path="/expenses" element={<ProtectedRoute><Expenses /></ProtectedRoute>} />
-        <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
-        <Route path="/risk" element={<ProtectedRoute><Risk /></ProtectedRoute>} />
-        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-        <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+        {/* Fleet Manager Routes */}
+        <Route path="/manager/dashboard" element={<ProtectedRoute allowedRoles={['Fleet Manager', 'Safety Officer', 'Financial Analyst']}><Dashboard /></ProtectedRoute>} />
+        <Route path="/manager/trips" element={<ProtectedRoute allowedRoles={['Fleet Manager']}><Trips /></ProtectedRoute>} />
+        <Route path="/manager/registry" element={<ProtectedRoute allowedRoles={['Fleet Manager']}><Registry /></ProtectedRoute>} />
+        <Route path="/manager/drivers" element={<ProtectedRoute allowedRoles={['Fleet Manager']}><Drivers /></ProtectedRoute>} />
+        <Route path="/manager/maintenance" element={<ProtectedRoute allowedRoles={['Fleet Manager']}><Maintenance /></ProtectedRoute>} />
+        <Route path="/manager/expenses" element={<ProtectedRoute allowedRoles={['Fleet Manager', 'Financial Analyst']}><Expenses /></ProtectedRoute>} />
+        <Route path="/manager/reports" element={<ProtectedRoute allowedRoles={['Fleet Manager', 'Financial Analyst']}><Reports /></ProtectedRoute>} />
+        <Route path="/manager/risk" element={<ProtectedRoute allowedRoles={['Fleet Manager', 'Safety Officer']}><Risk /></ProtectedRoute>} />
+        <Route path="/manager/profile" element={<ProtectedRoute allowedRoles={['Fleet Manager', 'Safety Officer', 'Financial Analyst']}><Profile /></ProtectedRoute>} />
+        <Route path="/manager/settings" element={<ProtectedRoute allowedRoles={['Fleet Manager']}><Settings /></ProtectedRoute>} />
+        {/* /manager/fleets will be added in Phase 3 */}
+
+        {/* Driver Routes (New shell to be built) */}
+        <Route path="/driver/dashboard" element={<ProtectedRoute allowedRoles={['Driver']}><div>Driver Dashboard</div></ProtectedRoute>} />
+        {/* Temporary placeholders for Driver routes */}
         
-        {/* Fallback */}
-        <Route path="*" element={<Navigate to="/dashboard" />} />
+        {/* Fallbacks */}
+        <Route path="/dashboard" element={<Navigate to="/manager/dashboard" replace />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
   );
