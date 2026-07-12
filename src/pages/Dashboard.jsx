@@ -1,8 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
+import { getKPIs } from '../services/dashboardService';
 
 export default function Dashboard() {
+  const [kpis, setKpis] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchKPIs = async () => {
+      try {
+        setLoading(true);
+        const data = await getKPIs();
+        setKpis(data);
+      } catch (err) {
+        setError(err.message || 'Failed to fetch KPIs');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchKPIs();
+  }, []);
+
   return (
     <div className="min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
       
@@ -41,86 +61,98 @@ export default function Dashboard() {
 {/*  CONTENT CANVAS  */}
 <main className="mt-topbar-height p-gutter pb-20 space-y-6">
 {/*  KPI STRIP  */}
-<section className="flex gap-4 overflow-x-auto pb-2 custom-scrollbar">
-{/*  Card 1  */}
-<div className="min-w-[180px] bg-surface-container border border-outline-variant p-4 rounded-lg flex flex-col justify-between glow-cyan transition-all">
-<p className="font-label-caps text-label-caps text-on-surface-variant">Active Vehicles</p>
-<div className="flex items-baseline gap-2 mt-2">
-<span className="font-kpi-value text-kpi-value">142</span>
-<span className="text-xs text-primary flex items-center"><span className="material-symbols-outlined text-xs">trending_up</span>4%</span>
-</div>
-<div className="w-full h-1 bg-primary/10 mt-3 rounded-full overflow-hidden">
-<div className="h-full bg-primary w-[85%]"></div>
-</div>
-</div>
-{/*  Card 2  */}
-<div className="min-w-[180px] bg-surface-container border border-outline-variant p-4 rounded-lg flex flex-col justify-between glow-cyan transition-all">
-<p className="font-label-caps text-label-caps text-on-surface-variant">Available (Green)</p>
-<div className="flex items-baseline gap-2 mt-2">
-<span className="font-kpi-value text-kpi-value text-emerald-400">28</span>
-<span className="text-xs text-emerald-400 flex items-center"><span className="material-symbols-outlined text-xs">check_circle</span>STABLE</span>
-</div>
-<div className="w-full h-1 bg-emerald-400/10 mt-3 rounded-full overflow-hidden">
-<div className="h-full bg-emerald-400 w-[20%]"></div>
-</div>
-</div>
-{/*  Card 3  */}
-<div className="min-w-[180px] bg-surface-container border border-outline-variant p-4 rounded-lg flex flex-col justify-between glow-cyan transition-all">
-<p className="font-label-caps text-label-caps text-on-surface-variant">In Maintenance</p>
-<div className="flex items-baseline gap-2 mt-2">
-<span className="font-kpi-value text-kpi-value text-purple-400">12</span>
-<span className="text-xs text-purple-400 flex items-center"><span className="material-symbols-outlined text-xs">build</span>+2</span>
-</div>
-<div className="w-full h-1 bg-purple-400/10 mt-3 rounded-full overflow-hidden">
-<div className="h-full bg-purple-400 w-[45%]"></div>
-</div>
-</div>
-{/*  Card 4  */}
-<div className="min-w-[180px] bg-surface-container border border-outline-variant p-4 rounded-lg flex flex-col justify-between glow-cyan transition-all">
-<p className="font-label-caps text-label-caps text-on-surface-variant">Active Trips</p>
-<div className="flex items-baseline gap-2 mt-2">
-<span className="font-kpi-value text-kpi-value text-amber-400">89</span>
-<span className="text-xs text-amber-400 flex items-center"><span className="material-symbols-outlined text-xs">schedule</span>LIVE</span>
-</div>
-<div className="w-full h-1 bg-amber-400/10 mt-3 rounded-full overflow-hidden">
-<div className="h-full bg-amber-400 w-[65%]"></div>
-</div>
-</div>
-{/*  Card 5  */}
-<div className="min-w-[180px] bg-surface-container border border-outline-variant p-4 rounded-lg flex flex-col justify-between glow-cyan transition-all">
-<p className="font-label-caps text-label-caps text-on-surface-variant">Pending Trips</p>
-<div className="flex items-baseline gap-2 mt-2">
-<span className="font-kpi-value text-kpi-value text-slate-400">34</span>
-<span className="text-xs text-slate-400 flex items-center"><span className="material-symbols-outlined text-xs">pause_circle</span>HOLD</span>
-</div>
-<div className="w-full h-1 bg-slate-400/10 mt-3 rounded-full overflow-hidden">
-<div className="h-full bg-slate-400 w-[15%]"></div>
-</div>
-</div>
-{/*  Card 6  */}
-<div className="min-w-[180px] bg-surface-container border border-outline-variant p-4 rounded-lg flex flex-col justify-between glow-cyan transition-all">
-<p className="font-label-caps text-label-caps text-on-surface-variant">Drivers On Duty</p>
-<div className="flex items-baseline gap-2 mt-2">
-<span className="font-kpi-value text-kpi-value">156</span>
-<span className="text-xs text-primary flex items-center"><span className="material-symbols-outlined text-xs">group</span>FULL</span>
-</div>
-<div className="w-full h-1 bg-primary/10 mt-3 rounded-full overflow-hidden">
-<div className="h-full bg-primary w-[98%]"></div>
-</div>
-</div>
-{/*  Card 7  */}
-<div className="min-w-[180px] bg-surface-container border border-outline-variant p-4 rounded-lg flex items-center justify-between glow-cyan transition-all">
-<div>
-<p className="font-label-caps text-label-caps text-on-surface-variant">Utilization %</p>
-<span className="font-kpi-value text-kpi-value">92.4</span>
-</div>
-<div className="relative w-12 h-12 flex items-center justify-center">
-<svg className="w-full h-full -rotate-90">
-<circle className="text-outline-variant" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" strokeWidth="4"></circle>
-<circle className="text-primary" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" strokeDasharray="125.6" strokeDashoffset="12.5" strokeWidth="4"></circle>
-</svg>
-</div>
-</div>
+<section className="flex gap-4 overflow-x-auto pb-2 custom-scrollbar min-h-[120px]">
+{loading ? (
+  <div className="w-full flex items-center justify-center font-bold text-primary">
+    Loading KPIs...
+  </div>
+) : error ? (
+  <div className="w-full flex items-center justify-center font-bold text-error">
+    {error}
+  </div>
+) : kpis && (
+  <>
+  {/*  Card 1  */}
+  <div className="min-w-[180px] bg-surface-container border border-outline-variant p-4 rounded-lg flex flex-col justify-between glow-cyan transition-all">
+  <p className="font-label-caps text-label-caps text-on-surface-variant">Active Vehicles</p>
+  <div className="flex items-baseline gap-2 mt-2">
+  <span className="font-kpi-value text-kpi-value">{kpis.activeVehicles}</span>
+  <span className="text-xs text-primary flex items-center"><span className="material-symbols-outlined text-xs">trending_up</span>4%</span>
+  </div>
+  <div className="w-full h-1 bg-primary/10 mt-3 rounded-full overflow-hidden">
+  <div className="h-full bg-primary w-[85%]"></div>
+  </div>
+  </div>
+  {/*  Card 2  */}
+  <div className="min-w-[180px] bg-surface-container border border-outline-variant p-4 rounded-lg flex flex-col justify-between glow-cyan transition-all">
+  <p className="font-label-caps text-label-caps text-on-surface-variant">Available (Green)</p>
+  <div className="flex items-baseline gap-2 mt-2">
+  <span className="font-kpi-value text-kpi-value text-emerald-400">{kpis.availableVehicles}</span>
+  <span className="text-xs text-emerald-400 flex items-center"><span className="material-symbols-outlined text-xs">check_circle</span>STABLE</span>
+  </div>
+  <div className="w-full h-1 bg-emerald-400/10 mt-3 rounded-full overflow-hidden">
+  <div className="h-full bg-emerald-400 w-[20%]"></div>
+  </div>
+  </div>
+  {/*  Card 3  */}
+  <div className="min-w-[180px] bg-surface-container border border-outline-variant p-4 rounded-lg flex flex-col justify-between glow-cyan transition-all">
+  <p className="font-label-caps text-label-caps text-on-surface-variant">In Maintenance</p>
+  <div className="flex items-baseline gap-2 mt-2">
+  <span className="font-kpi-value text-kpi-value text-purple-400">{kpis.inMaintenance}</span>
+  <span className="text-xs text-purple-400 flex items-center"><span className="material-symbols-outlined text-xs">build</span>+2</span>
+  </div>
+  <div className="w-full h-1 bg-purple-400/10 mt-3 rounded-full overflow-hidden">
+  <div className="h-full bg-purple-400 w-[45%]"></div>
+  </div>
+  </div>
+  {/*  Card 4  */}
+  <div className="min-w-[180px] bg-surface-container border border-outline-variant p-4 rounded-lg flex flex-col justify-between glow-cyan transition-all">
+  <p className="font-label-caps text-label-caps text-on-surface-variant">Active Trips</p>
+  <div className="flex items-baseline gap-2 mt-2">
+  <span className="font-kpi-value text-kpi-value text-amber-400">{kpis.activeTrips}</span>
+  <span className="text-xs text-amber-400 flex items-center"><span className="material-symbols-outlined text-xs">schedule</span>LIVE</span>
+  </div>
+  <div className="w-full h-1 bg-amber-400/10 mt-3 rounded-full overflow-hidden">
+  <div className="h-full bg-amber-400 w-[65%]"></div>
+  </div>
+  </div>
+  {/*  Card 5  */}
+  <div className="min-w-[180px] bg-surface-container border border-outline-variant p-4 rounded-lg flex flex-col justify-between glow-cyan transition-all">
+  <p className="font-label-caps text-label-caps text-on-surface-variant">Pending Trips</p>
+  <div className="flex items-baseline gap-2 mt-2">
+  <span className="font-kpi-value text-kpi-value text-slate-400">{kpis.pendingTrips}</span>
+  <span className="text-xs text-slate-400 flex items-center"><span className="material-symbols-outlined text-xs">pause_circle</span>HOLD</span>
+  </div>
+  <div className="w-full h-1 bg-slate-400/10 mt-3 rounded-full overflow-hidden">
+  <div className="h-full bg-slate-400 w-[15%]"></div>
+  </div>
+  </div>
+  {/*  Card 6  */}
+  <div className="min-w-[180px] bg-surface-container border border-outline-variant p-4 rounded-lg flex flex-col justify-between glow-cyan transition-all">
+  <p className="font-label-caps text-label-caps text-on-surface-variant">Drivers On Duty</p>
+  <div className="flex items-baseline gap-2 mt-2">
+  <span className="font-kpi-value text-kpi-value">{kpis.driversOnDuty}</span>
+  <span className="text-xs text-primary flex items-center"><span className="material-symbols-outlined text-xs">group</span>FULL</span>
+  </div>
+  <div className="w-full h-1 bg-primary/10 mt-3 rounded-full overflow-hidden">
+  <div className="h-full bg-primary w-[98%]"></div>
+  </div>
+  </div>
+  {/*  Card 7  */}
+  <div className="min-w-[180px] bg-surface-container border border-outline-variant p-4 rounded-lg flex items-center justify-between glow-cyan transition-all">
+  <div>
+  <p className="font-label-caps text-label-caps text-on-surface-variant">Utilization %</p>
+  <span className="font-kpi-value text-kpi-value">{kpis.fleetUtilization}</span>
+  </div>
+  <div className="relative w-12 h-12 flex items-center justify-center">
+  <svg className="w-full h-full -rotate-90">
+  <circle className="text-outline-variant" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" strokeWidth="4"></circle>
+  <circle className="text-primary" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" strokeDasharray="125.6" strokeDashoffset={`${125.6 - (125.6 * kpis.fleetUtilization) / 100}`} strokeWidth="4"></circle>
+  </svg>
+  </div>
+  </div>
+  </>
+)}
 </section>
 {/*  MIDDLE SECTION: MAP & RISK RADAR  */}
 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
