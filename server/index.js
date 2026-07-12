@@ -48,7 +48,10 @@ const requireRole = (allowedRoles) => {
 // ==========================================
 
 app.post('/api/auth/google-login', async (req, res) => {
-  const { credential } = req.body;
+  const { credential, intended_role } = req.body;
+  // Default to Fleet Manager if no role is specified
+  const requestedRole = intended_role === 'Driver' ? 'Driver' : 'Fleet Manager';
+
   try {
     const ticket = await client.verifyIdToken({
       idToken: credential,
@@ -63,14 +66,18 @@ app.post('/api/auth/google-login', async (req, res) => {
     
     let user;
     if (result.rows.length === 0) {
-      const roleRes = await pool.query("SELECT id FROM roles WHERE name = 'Fleet Manager'");
-      const roleId = roleRes.rows[0].id;
+      // NEW user: assign the role they chose at login
+      const roleRes = await pool.query("SELECT id FROM roles WHERE name = $1", [requestedRole]);
+      const roleId = roleRes.rows[0]?.id;
+      if (!roleId) return res.status(500).json({ error: `Role '${requestedRole}' not found in database` });
+
       const insertRes = await pool.query(`
         INSERT INTO users (email, name, picture, google_id, role_id)
         VALUES ($1, $2, $3, $4, $5) RETURNING id
       `, [payload.email, payload.name, payload.picture, payload.sub, roleId]);
-      user = { id: insertRes.rows[0].id, name: payload.name, email: payload.email, picture: payload.picture, role_name: 'Fleet Manager' };
+      user = { id: insertRes.rows[0].id, name: payload.name, email: payload.email, picture: payload.picture, role_name: requestedRole };
     } else {
+      // EXISTING user: always use their assigned role, ignore intended_role
       user = result.rows[0];
       await pool.query("UPDATE users SET last_login_at = CURRENT_TIMESTAMP WHERE id = $1", [user.id]);
     }
