@@ -8,6 +8,26 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid,
   LineChart, Line
 } from 'recharts';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+
+const createMarkerIcon = (colorClass, shadowColor) => {
+  return L.divIcon({
+    className: 'custom-leaflet-marker',
+    html: `<div class="w-3 h-3 ${colorClass} rounded-full border-2 border-[var(--color-surface)] shadow-[0_0_10px_${shadowColor}]"></div>`,
+    iconSize: [12, 12],
+    iconAnchor: [6, 6]
+  });
+};
+
+const markersData = [
+  { id: 1, pos: [37.78, -122.42], color: 'bg-emerald-400', shadow: 'rgba(52,211,153,0.8)', label: 'Vehicle A-112 (Online)' },
+  { id: 2, pos: [37.77, -122.41], color: 'bg-amber-400', shadow: 'rgba(251,191,36,0.8)', label: 'Vehicle B-229 (Delayed)' },
+  { id: 3, pos: [37.76, -122.40], color: 'bg-red-400', shadow: 'rgba(248,113,113,0.8)', label: 'Vehicle C-404 (Warning)' },
+  { id: 4, pos: [37.785, -122.43], color: 'bg-primary', shadow: 'rgba(98,243,236,0.8)', label: 'Vehicle D-101 (Active)' },
+  { id: 5, pos: [37.765, -122.44], color: 'bg-purple-400', shadow: 'rgba(167,139,250,0.8)', label: 'Vehicle E-55 (Maintenance)' }
+];
 
 export default function Dashboard() {
   const [kpis, setKpis] = useState(null);
@@ -198,27 +218,30 @@ export default function Dashboard() {
 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-400"></span> Warning</span>
 </div>
 </div>
-<div className="relative rounded-xl border border-outline-variant bg-surface-container-lowest overflow-hidden h-[480px]">
-<img className="w-full h-full object-cover opacity-60 grayscale brightness-50" data-location="San Francisco" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDY3zWgvBh1JLumrrlnObGHvruJ8uJIdEEF2wezrkxJC8T8PQplZBNqt3MCAl2EtE9Um19rYMunMDwmKg7Rvryvc0Cr8Hvq9taU9_z669ntpsZHLuE_0a91H85PnFPU1AFfV1aO_1EAg9Jc98d5tbQFBFtvosnTcEZmzqMxD2_Q0XFAM8f-BK5uT5fdtQvUzuo4-4r5b6g69GP9HHE__WXeVf32Pvl5bIbgq0ILXqjKQqg8xpHH_XYhzg"/>
-{/*  Overlay Markers  */}
-<div className="absolute top-1/4 left-1/3 w-3 h-3 bg-emerald-400 rounded-full border-2 border-surface map-marker shadow-[0_0_10px_rgba(52,211,153,0.8)]"></div>
-<div className="absolute top-1/2 left-1/2 w-3 h-3 bg-amber-400 rounded-full border-2 border-surface map-marker shadow-[0_0_10px_rgba(251,191,36,0.8)]"></div>
-<div className="absolute bottom-1/3 right-1/4 w-3 h-3 bg-red-400 rounded-full border-2 border-surface map-marker shadow-[0_0_10px_rgba(248,113,113,0.8)]"></div>
-<div className="absolute top-1/3 right-1/2 w-3 h-3 bg-primary rounded-full border-2 border-surface map-marker shadow-[0_0_10px_rgba(98,243,236,0.8)]"></div>
-<div className="absolute bottom-1/4 left-1/4 w-3 h-3 bg-purple-400 rounded-full border-2 border-surface map-marker shadow-[0_0_10px_rgba(167,139,250,0.8)]"></div>
-{/*  Legend  */}
-<div className="absolute bottom-4 right-4 p-3 bg-surface/80 backdrop-blur-md border border-outline-variant rounded-lg">
-<div className="text-[10px] font-label-caps text-on-surface-variant mb-2">COORD: 37.7749° N, 122.4194° W</div>
-<div className="h-24 w-32 rounded bg-surface-container-lowest border border-outline-variant/30 flex items-center justify-center">
-<span className="text-[10px] opacity-20">GRID DATA LOADED</span>
-</div>
-</div>
-{/*  Map Controls  */}
-<div className="absolute top-4 right-4 flex flex-col gap-1">
-<button className="w-8 h-8 bg-surface border border-outline-variant rounded flex items-center justify-center hover:bg-surface-variant transition-colors"><span className="material-symbols-outlined text-sm">add</span></button>
-<button className="w-8 h-8 bg-surface border border-outline-variant rounded flex items-center justify-center hover:bg-surface-variant transition-colors"><span className="material-symbols-outlined text-sm">remove</span></button>
-<button className="w-8 h-8 bg-surface border border-outline-variant mt-2 rounded flex items-center justify-center hover:bg-surface-variant transition-colors"><span className="material-symbols-outlined text-sm">my_location</span></button>
-</div>
+<div className="relative rounded-xl border border-outline-variant bg-surface-container-lowest overflow-hidden h-[480px] z-0">
+  <MapContainer center={[37.7749, -122.4194]} zoom={13} style={{ height: '100%', width: '100%', background: '#0e1514' }} zoomControl={false}>
+    <TileLayer
+      url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    />
+    {markersData.map(m => (
+      <Marker key={m.id} position={m.pos} icon={createMarkerIcon(m.color, m.shadow)}>
+        <Popup>
+          <div className="font-body-md text-on-surface bg-surface-container px-2 py-1 rounded">
+            <strong>{m.label}</strong>
+          </div>
+        </Popup>
+      </Marker>
+    ))}
+  </MapContainer>
+  
+  {/* Legend Overlay */}
+  <div className="absolute bottom-4 right-4 p-3 bg-surface/80 backdrop-blur-md border border-outline-variant rounded-lg z-[1000] pointer-events-none">
+    <div className="text-[10px] font-label-caps text-on-surface-variant mb-2">COORD: 37.7749° N, 122.4194° W</div>
+    <div className="h-10 w-32 rounded bg-surface-container-lowest border border-outline-variant/30 flex items-center justify-center">
+      <span className="text-[10px] opacity-50">LIVE TRACKING</span>
+    </div>
+  </div>
 </div>
 </div>
 {/*  FLEET RISK RADAR  */}
