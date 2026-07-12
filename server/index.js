@@ -52,7 +52,10 @@ const requireRole = (allowedRoles) => {
 // ==========================================
 
 app.post('/api/auth/google-login', async (req, res) => {
-  const { credential } = req.body;
+  const { credential, intended_role } = req.body;
+  // Default to Fleet Manager if no role is specified
+  const requestedRole = intended_role === 'Driver' ? 'Driver' : 'Fleet Manager';
+
   try {
     const ticket = await client.verifyIdToken({
       idToken: credential,
@@ -67,14 +70,18 @@ app.post('/api/auth/google-login', async (req, res) => {
     
     let user;
     if (result.rows.length === 0) {
-      const roleRes = await pool.query("SELECT id FROM roles WHERE name = 'Fleet Manager'");
-      const roleId = roleRes.rows[0].id;
+      // NEW user: assign the role they chose at login
+      const roleRes = await pool.query("SELECT id FROM roles WHERE name = $1", [requestedRole]);
+      const roleId = roleRes.rows[0]?.id;
+      if (!roleId) return res.status(500).json({ error: `Role '${requestedRole}' not found in database` });
+
       const insertRes = await pool.query(`
         INSERT INTO users (email, name, picture, google_id, role_id)
         VALUES ($1, $2, $3, $4, $5) RETURNING id
       `, [payload.email, payload.name, payload.picture, payload.sub, roleId]);
-      user = { id: insertRes.rows[0].id, name: payload.name, email: payload.email, picture: payload.picture, role_name: 'Fleet Manager' };
+      user = { id: insertRes.rows[0].id, name: payload.name, email: payload.email, picture: payload.picture, role_name: requestedRole };
     } else {
+      // EXISTING user: always use their assigned role, ignore intended_role
       user = result.rows[0];
       await pool.query("UPDATE users SET last_login_at = CURRENT_TIMESTAMP WHERE id = $1", [user.id]);
     }
@@ -94,6 +101,39 @@ app.post('/api/auth/google-login', async (req, res) => {
 
 // Use authentication for all routes below
 app.use('/api', authenticateToken);
+
+// ==========================================
+// USERS / PROFILE
+// ==========================================
+
+app.get('/api/users/profile', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT u.id, u.name, u.email, u.picture, r.name as role_name 
+      FROM users u LEFT JOIN roles r ON u.role_id = r.id WHERE u.id = $1
+    `, [req.user.id]);
+    if (result.rows.length === 0) return res.status(404).json({ error: 'User not found' });
+    res.json(result.rows[0]);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.put('/api/users/profile', async (req, res) => {
+  const { name, picture } = req.body;
+  try {
+    const result = await pool.query(
+      "UPDATE users SET name = $1, picture = $2 WHERE id = $3 RETURNING id, name, email, picture",
+      [name, picture, req.user.id]
+    );
+    if (result.rows.length === 0) return res.status(404).json({ error: 'User not found' });
+    const user = result.rows[0];
+    user.role_name = req.user.role;
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // ==========================================
 // DASHBOARD & ANALYTICS

@@ -9,6 +9,8 @@ import Expenses from './pages/Expenses';
 import Reports from './pages/Reports';
 import Risk from './pages/Risk';
 import Login from './pages/Login';
+import Profile from './pages/Profile';
+import Settings from './pages/Settings';
 
 // Auth Guard Component
 const ProtectedRoute = ({ children }) => {
@@ -35,6 +37,8 @@ export default function App() {
         <Route path="/expenses" element={<ProtectedRoute><Expenses /></ProtectedRoute>} />
         <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
         <Route path="/risk" element={<ProtectedRoute><Risk /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
         
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/dashboard" />} />
