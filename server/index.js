@@ -1,13 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-<<<<<<< HEAD
-import dotenv from 'dotenv';
-=======
 import { OAuth2Client } from 'google-auth-library';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import pool, { initDb } from './db.js';
->>>>>>> d10615fee40ed05b3b69fb53032bd3fe67aeb259
 
 dotenv.config();
 
