@@ -4,7 +4,7 @@ import Sidebar from '../components/Sidebar';
 
 export default function Expenses() {
   return (
-    <div className="flex min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
+    <div className="min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
       
 {/*  SideNavBar  */}
 <Sidebar />
@@ -124,7 +124,7 @@ export default function Expenses() {
 </div>
 </div>
 {/*  Main Data Section  */}
-<div className="bg-surface-container-low border border-outline-variant rounded-xl overflow-hidden flex flex-col min-h-[600px]">
+<div className="bg-surface-container-low border border-outline-variant rounded-xl overflow-x-auto flex flex-col min-h-[600px]">
 {/*  Tabs  */}
 <div className="flex border-b border-outline-variant bg-surface-container-low/50">
 <button className="px-8 py-4 font-headline-sm text-primary border-b-2 border-primary bg-primary/5 transition-all" id="tab-fuel" onclick="switchTab('fuel')">

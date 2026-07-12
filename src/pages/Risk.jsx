@@ -4,7 +4,7 @@ import Sidebar from '../components/Sidebar';
 
 export default function Risk() {
   return (
-    <div className="flex min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
+    <div className="min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
       
 {/*  SideNavBar (Authority: JSON & Style Guidance)  */}
 <Sidebar />
@@ -76,7 +76,7 @@ export default function Risk() {
 </div>
 </section>
 {/*  Risk Entities List  */}
-<section className="flex-1 glass-panel rounded-lg overflow-hidden flex flex-col">
+<section className="flex-1 glass-panel rounded-lg overflow-x-auto flex flex-col">
 <div className="p-4 border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
 <h3 className="font-label-caps text-label-caps text-white uppercase">Highest Risk Entities (Ranked)</h3>
 <div className="flex gap-2">
@@ -241,7 +241,7 @@ export default function Risk() {
                     </button>
 </section>
 {/*  Mini Map / Insight Card  */}
-<section className="flex-1 glass-panel rounded-lg overflow-hidden relative">
+<section className="flex-1 glass-panel rounded-lg overflow-x-auto relative">
 <div className="absolute inset-0 bg-cover bg-center opacity-40 grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A dark, stylized tactical map of a metropolitan city with glowing teal lines representing bus routes and vehicle traffic flow. The map has a high-contrast blueprint aesthetic with technical grid overlays and pinpoint markers showing current vehicle locations. The lighting is low-key, emphasizing the neon-cyan data points." style={{backgroundImage: "url('https", }}></div>
 <div className="relative z-10 p-6 flex flex-col h-full">
 <h4 className="font-label-caps text-label-caps text-white uppercase mb-1">Geospatial Risk Cluster</h4>

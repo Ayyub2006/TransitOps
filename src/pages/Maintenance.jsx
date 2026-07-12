@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 
 export default function Maintenance() {
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+
   return (
-    <div className="flex min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
+    <div className="min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
       
 {/*  Sidebar (Shared Component Style)  */}
 <Sidebar />
@@ -54,14 +56,14 @@ export default function Maintenance() {
 <span className="material-symbols-outlined text-[20px]">ios_share</span>
                     Export
                 </button>
-<button className="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg font-headline-sm text-[14px] font-bold hover:brightness-110 transition-all active:scale-95" onclick="document.getElementById('side-drawer').classList.remove('translate-x-full')">
+<button className="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg font-headline-sm text-[14px] font-bold hover:brightness-110 transition-all active:scale-95" onClick={() => setIsDrawerOpen(true)}>
 <span className="material-symbols-outlined">add</span>
                     New Maintenance Record
                 </button>
 </div>
 </div>
 {/*  Data Table Section  */}
-<div className="glass-panel rounded-xl overflow-hidden">
+<div className="glass-panel rounded-xl overflow-x-auto">
 <table className="w-full border-collapse">
 <thead>
 <tr className="bg-surface-container-high text-left">
@@ -186,16 +188,16 @@ export default function Maintenance() {
 </div>
 </main>
 {/*  Side Slide-In Drawer  */}
-<div className="fixed inset-0 z-[60] flex justify-end transition-transform transform translate-x-0" id="side-drawer" style={{background: "rgba(0,0,0,0.4)", }}>
+<div className={`fixed inset-0 z-[60] flex justify-end transition-transform transform ${isDrawerOpen ? 'translate-x-0' : 'translate-x-full'}`} id="side-drawer" style={{background: "rgba(0,0,0,0.4)", }}>
 {/*  Click outside overlay  */}
-<div className="flex-1" onclick="document.getElementById('side-drawer').classList.add('translate-x-full')"></div>
+<div className="flex-1" onClick={() => setIsDrawerOpen(false)}></div>
 <div className="w-[450px] h-full glass-panel shadow-2xl p-8 flex flex-col border-l border-outline-variant translate-x-0 transition-transform">
 <div className="flex items-center justify-between mb-8">
 <div>
 <h2 className="font-headline-md text-headline-md text-primary">New Maintenance Record</h2>
 <p className="text-body-md text-on-surface-variant">Log operational service and fleet availability.</p>
 </div>
-<button className="material-symbols-outlined text-on-surface-variant hover:text-white transition-colors" onclick="document.getElementById('side-drawer').classList.add('translate-x-full')">close</button>
+<button className="material-symbols-outlined text-on-surface-variant hover:text-white transition-colors" onClick={() => setIsDrawerOpen(false)}>close</button>
 </div>
 <form className="space-y-6 flex-1 overflow-y-auto pr-2">
 <div>
@@ -263,7 +265,7 @@ export default function Maintenance() {
 <p className="text-[12px] leading-tight text-primary font-medium">Vehicle status will be updated to <span className="font-bold">In Shop</span> — removed from dispatch pool immediately upon saving.</p>
 </div>
 <div className="flex gap-4">
-<button className="flex-1 py-3 border border-outline-variant rounded-lg text-on-surface font-bold hover:bg-surface-container transition-colors" onclick="document.getElementById('side-drawer').classList.add('translate-x-full')">Discard</button>
+<button className="flex-1 py-3 border border-outline-variant rounded-lg text-on-surface font-bold hover:bg-surface-container transition-colors" type="button" onClick={() => setIsDrawerOpen(false)}>Discard</button>
 <button className="flex-1 py-3 bg-primary text-on-primary rounded-lg font-bold hover:brightness-110 shadow-lg shadow-primary/10 transition-all active:scale-95">Save Record</button>
 </div>
 </div>

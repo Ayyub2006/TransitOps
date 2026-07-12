@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 
 export default function Registry() {
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+
   return (
-    <div className="flex min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
+    <div className="min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
       
 {/*  Persistent SideNavBar  */}
 <Sidebar />
@@ -48,7 +50,7 @@ export default function Registry() {
 <button className="p-2 border border-outline-variant rounded-md text-on-surface-variant hover:bg-surface-variant/30">
 <span className="material-symbols-outlined">tune</span>
 </button>
-<button className="bg-primary text-background font-bold px-6 py-2 rounded-md hover:brightness-110 active:scale-95 transition-all" id="openDrawer">
+<button className="bg-primary text-background font-bold px-6 py-2 rounded-md hover:brightness-110 active:scale-95 transition-all" id="openDrawer" onClick={() => setIsDrawerOpen(true)}>
                         + Register Vehicle
                     </button>
 </div>
@@ -100,7 +102,7 @@ export default function Registry() {
 </button>
 </div>
 {/*  Registry Table  */}
-<div className="bg-surface-container-low border border-outline-variant rounded-lg overflow-hidden">
+<div className="bg-surface-container-low border border-outline-variant rounded-lg overflow-x-auto">
 <table className="w-full text-left border-collapse">
 <thead className="bg-surface-container text-outline-variant">
 <tr>
@@ -238,11 +240,11 @@ export default function Registry() {
 </div>
 </div>
 {/*  Slide-In Drawer: Register Vehicle (State: Partially Open)  */}
-<div className="fixed inset-0 bg-background/60 backdrop-blur-sm z-[60] transition-opacity duration-300 pointer-events-none opacity-0" id="drawerOverlay"></div>
-<div className="fixed top-0 right-0 h-full w-[400px] bg-surface-container-high border-l border-outline-variant z-[70] translate-x-0 drawer-shadow flex flex-col transform transition-transform duration-500 ease-out" id="registrationDrawer">
+<div className={`fixed inset-0 bg-background/60 backdrop-blur-sm z-[60] transition-opacity duration-300 ${isDrawerOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} id="drawerOverlay" onClick={() => setIsDrawerOpen(false)}></div>
+<div className={`fixed top-0 right-0 h-full w-[400px] bg-surface-container-high border-l border-outline-variant z-[70] drawer-shadow flex flex-col transform transition-transform duration-500 ease-out ${isDrawerOpen ? 'translate-x-0' : 'translate-x-full'}`} id="registrationDrawer">
 <div className="p-gutter border-b border-outline-variant flex justify-between items-center">
 <h3 className="font-headline-sm text-headline-sm text-primary">Register Vehicle</h3>
-<button className="p-1 hover:bg-surface-variant/30 rounded" id="closeDrawer">
+<button className="p-1 hover:bg-surface-variant/30 rounded" id="closeDrawer" onClick={() => setIsDrawerOpen(false)}>
 <span className="material-symbols-outlined">close</span>
 </button>
 </div>

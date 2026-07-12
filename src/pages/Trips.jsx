@@ -4,7 +4,7 @@ import Sidebar from '../components/Sidebar';
 
 export default function Trips() {
   return (
-    <div className="flex min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
+    <div className="min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
       
 {/*  Sidebar Navigation  */}
 <Sidebar />

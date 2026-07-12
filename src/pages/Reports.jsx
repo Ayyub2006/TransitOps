@@ -4,33 +4,33 @@ import Sidebar from '../components/Sidebar';
 
 export default function Reports() {
   return (
-    <div className="flex min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
+    <div className="min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
       
 {/*  SideNavBar  */}
 <Sidebar />
 {/*  Main Content Area  */}
 <main className="ml-0 lg:ml-[var(--spacing-sidebar-width)] flex-1 flex flex-col overflow-hidden relative">
 {/*  TopNavBar  */}
-<header className="h-topbar-height w-full flex justify-between items-center px-gutter bg-surface/95 backdrop-blur-md border-b border-outline-variant z-30">
+<header className="min-h-topbar-height w-full flex flex-wrap justify-between items-center px-gutter py-3 gap-4 bg-surface/95 backdrop-blur-md border-b border-outline-variant z-30">
 <div className="flex items-center gap-6">
 <h1 className="font-headline-md text-headline-md font-bold text-primary tracking-tighter">REPORTS &amp; ANALYTICS</h1>
 <div className="hidden md:flex items-center gap-2 bg-surface-container border border-outline-variant px-3 py-1.5 rounded">
 <span className="material-symbols-outlined text-on-surface-variant text-sm">calendar_month</span>
-<span className="font-label-caps text-on-surface-variant">OCT 1, 2023 - OCT 31, 2023</span>
+<span className="font-label-caps text-on-surface-variant whitespace-nowrap">OCT 1, 2023 - OCT 31, 2023</span>
 <span className="material-symbols-outlined text-on-surface-variant text-sm">expand_more</span>
 </div>
 <div className="hidden md:flex items-center gap-2 bg-surface-container border border-outline-variant px-3 py-1.5 rounded">
 <span className="material-symbols-outlined text-on-surface-variant text-sm">filter_alt</span>
-<span className="font-label-caps text-on-surface-variant">ALL VEHICLES</span>
+<span className="font-label-caps text-on-surface-variant whitespace-nowrap">ALL VEHICLES</span>
 <span className="material-symbols-outlined text-on-surface-variant text-sm">expand_more</span>
 </div>
 </div>
 <div className="flex items-center gap-4">
-<button className="flex items-center gap-2 border border-outline px-4 py-2 rounded font-label-caps hover:bg-surface-variant/30 transition-colors">
+<button className="flex items-center gap-2 border border-outline px-4 py-2 rounded font-label-caps hover:bg-surface-variant/30 transition-colors whitespace-nowrap">
 <span className="material-symbols-outlined text-sm">picture_as_pdf</span>
                     EXPORT PDF
                 </button>
-<button className="flex items-center gap-2 bg-primary-container text-on-primary-container px-4 py-2 rounded font-label-caps font-bold hover:opacity-90 transition-opacity">
+<button className="flex items-center gap-2 bg-primary-container text-on-primary-container px-4 py-2 rounded font-label-caps font-bold hover:opacity-90 transition-opacity whitespace-nowrap">
 <span className="material-symbols-outlined text-sm">table_view</span>
                     EXPORT CSV
                 </button>
@@ -46,13 +46,25 @@ export default function Reports() {
 </div>
 </div>
 </header>
+{/*  Risk Alert Ticker (Top Bar Integration)  */}
+<div className="w-full h-8 bg-surface-container-low border-b border-outline-variant/30 flex items-center px-gutter overflow-hidden z-20 shrink-0">
+<div className="flex items-center gap-2 text-error mr-6 whitespace-nowrap">
+<span className="material-symbols-outlined text-sm" style={{fontVariationSettings: "'FILL' 1", }}>warning</span>
+<span className="font-label-caps text-[10px] font-bold">RISK ALERT:</span>
+</div>
+<div className="flex-1 whitespace-nowrap">
+<p className="font-mono-technical text-[10px] text-on-surface-variant animate-marquee inline-block">
+                    UNIT_881-M reporting terminal engine degradation. ROI potential dropping. Scheduled maintenance bypass detected. Global fuel index rising +1.2%. Strategic re-routing required for Fleet Segment C.
+                </p>
+</div>
+</div>
 {/*  Scrollable Dashboard  */}
 <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
 <div className="max-w-[1600px] mx-auto space-y-6">
 {/*  Main Grid  */}
 <div className="bento-grid">
 {/*  Fuel Efficiency Trend (6 Columns)  */}
-<div className="col-span-12 lg:col-span-7 bg-surface-container border border-outline-variant rounded p-5 flex flex-col card-glow transition-all">
+<div className="col-span-12 lg:col-span-7 bg-surface-container border border-outline-variant rounded p-5 flex flex-col card-glow transition-all overflow-hidden">
 <div className="flex justify-between items-center mb-6">
 <div>
 <h3 className="font-headline-sm text-headline-sm text-on-surface uppercase tracking-wider">Fuel Efficiency Trend</h3>
@@ -75,14 +87,14 @@ export default function Reports() {
 </div>
 {/*  Simple Line Chart Representation  */}
 <div className="absolute inset-0 p-8 flex items-center">
-<svg className="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 1000 200">
-<path d="M0,150 L100,140 L200,160 L300,110 L400,120 L500,80 L600,90 L700,50 L800,60 L900,30 L1000,40" fill="none" stroke="#3dd6d0" stroke-linecap="round" strokeWidth="3"></path>
+<svg className="w-full h-full overflow-hidden" preserveAspectRatio="none" viewBox="0 0 1000 200">
+<path d="M0,150 L100,140 L200,160 L300,110 L400,120 L500,80 L600,90 L700,50 L800,60 L900,30 L1000,40" fill="none" stroke="#3dd6d0" strokeLinecap="round" strokeWidth="3"></path>
 <path d="M0,150 L100,140 L200,160 L300,110 L400,120 L500,80 L600,90 L700,50 L800,60 L900,30 L1000,40 L1000,200 L0,200 Z" fill="url(#cyan-gradient)" opacity="0.1"></path>
 <defs>
-<lineargradient id="cyan-gradient" x1="0" x2="0" y1="0" y2="1">
-<stop offset="0%" stop-color="#3dd6d0"></stop>
-<stop offset="100%" stop-color="#3dd6d0" stop-opacity="0"></stop>
-</lineargradient>
+<linearGradient id="cyan-gradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stopColor="#3dd6d0"></stop>
+<stop offset="100%" stopColor="#3dd6d0" stopOpacity="0"></stop>
+</linearGradient>
 </defs>
 </svg>
 </div>
@@ -329,18 +341,7 @@ export default function Reports() {
 </footer>
 </div>
 </div>
-{/*  Risk Alert Ticker (Top Bar Integration)  */}
-<div className="absolute top-[64px] left-0 w-full h-8 bg-surface-container-low border-b border-outline-variant/30 flex items-center px-gutter overflow-hidden z-20">
-<div className="flex items-center gap-2 text-error mr-6 whitespace-nowrap">
-<span className="material-symbols-outlined text-sm" style={{fontVariationSettings: "'FILL' 1", }}>warning</span>
-<span className="font-label-caps text-[10px] font-bold">RISK ALERT:</span>
-</div>
-<div className="flex-1 whitespace-nowrap">
-<p className="font-mono-technical text-[10px] text-on-surface-variant animate-marquee inline-block">
-                    UNIT_881-M reporting terminal engine degradation. ROI potential dropping. Scheduled maintenance bypass detected. Global fuel index rising +1.2%. Strategic re-routing required for Fleet Segment C.
-                </p>
-</div>
-</div>
+
 </main>
 <style dangerouslySetInnerHTML={{ __html: `\n@keyframes marquee {
             0% { transform: translateX(100%); }

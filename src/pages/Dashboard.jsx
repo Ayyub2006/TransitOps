@@ -4,12 +4,12 @@ import Sidebar from '../components/Sidebar';
 
 export default function Dashboard() {
   return (
-    <div className="flex min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
+    <div className="min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
       
 {/*  SIDEBAR  */}
 <Sidebar />
 {/*  MAIN WRAPPER  */}
-<div className="flex-1 ml-0 lg:ml-[var(--spacing-sidebar-width)] flex flex-col">
+<div className="ml-0 lg:ml-[var(--spacing-sidebar-width)] flex flex-col">
 {/*  TOP APP BAR  */}
 <header className="fixed top-0 right-0 h-topbar-height w-full lg:w-[calc(100%-var(--spacing-sidebar-width))] bg-surface border-b border-outline-variant z-40 flex justify-between items-center px-gutter">
 <div className="flex items-center gap-4 flex-wrap">
@@ -39,7 +39,7 @@ export default function Dashboard() {
 </div>
 </header>
 {/*  CONTENT CANVAS  */}
-<main className="mt-topbar-height p-gutter space-y-6">
+<main className="mt-topbar-height p-gutter pb-20 space-y-6">
 {/*  KPI STRIP  */}
 <section className="flex gap-4 overflow-x-auto pb-2 custom-scrollbar">
 {/*  Card 1  */}
@@ -257,7 +257,7 @@ export default function Dashboard() {
 </div>
 <div className="h-48 w-full flex items-end gap-2 px-2 relative">
 {/*  Simplified SVG Chart  */}
-<svg className="absolute inset-0 w-full h-full" preserveaspectratio="none">
+<svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
 <path className="opacity-50" d="M0 160 Q 50 120, 100 140 T 200 80 T 300 110 T 400 60 T 500 90 T 600 40 T 700 70" fill="none" stroke="#62f3ec" strokeWidth="2"></path>
 <path className="opacity-10" d="M0 160 Q 50 120, 100 140 T 200 80 T 300 110 T 400 60 T 500 90 T 600 40 T 700 70 L 700 192 L 0 192 Z" fill="url(#grad)"></path>
 <defs>

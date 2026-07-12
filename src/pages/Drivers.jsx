@@ -4,7 +4,7 @@ import Sidebar from '../components/Sidebar';
 
 export default function Drivers() {
   return (
-    <div className="flex min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
+    <div className="min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
       
 {/*  SideNavBar Anchor  */}
 <Sidebar />
@@ -41,7 +41,7 @@ export default function Drivers() {
 <p className="text-outline text-sm">Monitor and manage 248 registered operators across the fleet network.</p>
 </div>
 <div className="flex items-center gap-3">
-<div className="flex border border-outline-variant rounded-lg overflow-hidden mr-2">
+<div className="flex border border-outline-variant rounded-lg overflow-x-auto mr-2">
 <button className="px-3 py-2 bg-surface-container-highest text-primary flex items-center">
 <span className="material-symbols-outlined text-sm">grid_view</span>
 </button>
