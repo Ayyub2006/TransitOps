@@ -117,7 +117,7 @@ export default function Trips() {
     </div>
     <div className="flex justify-between items-start mb-3">
       <span className="text-[10px] font-bold text-[#FBBF24]">EN ROUTE</span>
-      <span className="material-symbols-outlined text-[16px] text-on-surface-variant">map</span>
+      <span className="material-symbols-outlined text-[16px] text-on-surface-variant cursor-pointer hover:text-primary">more_vert</span>
     </div>
     <div className="flex items-center gap-3 mb-4">
       <div className="flex-1 space-y-1">
