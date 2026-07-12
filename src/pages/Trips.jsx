@@ -27,7 +27,7 @@ export default function Trips() {
 <button className="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:scale-95">notifications</button>
 <div className="flex items-center gap-3 pl-4 border-l border-outline-variant">
 <div className="text-right">
-<p className="font-headline-sm text-[12px] leading-tight">Elias Thorne</p>
+<p className="font-headline-sm text-[12px] leading-tight">Eshan Thakkar</p>
 <p className="text-[10px] text-on-surface-variant uppercase">Senior Dispatcher</p>
 </div>
 <img className="w-8 h-8 rounded-full border border-primary/50 object-cover" data-alt="A portrait of a professional fleet operations manager in a dark tech-focused environment, dramatic rim lighting with cyan highlights, wearing a tactical modern headset, high-end enterprise aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIkP8BuIx4GJucq-V72TUMYQOmK0Upxx7afYMnN1MLUNyVLNQ5y1TkwGBZqwN57SdvbL6mHEYAOWnoOBdrFujV4Vdj_Umy6vKMiV85VJN0DGtxKvcd_Vyxny8sPRvgHXQc6_KtuJtK3MeAHHj4R5GCIdaTWx_vwHNsny5jpeLlGNJq5AcmyXyl_q5zTVfiPmzbo-m4iEbUL4QSfCqMpoKIjhh12PYBRxmO_Yv21KhofVoVsqWnNN3wcQ"/>
@@ -64,7 +64,7 @@ export default function Trips() {
 {/*  Card 1  */}
 <div className="trip-card relative group bg-[#131A22] border border-[#1F2A35] p-4 rounded-lg hover:border-primary/40 transition-all cursor-pointer">
 <div className="flex justify-between items-start mb-3">
-<span className="text-[10px] font-bold text-on-surface-variant">TRP-0921-X</span>
+<span className="text-[10px] font-bold text-on-surface-variant">TRP-MH-01</span>
 <span className="material-symbols-outlined text-[16px] text-on-surface-variant">more_vert</span>
 </div>
 <div className="flex items-center gap-3 mb-4">
@@ -74,18 +74,18 @@ export default function Trips() {
 <span className="w-2 h-2 bg-primary rounded-full"></span>
 </div>
 <div className="flex-1 space-y-2">
-<p className="text-xs font-bold truncate">Terminal Alpha, Port C</p>
-<p className="text-xs font-bold truncate">Sector 7 Distribution</p>
+<p className="text-xs font-bold truncate">JNPT Port, Navi Mumbai</p>
+<p className="text-xs font-bold truncate">Andheri East MIDC</p>
 </div>
 </div>
 <div className="grid grid-cols-2 gap-3 mb-4">
 <div className="flex items-center gap-2">
 <span className="material-symbols-outlined text-[14px] text-primary">local_shipping</span>
-<span className="text-[11px] font-medium">VX-901</span>
+<span className="text-[11px] font-medium">MH-01-VX</span>
 </div>
 <div className="flex items-center gap-2">
 <img className="w-4 h-4 rounded-full border border-outline-variant" data-alt="A small circular professional headshot avatar of a truck driver in a dark uniform with soft blue lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrjgxGlexN77L7yb-9lYYbUepX6pJiF6Boj5u2FwyOJFOKPiSCPzFbiZRwKxGlUV3o5kf7y58G-0OQimEegXMHArtFs6PGGBHA1w5AmCkK9u7YZyqmf7cqT8CoM5PbMEIPKx0m0v45yv7hUBVx75tSgYNq0jfXhEFTST3T1ZCP8We9-nLZEBG_cnBnasijuSR3MtVUQfhUvTlES_2BqLzEl7SfBxeB85Q-VVK4PdwbD4upyaYm8OEpOQ"/>
-<span className="text-[11px] font-medium">Elias Thorne</span>
+<span className="text-[11px] font-medium">Eshan Thakkar</span>
 </div>
 </div>
 <div className="space-y-1">
@@ -109,7 +109,7 @@ export default function Trips() {
 {/*  Card 2  */}
 <div className="trip-card relative group bg-[#131A22] border border-[#1F2A35] p-4 rounded-lg hover:border-primary/40 transition-all cursor-pointer">
 <div className="flex justify-between items-start mb-3">
-<span className="text-[10px] font-bold text-on-surface-variant">TRP-0922-K</span>
+<span className="text-[10px] font-bold text-on-surface-variant">TRP-MH-02</span>
 <span className="material-symbols-outlined text-[16px] text-on-surface-variant">more_vert</span>
 </div>
 <div className="flex items-center gap-3 mb-4">
@@ -119,18 +119,18 @@ export default function Trips() {
 <span className="w-2 h-2 bg-primary rounded-full"></span>
 </div>
 <div className="flex-1 space-y-2">
-<p className="text-xs font-bold truncate">Warehouse B-12</p>
-<p className="text-xs font-bold truncate">Nexus City Hub</p>
+<p className="text-xs font-bold truncate">Bhiwandi Hub</p>
+<p className="text-xs font-bold truncate">Thane West Terminal</p>
 </div>
 </div>
 <div className="grid grid-cols-2 gap-3 mb-4">
 <div className="flex items-center gap-2">
 <span className="material-symbols-outlined text-[14px] text-primary">airport_shuttle</span>
-<span className="text-[11px] font-medium">VN-404</span>
+<span className="text-[11px] font-medium">MH-02-VN</span>
 </div>
 <div className="flex items-center gap-2">
 <img className="w-4 h-4 rounded-full border border-outline-variant" data-alt="Close-up professional avatar of a female logistics driver with a focused expression, neon green secondary lighting in a futuristic tech setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDp9qkHqnp6h1iV_xTzZm2mMsgJC24RSp_kLMxXbLESgBRdIvb1s20caPVSNp7bzS_hey_00iJF6YzRxy3_cuKxUPXDqNb0TxnxpvGaiIREyPVkciXDUPbk3n0Tsy2s_usFbp0kOUlB-0Tx-yk67le11Y0B_w4wgriCyEEFIVMV5eT7V4WYH6P7cpz7B7XqZM9kHts0_cYPI0XYRGpIMlhuPADRIKtUz6H53eMHAX9vTG7HPSa4u-MJig"/>
-<span className="text-[11px] font-medium">Sarah Jenkins</span>
+<span className="text-[11px] font-medium">Smita Jadhav</span>
 </div>
 </div>
 <div className="space-y-1">
@@ -173,23 +173,23 @@ export default function Trips() {
 </div>
 <div className="flex items-center gap-3 mb-4">
 <div className="flex-1 space-y-1">
-<p className="text-xs font-bold truncate">Terminal Alpha</p>
+<p className="text-xs font-bold truncate">JNPT Port</p>
 <div className="flex items-center gap-2">
 <div className="flex-1 h-[1px] bg-outline-variant relative">
 <span className="material-symbols-outlined text-[10px] absolute left-1/2 -top-1.5 -translate-x-1/2 text-primary" style={{fontVariationSettings: "'FILL' 1", }}>local_shipping</span>
 </div>
 </div>
-<p className="text-xs font-bold truncate">Skyline Depot</p>
+<p className="text-xs font-bold truncate">Pune Station</p>
 </div>
 </div>
 <div className="grid grid-cols-2 gap-3 mb-4">
 <div className="flex items-center gap-2">
 <span className="material-symbols-outlined text-[14px] text-primary">local_shipping</span>
-<span className="text-[11px] font-medium">VX-909</span>
+<span className="text-[11px] font-medium">MH-03-VX</span>
 </div>
 <div className="flex items-center gap-2">
 <img className="w-4 h-4 rounded-full" data-alt="Avatar headshot of a male driver, tactical fleet uniform, sharp cinematic lighting, technical background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjqYczdzUaC1MkdfXloGhm-Owa5NCWXmB_pVGpL_6kTbQXeu7qSNbOwnxbIk1s20zhqJNWERAyNwhT1DxrMUm0i_MK1w5McURfGdIv8sKHuKkm7hkOiEWeLDH5j8sOCJ2k18xLpsqa9e1QTnC5PF0pDzyZMEL-qT38a_agC4J4D4slk8tlymvbIO20idpmIDfo5rJIVaZEbHsWrx-v5l88J6zcrDVO3KKpk60q2vIHKI6_RpY20OuQUg"/>
-<span className="text-[11px] font-medium">Marcus Vane</span>
+<span className="text-[11px] font-medium">Manish Varma</span>
 </div>
 </div>
 <div className="flex justify-between items-center pt-3 border-t border-outline-variant/30">
@@ -217,13 +217,13 @@ export default function Trips() {
 <span className="text-[10px] font-bold text-[#34D399]">LOGGED</span>
 <span className="text-[10px] text-on-surface-variant">2h ago</span>
 </div>
-<p className="text-xs font-bold mb-3">Warehouse B-12 → Port C</p>
+<p className="text-xs font-bold mb-3">Bhiwandi Hub → JNPT Port</p>
 <div className="flex items-center justify-between text-[11px] text-on-surface-variant">
 <div className="flex items-center gap-1">
 <span className="material-symbols-outlined text-[14px]">history</span>
 <span>340km</span>
 </div>
-<span>Driver: Thorne</span>
+<span>Driver: Thakkar</span>
 </div>
 </div>
 </div>
@@ -243,7 +243,7 @@ export default function Trips() {
 <span className="text-[10px] font-bold text-[#F87171]">CANCELLED</span>
 <span className="material-symbols-outlined text-[16px] text-[#F87171]">error_outline</span>
 </div>
-<p className="text-xs font-bold mb-1">Sector 7 → Terminal Alpha</p>
+<p className="text-xs font-bold mb-1">Andheri MIDC → JNPT Port</p>
 <p className="text-[10px] text-[#F87171]/70 italic">Reason: Vehicle Maintenance Required</p>
 </div>
 </div>

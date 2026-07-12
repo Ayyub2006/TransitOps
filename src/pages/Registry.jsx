@@ -78,8 +78,8 @@ export default function Registry() {
 <div className="bg-surface-container rounded-md px-3 py-1.5 border border-outline-variant flex items-center gap-2">
 <span className="text-[10px] font-bold uppercase text-outline-variant">Region</span>
 <select className="bg-transparent border-none p-0 pr-6 text-sm focus:ring-0 text-on-surface cursor-pointer">
-<option>North Ops</option>
-<option>South Ops</option>
+<option>North Mumbai</option>
+<option>South Mumbai</option>
 <option>Global</option>
 </select>
 </div>
@@ -112,7 +112,7 @@ export default function Registry() {
 <th className="p-4 font-label-caps text-label-caps uppercase tracking-widest">Type</th>
 <th className="p-4 font-label-caps text-label-caps uppercase tracking-widest">Max Load</th>
 <th className="p-4 font-label-caps text-label-caps uppercase tracking-widest">Odometer</th>
-<th className="p-4 font-label-caps text-label-caps uppercase tracking-widest">Cost</th>
+<th className="p-4 font-label-caps text-label-caps uppercase tracking-widest">Cost (₹)</th>
 <th className="p-4 font-label-caps text-label-caps uppercase tracking-widest">Status</th>
 <th className="p-4 font-label-caps text-label-caps uppercase tracking-widest text-center">Risk</th>
 <th className="p-4 w-20"></th>
@@ -122,14 +122,14 @@ export default function Registry() {
 {/*  Row 1  */}
 <tr className="hover:bg-surface-variant/20 transition-colors group">
 <td className="p-4"><input defaultChecked className="rounded border-outline-variant bg-background text-primary focus:ring-primary" type="checkbox"/></td>
-<td className="p-4 font-mono text-primary text-xs tracking-tighter">VX-7092-A</td>
+<td className="p-4 font-mono text-primary text-xs tracking-tighter">MH-01-VX</td>
 <td className="p-4 font-bold text-on-surface">Heavy Hauler X2</td>
 <td className="p-4 flex items-center gap-2 text-on-surface-variant">
 <span className="material-symbols-outlined text-lg">local_shipping</span> Truck
                             </td>
 <td className="p-4 text-on-surface">12,500 <span className="text-[10px] text-outline-variant">kg</span></td>
 <td className="p-4 text-on-surface">42,390 <span className="text-[10px] text-outline-variant">km</span></td>
-<td className="p-4 text-on-surface">$145,000</td>
+<td className="p-4 text-on-surface">₹1,45,00,000</td>
 <td className="p-4">
 <span className="inline-flex items-center gap-2 px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest">
 <span className="w-1 h-1 rounded-full bg-primary"></span> Available
@@ -149,14 +149,14 @@ export default function Registry() {
 {/*  Row 2  */}
 <tr className="hover:bg-surface-variant/20 transition-colors group">
 <td className="p-4"><input defaultChecked className="rounded border-outline-variant bg-background text-primary focus:ring-primary" type="checkbox"/></td>
-<td className="p-4 font-mono text-primary text-xs tracking-tighter">TL-4005-B</td>
+<td className="p-4 font-mono text-primary text-xs tracking-tighter">MH-02-TL</td>
 <td className="p-4 font-bold text-on-surface">Transit-Lite 400</td>
 <td className="p-4 flex items-center gap-2 text-on-surface-variant">
 <span className="material-symbols-outlined text-lg">airport_shuttle</span> Van
                             </td>
 <td className="p-4 text-on-surface">2,800 <span className="text-[10px] text-outline-variant">kg</span></td>
 <td className="p-4 text-on-surface">112,012 <span className="text-[10px] text-outline-variant">km</span></td>
-<td className="p-4 text-on-surface">$38,500</td>
+<td className="p-4 text-on-surface">₹38,50,000</td>
 <td className="p-4">
 <span className="inline-flex items-center gap-2 px-2 py-0.5 rounded bg-tertiary-container/10 text-tertiary text-[10px] font-bold uppercase tracking-widest">
 <span className="w-1 h-1 rounded-full bg-tertiary"></span> On Trip
@@ -176,14 +176,14 @@ export default function Registry() {
 {/*  Row 3  */}
 <tr className="hover:bg-surface-variant/20 transition-colors group">
 <td className="p-4"><input defaultChecked className="rounded border-outline-variant bg-background text-primary focus:ring-primary" type="checkbox"/></td>
-<td className="p-4 font-mono text-primary text-xs tracking-tighter">BU-2210-C</td>
+<td className="p-4 font-mono text-primary text-xs tracking-tighter">MH-03-BU</td>
 <td className="p-4 font-bold text-on-surface">Voyager L-Series</td>
 <td className="p-4 flex items-center gap-2 text-on-surface-variant">
 <span className="material-symbols-outlined text-lg">directions_bus</span> Bus
                             </td>
 <td className="p-4 text-on-surface">8,500 <span className="text-[10px] text-outline-variant">kg</span></td>
 <td className="p-4 text-on-surface">9,420 <span className="text-[10px] text-outline-variant">km</span></td>
-<td className="p-4 text-on-surface">$210,000</td>
+<td className="p-4 text-on-surface">₹2,10,00,000</td>
 <td className="p-4">
 <span className="inline-flex items-center gap-2 px-2 py-0.5 rounded bg-error-container/20 text-error text-[10px] font-bold uppercase tracking-widest">
 <span className="w-1 h-1 rounded-full bg-error"></span> In Shop
@@ -203,14 +203,14 @@ export default function Registry() {
 {/*  Row 4  */}
 <tr className="hover:bg-surface-variant/20 transition-colors group">
 <td className="p-4"><input className="rounded border-outline-variant bg-background text-primary focus:ring-primary" type="checkbox"/></td>
-<td className="p-4 font-mono text-primary text-xs tracking-tighter">VX-1102-X</td>
+<td className="p-4 font-mono text-primary text-xs tracking-tighter">MH-04-VX</td>
 <td className="p-4 font-bold text-on-surface">Heavy Hauler X1</td>
 <td className="p-4 flex items-center gap-2 text-on-surface-variant">
 <span className="material-symbols-outlined text-lg">local_shipping</span> Truck
                             </td>
 <td className="p-4 text-on-surface">12,000 <span className="text-[10px] text-outline-variant">kg</span></td>
 <td className="p-4 text-on-surface">242,390 <span className="text-[10px] text-outline-variant">km</span></td>
-<td className="p-4 text-on-surface">$125,000</td>
+<td className="p-4 text-on-surface">₹1,25,00,000</td>
 <td className="p-4">
 <span className="inline-flex items-center gap-2 px-2 py-0.5 rounded bg-outline/10 text-outline text-[10px] font-bold uppercase tracking-widest">
 <span className="w-1 h-1 rounded-full bg-outline"></span> Retired
@@ -252,7 +252,7 @@ export default function Registry() {
 {/*  Registration Number  */}
 <div className="space-y-2">
 <label className="font-label-caps text-label-caps text-on-surface uppercase tracking-widest">Registration Number</label>
-<input className="w-full bg-background border border-outline-variant rounded-md px-3 py-2 font-mono text-primary focus:ring-1 focus:ring-primary outline-none" type="text" value="VX-8842-D"/>
+<input className="w-full bg-background border border-outline-variant rounded-md px-3 py-2 font-mono text-primary focus:ring-1 focus:ring-primary outline-none" type="text" value="MH-05-VX"/>
 <p className="text-[10px] text-outline-variant italic">Must follow standard OPS format (e.g., XX-0000-X)</p>
 </div>
 {/*  Name/Model  */}
@@ -290,7 +290,7 @@ export default function Registry() {
 <input className="w-full bg-background border border-outline-variant rounded-md px-3 py-2 focus:ring-1 focus:ring-primary outline-none" placeholder="0" type="number"/>
 </div>
 <div className="space-y-2">
-<label className="font-label-caps text-label-caps text-on-surface uppercase tracking-widest">Acq. Cost ($)</label>
+<label className="font-label-caps text-label-caps text-on-surface uppercase tracking-widest">Acq. Cost (₹)</label>
 <input className="w-full bg-background border border-outline-variant rounded-md px-3 py-2 focus:ring-1 focus:ring-primary outline-none" placeholder="0.00" type="number"/>
 </div>
 </div>

@@ -32,7 +32,7 @@ export default function Expenses() {
 <div className="w-[1px] h-6 bg-outline-variant"></div>
 <div className="flex items-center gap-3">
 <div className="text-right">
-<p className="text-body-md font-bold text-on-surface leading-none">J. Sterling</p>
+<p className="text-body-md font-bold text-on-surface leading-none">J. Sharma</p>
 <p className="text-[10px] text-on-surface-variant uppercase tracking-tighter">Senior Controller</p>
 </div>
 <div className="w-8 h-8 rounded-lg bg-primary-container/20 border border-primary/30 overflow-hidden">
@@ -72,7 +72,7 @@ export default function Expenses() {
 <span className="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Total Fuel Cost</span>
 <span className="material-symbols-outlined text-primary/40">local_gas_station</span>
 </div>
-<div className="font-kpi-value text-kpi-value text-on-surface tracking-tight mb-2">$42,390.42</div>
+<div className="font-kpi-value text-kpi-value text-on-surface tracking-tight mb-2">₹42,39,042</div>
 <div className="flex items-center gap-2 text-[12px]">
 <span className="text-primary">+2.4%</span>
 <span className="text-on-surface-variant opacity-50">vs previous period</span>
@@ -90,7 +90,7 @@ export default function Expenses() {
 <span className="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Other Expenses</span>
 <span className="material-symbols-outlined text-primary/40">payments</span>
 </div>
-<div className="font-kpi-value text-kpi-value text-on-surface tracking-tight mb-2">$8,120.00</div>
+<div className="font-kpi-value text-kpi-value text-on-surface tracking-tight mb-2">₹8,12,000</div>
 <div className="flex items-center gap-2 text-[12px]">
 <span className="text-error-container text-error">-1.1%</span>
 <span className="text-on-surface-variant opacity-50">optimization gain</span>
@@ -102,7 +102,7 @@ export default function Expenses() {
 <span className="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Combined Cost</span>
 <span className="material-symbols-outlined text-primary/40">account_balance_wallet</span>
 </div>
-<div className="font-kpi-value text-kpi-value text-primary tracking-tight mb-2">$50,510.42</div>
+<div className="font-kpi-value text-kpi-value text-primary tracking-tight mb-2">₹50,51,042</div>
 <div className="flex items-center gap-2 text-[12px]">
 <span className="px-2 py-0.5 bg-primary/10 border border-primary/20 text-primary rounded-full">In Budget</span>
 </div>
@@ -164,7 +164,7 @@ export default function Expenses() {
 <td className="px-gutter py-4 font-mono text-primary">TX-9920-A</td>
 <td className="px-gutter py-4">Oct 24, 2023</td>
 <td className="px-gutter py-4">124.5 L</td>
-<td className="px-gutter py-4">$186.75</td>
+<td className="px-gutter py-4">₹18,675</td>
 <td className="px-gutter py-4">42,910 km</td>
 <td className="px-gutter py-4 text-error font-bold">5.4 km/L</td>
 <td className="px-gutter py-4 relative">
@@ -186,7 +186,7 @@ export default function Expenses() {
 <td className="px-gutter py-4 font-mono text-primary">TX-1044-B</td>
 <td className="px-gutter py-4">Oct 24, 2023</td>
 <td className="px-gutter py-4">98.0 L</td>
-<td className="px-gutter py-4">$147.00</td>
+<td className="px-gutter py-4">₹14,700</td>
 <td className="px-gutter py-4">18,332 km</td>
 <td className="px-gutter py-4 text-on-surface">8.4 km/L</td>
 <td className="px-gutter py-4">
@@ -200,7 +200,7 @@ export default function Expenses() {
 <td className="px-gutter py-4 font-mono text-primary">TX-5512-C</td>
 <td className="px-gutter py-4">Oct 23, 2023</td>
 <td className="px-gutter py-4">150.2 L</td>
-<td className="px-gutter py-4">$225.30</td>
+<td className="px-gutter py-4">₹22,530</td>
 <td className="px-gutter py-4">89,122 km</td>
 <td className="px-gutter py-4 text-on-surface">8.2 km/L</td>
 <td className="px-gutter py-4">
@@ -214,7 +214,7 @@ export default function Expenses() {
 <td className="px-gutter py-4 font-mono text-primary">TX-9110-D</td>
 <td className="px-gutter py-4">Oct 23, 2023</td>
 <td className="px-gutter py-4">45.0 L</td>
-<td className="px-gutter py-4">$67.50</td>
+<td className="px-gutter py-4">₹6,750</td>
 <td className="px-gutter py-4">12,400 km</td>
 <td className="px-gutter py-4 text-tertiary">7.1 km/L</td>
 <td className="px-gutter py-4">
@@ -228,7 +228,7 @@ export default function Expenses() {
 <td className="px-gutter py-4 font-mono text-primary">TX-2283-K</td>
 <td className="px-gutter py-4">Oct 22, 2023</td>
 <td className="px-gutter py-4">112.5 L</td>
-<td className="px-gutter py-4">$168.75</td>
+<td className="px-gutter py-4">₹16,875</td>
 <td className="px-gutter py-4">55,109 km</td>
 <td className="px-gutter py-4 text-on-surface">8.5 km/L</td>
 <td className="px-gutter py-4">
@@ -271,8 +271,8 @@ export default function Expenses() {
 <span className="px-2 py-0.5 bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-full text-[11px] font-bold uppercase">Toll</span>
 </td>
 <td className="px-gutter py-4 text-on-surface-variant">Oct 24, 2023</td>
-<td className="px-gutter py-4 font-bold text-on-surface">$12.50</td>
-<td className="px-gutter py-4 text-on-surface-variant italic">I-95 North Plaza</td>
+<td className="px-gutter py-4 font-bold text-on-surface">₹1,250</td>
+<td className="px-gutter py-4 text-on-surface-variant italic">Bandra Worli Sea Link</td>
 <td className="px-gutter py-4 text-right">
 <button className="text-on-surface-variant hover:text-primary transition-colors"><span className="material-symbols-outlined">more_vert</span></button>
 </td>
@@ -283,7 +283,7 @@ export default function Expenses() {
 <span className="px-2 py-0.5 bg-error/10 text-error border border-error/20 rounded-full text-[11px] font-bold uppercase">Repair</span>
 </td>
 <td className="px-gutter py-4 text-on-surface-variant">Oct 23, 2023</td>
-<td className="px-gutter py-4 font-bold text-on-surface">$450.00</td>
+<td className="px-gutter py-4 font-bold text-on-surface">₹45,000</td>
 <td className="px-gutter py-4 text-on-surface-variant italic">Alternator replacement (Emergency)</td>
 <td className="px-gutter py-4 text-right">
 <button className="text-on-surface-variant hover:text-primary transition-colors"><span className="material-symbols-outlined">more_vert</span></button>
@@ -295,7 +295,7 @@ export default function Expenses() {
 <span className="px-2 py-0.5 bg-primary/10 text-primary border border-primary/20 rounded-full text-[11px] font-bold uppercase">Other</span>
 </td>
 <td className="px-gutter py-4 text-on-surface-variant">Oct 22, 2023</td>
-<td className="px-gutter py-4 font-bold text-on-surface">$1,200.00</td>
+<td className="px-gutter py-4 font-bold text-on-surface">₹1,20,000</td>
 <td className="px-gutter py-4 text-on-surface-variant italic">Software Subscription - FleetControl Pro</td>
 <td className="px-gutter py-4 text-right">
 <button className="text-on-surface-variant hover:text-primary transition-colors"><span className="material-symbols-outlined">more_vert</span></button>
@@ -322,7 +322,7 @@ export default function Expenses() {
 </div>
 <div className="p-4 bg-surface-container rounded-lg border border-outline-variant">
 <p className="text-[11px] text-on-surface-variant uppercase tracking-widest mb-1">Idle Analysis</p>
-<p className="text-on-surface font-body-md">Excessive idling detected in <span className="text-primary">4 drivers</span>. Potential savings: <span className="text-primary">$1,240/mo</span>.</p>
+<p className="text-on-surface font-body-md">Excessive idling detected in <span className="text-primary">4 drivers</span>. Potential savings: <span className="text-primary">₹1,24,000/mo</span>.</p>
 </div>
 </div>
 

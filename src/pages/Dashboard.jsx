@@ -22,11 +22,11 @@ const createMarkerIcon = (colorClass, shadowColor) => {
 };
 
 const markersData = [
-  { id: 1, pos: [37.78, -122.42], color: 'bg-emerald-400', shadow: 'rgba(52,211,153,0.8)', label: 'Vehicle A-112 (Online)' },
-  { id: 2, pos: [37.77, -122.41], color: 'bg-amber-400', shadow: 'rgba(251,191,36,0.8)', label: 'Vehicle B-229 (Delayed)' },
-  { id: 3, pos: [37.76, -122.40], color: 'bg-red-400', shadow: 'rgba(248,113,113,0.8)', label: 'Vehicle C-404 (Warning)' },
-  { id: 4, pos: [37.785, -122.43], color: 'bg-primary', shadow: 'rgba(98,243,236,0.8)', label: 'Vehicle D-101 (Active)' },
-  { id: 5, pos: [37.765, -122.44], color: 'bg-purple-400', shadow: 'rgba(167,139,250,0.8)', label: 'Vehicle E-55 (Maintenance)' }
+  { id: 1, pos: [19.0760, 72.8777], color: 'bg-emerald-400', shadow: 'rgba(52,211,153,0.8)', label: 'Vehicle MH-01 (Online)' },
+  { id: 2, pos: [19.0522, 72.9005], color: 'bg-amber-400', shadow: 'rgba(251,191,36,0.8)', label: 'Vehicle MH-02 (Delayed)' },
+  { id: 3, pos: [19.0176, 72.8562], color: 'bg-red-400', shadow: 'rgba(248,113,113,0.8)', label: 'Vehicle MH-03 (Warning)' },
+  { id: 4, pos: [19.1136, 72.8697], color: 'bg-primary', shadow: 'rgba(98,243,236,0.8)', label: 'Vehicle MH-04 (Active)' },
+  { id: 5, pos: [18.9220, 72.8347], color: 'bg-purple-400', shadow: 'rgba(167,139,250,0.8)', label: 'Vehicle MH-05 (Maintenance)' }
 ];
 
 export default function Dashboard() {
@@ -219,7 +219,7 @@ export default function Dashboard() {
 </div>
 </div>
 <div className="relative rounded-xl border border-outline-variant bg-surface-container-lowest overflow-hidden h-[480px] z-0">
-  <MapContainer center={[37.7749, -122.4194]} zoom={13} style={{ height: '100%', width: '100%', background: '#0e1514' }} zoomControl={false}>
+  <MapContainer center={[19.0760, 72.8777]} zoom={12} style={{ height: '100%', width: '100%', background: '#0e1514' }} zoomControl={false}>
     <TileLayer
       url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
@@ -237,9 +237,9 @@ export default function Dashboard() {
   
   {/* Legend Overlay */}
   <div className="absolute bottom-4 right-4 p-3 bg-surface/80 backdrop-blur-md border border-outline-variant rounded-lg z-[1000] pointer-events-none">
-    <div className="text-[10px] font-label-caps text-on-surface-variant mb-2">COORD: 37.7749° N, 122.4194° W</div>
+    <div className="text-[10px] font-label-caps text-on-surface-variant mb-2">COORD: 19.0760° N, 72.8777° E</div>
     <div className="h-10 w-32 rounded bg-surface-container-lowest border border-outline-variant/30 flex items-center justify-center">
-      <span className="text-[10px] opacity-50">LIVE TRACKING</span>
+      <span className="text-[10px] opacity-50">LIVE TRACKING (MUMBAI)</span>
     </div>
   </div>
 </div>
@@ -268,7 +268,7 @@ export default function Dashboard() {
 </div>
 </div>
 <div className="flex justify-between items-center mt-3">
-<span className="text-[10px] bg-red-500/10 text-red-400 px-2 py-0.5 rounded border border-red-500/20">Route #402</span>
+<span className="text-[10px] bg-red-500/10 text-red-400 px-2 py-0.5 rounded border border-red-500/20">Route #402 (Andheri)</span>
 <a className="text-[10px] font-bold text-primary flex items-center gap-1 hover:underline" href="#" onClick={(e) => e.preventDefault()}>REVIEW <span className="material-symbols-outlined text-[10px]">arrow_forward</span></a>
 </div>
 </div>
@@ -277,7 +277,7 @@ export default function Dashboard() {
 <div className="absolute left-0 top-0 bottom-0 w-1 bg-red-400 risk-bar transition-all duration-300"></div>
 <div className="flex justify-between items-start mb-2">
 <div>
-<p className="text-sm font-bold">Vehicle B-229</p>
+<p className="text-sm font-bold">Vehicle MH-229</p>
 <p className="text-[10px] text-on-surface-variant">Brake Pressure Anomaly</p>
 </div>
 <div className="text-right">
@@ -295,7 +295,7 @@ export default function Dashboard() {
 <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500 risk-bar transition-all duration-300"></div>
 <div className="flex justify-between items-start mb-2">
 <div>
-<p className="text-sm font-bold">Sara J.</p>
+<p className="text-sm font-bold">Priya S.</p>
 <p className="text-[10px] text-on-surface-variant">Route Deviation Warning</p>
 </div>
 <div className="text-right">
@@ -304,7 +304,7 @@ export default function Dashboard() {
 </div>
 </div>
 <div className="flex justify-between items-center mt-3">
-<span className="text-[10px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded border border-amber-500/20">Shuttle X-1</span>
+<span className="text-[10px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded border border-amber-500/20">Shuttle X-1 (Bandra)</span>
 <a className="text-[10px] font-bold text-primary flex items-center gap-1 hover:underline" href="#" onClick={(e) => e.preventDefault()}>REVIEW <span className="material-symbols-outlined text-[10px]">arrow_forward</span></a>
 </div>
 </div>
@@ -313,7 +313,7 @@ export default function Dashboard() {
 <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-400 risk-bar transition-all duration-300"></div>
 <div className="flex justify-between items-start mb-2">
 <div>
-<p className="text-sm font-bold">Station C-Prime</p>
+<p className="text-sm font-bold">Dadar Hub</p>
 <p className="text-[10px] text-on-surface-variant">Congestion Threshold Exceeded</p>
 </div>
 <div className="text-right">
@@ -409,7 +409,7 @@ export default function Dashboard() {
             <XAxis type="number" stroke="#859492" fontSize={12} tickLine={false} axisLine={false} />
             <YAxis dataKey="category" type="category" stroke="#859492" fontSize={12} tickLine={false} axisLine={false} width={80} />
             <RechartsTooltip contentStyle={{ backgroundColor: '#1a2120', borderColor: '#3c4948', color: '#dde4e2', borderRadius: '8px' }} cursor={{ fill: '#2f3635' }} />
-            <Bar dataKey="amount" name="Amount ($)" radius={[0, 4, 4, 0]}>
+            <Bar dataKey="amount" name="Amount (₹)" radius={[0, 4, 4, 0]}>
               {analytics.expenseDistribution.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}

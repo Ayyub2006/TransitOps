@@ -97,8 +97,8 @@ export default function Risk() {
 <div className="flex-1">
 <div className="flex items-center gap-2 mb-1">
 <span className="material-symbols-outlined text-outline text-[20px]">person</span>
-<span className="font-headline-sm text-white">Marcus Sterling</span>
-<span className="font-label-caps text-[10px] px-2 py-0.5 rounded border border-outline-variant text-outline bg-surface-container-lowest">ID: DR-4402</span>
+<span className="font-headline-sm text-white">Mahesh Sharma</span>
+<span className="font-label-caps text-[10px] px-2 py-0.5 rounded border border-outline-variant text-outline bg-surface-container-lowest">ID: DR-MH-4402</span>
 </div>
 <div className="flex gap-2">
 <span className="tag-red font-label-caps text-[10px] px-2 py-0.5 rounded uppercase">License expires in 4 days</span>
@@ -121,7 +121,7 @@ export default function Risk() {
 <div className="flex-1">
 <div className="flex items-center gap-2 mb-1">
 <span className="material-symbols-outlined text-outline text-[20px]">directions_bus</span>
-<span className="font-headline-sm text-white">VX-901</span>
+<span className="font-headline-sm text-white">MH-01-VX</span>
 <span className="font-label-caps text-[10px] px-2 py-0.5 rounded border border-outline-variant text-outline bg-surface-container-lowest">Heavy Transit</span>
 </div>
 <div className="flex gap-2">
@@ -145,8 +145,8 @@ export default function Risk() {
 <div className="flex-1">
 <div className="flex items-center gap-2 mb-1">
 <span className="material-symbols-outlined text-outline text-[20px]">person</span>
-<span className="font-headline-sm text-white">Elena Rodriguez</span>
-<span className="font-label-caps text-[10px] px-2 py-0.5 rounded border border-outline-variant text-outline bg-surface-container-lowest">ID: DR-9912</span>
+<span className="font-headline-sm text-white">Pooja Patil</span>
+<span className="font-label-caps text-[10px] px-2 py-0.5 rounded border border-outline-variant text-outline bg-surface-container-lowest">ID: DR-MH-9912</span>
 </div>
 <div className="flex gap-2">
 <span className="tag-amber font-label-caps text-[10px] px-2 py-0.5 rounded uppercase">Excessive Idling Detected</span>
@@ -169,7 +169,7 @@ export default function Risk() {
 <div className="flex-1">
 <div className="flex items-center gap-2 mb-1">
 <span className="material-symbols-outlined text-outline text-[20px]">directions_bus</span>
-<span className="font-headline-sm text-white">BX-224</span>
+<span className="font-headline-sm text-white">MH-02-BX</span>
 <span className="font-label-caps text-[10px] px-2 py-0.5 rounded border border-outline-variant text-outline bg-surface-container-lowest">Logistics Van</span>
 </div>
 <div className="flex gap-2">
@@ -245,10 +245,10 @@ export default function Risk() {
 <div className="absolute inset-0 bg-cover bg-center opacity-40 grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A dark, stylized tactical map of a metropolitan city with glowing teal lines representing bus routes and vehicle traffic flow. The map has a high-contrast blueprint aesthetic with technical grid overlays and pinpoint markers showing current vehicle locations. The lighting is low-key, emphasizing the neon-cyan data points." style={{backgroundImage: "url('https", }}></div>
 <div className="relative z-10 p-6 flex flex-col h-full">
 <h4 className="font-label-caps text-label-caps text-white uppercase mb-1">Geospatial Risk Cluster</h4>
-<p className="text-[10px] text-primary font-bold uppercase mb-4">Central District Hub</p>
+<p className="text-[10px] text-primary font-bold uppercase mb-4">Andheri East Hub</p>
 <div className="mt-auto bg-surface/80 backdrop-blur-md p-4 rounded border border-outline-variant">
 <p className="text-body-md leading-relaxed">
-<span className="text-error font-bold">! CRITICAL:</span> Cluster of brake maintenance alerts identified in vehicles servicing the <span className="text-primary">North Ridge Line</span>. Potential systemic component failure.
+<span className="text-error font-bold">! CRITICAL:</span> Cluster of brake maintenance alerts identified in vehicles servicing the <span className="text-primary">Western Express Highway</span>. Potential systemic component failure.
                             </p>
 </div>
 </div>

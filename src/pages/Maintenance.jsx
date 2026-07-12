@@ -27,7 +27,7 @@ export default function Maintenance() {
 </div>
 <div className="flex items-center gap-3 pl-4 border-l border-outline-variant">
 <div className="text-right">
-<p className="font-label-caps text-[11px] text-on-surface">Alex Chen</p>
+<p className="font-label-caps text-[11px] text-on-surface">Amit Chavda</p>
 <p className="font-label-caps text-[9px] text-primary">OPERATIONAL LEAD</p>
 </div>
 <div className="w-8 h-8 rounded bg-primary-container/20 border border-primary/30 flex items-center justify-center overflow-hidden">
@@ -79,7 +79,7 @@ export default function Maintenance() {
 <tbody className="divide-y divide-outline-variant">
 {/*  Active Row  */}
 <tr className="hover:bg-primary-container/5 transition-colors group">
-<td className="px-6 py-4 technical-id text-primary">VX-901</td>
+<td className="px-6 py-4 technical-id text-primary">MH-01-VX</td>
 <td className="px-6 py-4">
 <div className="flex items-center gap-2">
 <span className="material-symbols-outlined text-secondary text-[20px]">oil_barrel</span>
@@ -90,7 +90,7 @@ export default function Maintenance() {
 <td className="px-6 py-4">
 <span className="text-body-md text-secondary font-medium italic">In Progress</span>
 </td>
-<td className="px-6 py-4 text-body-md text-right technical-id">$185.00</td>
+<td className="px-6 py-4 text-body-md text-right technical-id">₹18,500</td>
 <td className="px-6 py-4">
 <span className="status-pill bg-[#8B5CF6]/10 text-[#A78BFA] border border-[#8B5CF6]/30">
 <span className="w-1 h-1 rounded-full bg-[#8B5CF6] mr-2"></span>
@@ -106,7 +106,7 @@ export default function Maintenance() {
 </tr>
 {/*  Active Row  */}
 <tr className="hover:bg-primary-container/5 transition-colors group">
-<td className="px-6 py-4 technical-id text-primary">TL-400</td>
+<td className="px-6 py-4 technical-id text-primary">MH-02-TL</td>
 <td className="px-6 py-4">
 <div className="flex items-center gap-2">
 <span className="material-symbols-outlined text-secondary text-[20px]">build</span>
@@ -117,7 +117,7 @@ export default function Maintenance() {
 <td className="px-6 py-4">
 <span className="text-body-md text-secondary font-medium italic">In Progress</span>
 </td>
-<td className="px-6 py-4 text-body-md text-right technical-id">$1,240.00</td>
+<td className="px-6 py-4 text-body-md text-right technical-id">₹1,24,000</td>
 <td className="px-6 py-4">
 <span className="status-pill bg-[#8B5CF6]/10 text-[#A78BFA] border border-[#8B5CF6]/30">
 <span className="w-1 h-1 rounded-full bg-[#8B5CF6] mr-2"></span>
@@ -133,7 +133,7 @@ export default function Maintenance() {
 </tr>
 {/*  Closed Row  */}
 <tr className="hover:bg-primary-container/5 transition-colors group">
-<td className="px-6 py-4 technical-id text-on-surface-variant">FR-672</td>
+<td className="px-6 py-4 technical-id text-on-surface-variant">MH-03-FR</td>
 <td className="px-6 py-4">
 <div className="flex items-center gap-2">
 <span className="material-symbols-outlined text-secondary text-[20px]">tire_repair</span>
@@ -142,7 +142,7 @@ export default function Maintenance() {
 </td>
 <td className="px-6 py-4 text-body-md text-on-surface-variant">Oct 18, 2023</td>
 <td className="px-6 py-4 text-body-md text-on-surface-variant">Oct 19, 2023</td>
-<td className="px-6 py-4 text-body-md text-right technical-id">$85.00</td>
+<td className="px-6 py-4 text-body-md text-right technical-id">₹8,500</td>
 <td className="px-6 py-4">
 <span className="status-pill bg-primary/10 text-primary border border-primary/30">
 <span className="w-1 h-1 rounded-full bg-primary mr-2"></span>
@@ -157,7 +157,7 @@ export default function Maintenance() {
 </tr>
 {/*  Closed Row  */}
 <tr className="hover:bg-primary-container/5 transition-colors group">
-<td className="px-6 py-4 technical-id text-on-surface-variant">MX-880</td>
+<td className="px-6 py-4 technical-id text-on-surface-variant">MH-04-MX</td>
 <td className="px-6 py-4">
 <div className="flex items-center gap-2">
 <span className="material-symbols-outlined text-secondary text-[20px]">fact_check</span>
@@ -166,7 +166,7 @@ export default function Maintenance() {
 </td>
 <td className="px-6 py-4 text-body-md text-on-surface-variant">Oct 15, 2023</td>
 <td className="px-6 py-4 text-body-md text-on-surface-variant">Oct 15, 2023</td>
-<td className="px-6 py-4 text-body-md text-right technical-id">$150.00</td>
+<td className="px-6 py-4 text-body-md text-right technical-id">₹15,000</td>
 <td className="px-6 py-4">
 <span className="status-pill bg-primary/10 text-primary border border-primary/30">
 <span className="w-1 h-1 rounded-full bg-primary mr-2"></span>
@@ -206,11 +206,11 @@ export default function Maintenance() {
 <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
 <select className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg py-3 pl-10 pr-4 text-body-md text-on-surface appearance-none glow-cyan technical-id">
 <option>Select Registration Number...</option>
-<option>VX-901</option>
-<option>TL-400</option>
-<option>KR-212</option>
-<option>MX-009</option>
-<option>BJ-118</option>
+<option>MH-01-VX</option>
+<option>MH-02-TL</option>
+<option>MH-03-KR</option>
+<option>MH-04-MX</option>
+<option>MH-05-BJ</option>
 </select>
 <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
 </div>
@@ -248,7 +248,7 @@ export default function Maintenance() {
 <div>
 <label className="block font-label-caps text-[11px] text-on-surface-variant mb-2 uppercase">Estimated Cost</label>
 <div className="relative">
-<span className="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant font-bold">$</span>
+<span className="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant font-bold">₹</span>
 <input className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg py-3 pl-8 pr-4 text-body-md text-on-surface technical-id glow-cyan" placeholder="0.00" type="text"/>
 </div>
 </div>

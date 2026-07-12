@@ -203,7 +203,7 @@ export default function Reports() {
 </svg>
 <div className="absolute inset-0 flex flex-col items-center justify-center">
 <p className="font-label-caps text-[10px] text-on-surface-variant">TOTAL OPEX</p>
-<p className="font-mono-technical text-2xl text-on-surface">$1.2M</p>
+<p className="font-mono-technical text-2xl text-on-surface">₹1.2Cr</p>
 </div>
 </div>
 <div className="mt-8 grid grid-cols-2 gap-8 w-full">
@@ -212,7 +212,7 @@ export default function Reports() {
 <div className="w-2 h-2 rounded-full bg-primary-container"></div>
 <span className="font-label-caps text-[10px] text-on-surface-variant">FUEL</span>
 </div>
-<p className="font-mono-technical text-lg">$780k</p>
+<p className="font-mono-technical text-lg">₹78L</p>
 <p className="text-[10px] font-label-caps text-primary">65%</p>
 </div>
 <div className="text-center border-l border-outline-variant/30">
@@ -220,7 +220,7 @@ export default function Reports() {
 <div className="w-2 h-2 rounded-full bg-tertiary-container"></div>
 <span className="font-label-caps text-[10px] text-on-surface-variant">MAINT</span>
 </div>
-<p className="font-mono-technical text-lg">$420k</p>
+<p className="font-mono-technical text-lg">₹42L</p>
 <p className="text-[10px] font-label-caps text-tertiary-container">35%</p>
 </div>
 </div>
@@ -269,8 +269,8 @@ export default function Reports() {
 </div>
 </td>
 <td className="py-4 text-on-surface-variant">LONG_HAUL</td>
-<td className="py-4 text-right text-on-surface">$14,200</td>
-<td className="py-4 text-right text-on-surface-variant">$4,120</td>
+<td className="py-4 text-right text-on-surface">₹14,200</td>
+<td className="py-4 text-right text-on-surface-variant">₹4,120</td>
 <td className="py-4 text-right text-primary font-bold">+18.4%</td>
 </tr>
 {/*  Row 2: Healthy  */}
@@ -282,8 +282,8 @@ export default function Reports() {
 </div>
 </td>
 <td className="py-4 text-on-surface-variant">CITY_GRID</td>
-<td className="py-4 text-right text-on-surface">$11,500</td>
-<td className="py-4 text-right text-on-surface-variant">$2,800</td>
+<td className="py-4 text-right text-on-surface">₹11,500</td>
+<td className="py-4 text-right text-on-surface-variant">₹2,800</td>
 <td className="py-4 text-right text-primary font-bold">+16.2%</td>
 </tr>
 {/*  Row 3: Marginal  */}
@@ -295,8 +295,8 @@ export default function Reports() {
 </div>
 </td>
 <td className="py-4 text-on-surface-variant">HEAVY_LOAD</td>
-<td className="py-4 text-right text-on-surface">$22,800</td>
-<td className="py-4 text-right text-on-surface-variant">$16,400</td>
+<td className="py-4 text-right text-on-surface">₹22,800</td>
+<td className="py-4 text-right text-on-surface-variant">₹16,400</td>
 <td className="py-4 text-right text-tertiary-container font-bold">+4.1%</td>
 </tr>
 {/*  Row 4: Negative  */}
@@ -308,8 +308,8 @@ export default function Reports() {
 </div>
 </td>
 <td className="py-4 text-on-surface-variant">SUPPORT</td>
-<td className="py-4 text-right text-on-surface">$4,200</td>
-<td className="py-4 text-right text-on-surface-variant">$5,100</td>
+<td className="py-4 text-right text-on-surface">₹4,200</td>
+<td className="py-4 text-right text-on-surface-variant">₹5,100</td>
 <td className="py-4 text-right text-error font-bold">-2.4%</td>
 </tr>
 </tbody>

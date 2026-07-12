@@ -58,10 +58,10 @@ export const getExpenseDistribution = async () => {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve([
-          { category: 'Fuel', amount: 45000, color: '#fbbf24' },
-          { category: 'Maintenance', amount: 25000, color: '#a78bfa' },
-          { category: 'Wages', amount: 65000, color: '#62f3ec' },
-          { category: 'Insurance', amount: 15000, color: '#94a3b8' }
+          { category: 'Fuel', amount: 4500000, color: '#fbbf24' },
+          { category: 'Maintenance', amount: 2500000, color: '#a78bfa' },
+          { category: 'Wages', amount: 6500000, color: '#62f3ec' },
+          { category: 'Insurance', amount: 1500000, color: '#94a3b8' }
         ]);
       }, 800);
     });
