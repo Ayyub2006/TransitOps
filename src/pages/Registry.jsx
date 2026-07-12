@@ -284,7 +284,6 @@ export default function Registry() {
 <p className="text-center text-[10px] text-outline-variant mt-3 uppercase font-bold tracking-widest">Requires Supervisor Approval</p>
 </div>
 </div>
-</div>
 {/* Modals */}
 <ViewVehicleModal isOpen={viewModalOpen} onClose={() => setViewModalOpen(false)} vehicle={selectedVehicle} />
 <EditVehicleModal isOpen={editModalOpen} onClose={() => setEditModalOpen(false)} vehicle={selectedVehicle} onSave={handleEditSave} />
