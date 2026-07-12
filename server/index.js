@@ -86,6 +86,28 @@ app.post('/api/auth/google-login', async (req, res) => {
       await pool.query("UPDATE users SET last_login_at = CURRENT_TIMESTAMP WHERE id = $1", [user.id]);
     }
     
+    // Auto-assign to first fleet if Driver and not already assigned (for showcase)
+    if (user.role_name === 'Driver') {
+      const driverCheck = await pool.query("SELECT id FROM drivers WHERE user_id = $1", [user.id]);
+      if (driverCheck.rows.length === 0) {
+        const firstFleet = await pool.query("SELECT id FROM fleets LIMIT 1");
+        if (firstFleet.rows.length > 0) {
+          await pool.query(`
+            INSERT INTO drivers (fleet_id, user_id, name, license_number, license_category, license_expiry_date, status)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
+          `, [
+            firstFleet.rows[0].id, 
+            user.id, 
+            user.name, 
+            'SHOWCASE-DL-123', 
+            'HMV', 
+            new Date(Date.now() + 365*24*60*60*1000).toISOString(), 
+            'Available'
+          ]);
+        }
+      }
+    }
+    
     const token = jwt.sign(
       { id: user.id, email: user.email, name: user.name, role: user.role_name },
       process.env.JWT_SECRET || 'transitops_secret_key_123',
@@ -277,7 +299,7 @@ app.get('/api/dashboard/kpis', async (req, res) => {
       if (r.status === 'In Shop') inMaintenance += cnt;
     });
     
-    const tRes = await pool.query(`SELECT status, count(*) FROM trips t LEFT JOIN vehicles v ON t.vehicle_id = v.id WHERE ${buildScopeWhere(scope, 'v')} GROUP BY status`);
+    const tRes = await pool.query(`SELECT t.status, count(*) FROM trips t LEFT JOIN vehicles v ON t.vehicle_id = v.id WHERE ${buildScopeWhere(scope, 'v')} GROUP BY t.status`);
     let activeTrips = 0, pendingTrips = 0;
     tRes.rows.forEach(r => {
       if (r.status === 'Dispatched') activeTrips += parseInt(r.count);
@@ -709,3 +731,4 @@ app.get('/api/driver/my-dashboard', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+// Trigger restart

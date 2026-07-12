@@ -7,6 +7,7 @@ export default function DriverDashboard() {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user') || '{}');
   const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showNotifications, setShowNotifications] = useState(true);
 
@@ -18,6 +19,7 @@ export default function DriverDashboard() {
       })
       .catch(err => {
         console.error(err);
+        setError(err.message);
         setLoading(false);
       });
   }, []);
@@ -28,10 +30,36 @@ export default function DriverDashboard() {
     navigate('/login');
   };
 
-  if (loading || !data) {
+  if (loading) {
     return (
       <div className="min-h-screen bg-background font-body-md pb-24 flex items-center justify-center">
         <p className="text-on-surface-variant">Loading dashboard...</p>
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className="min-h-screen bg-background font-body-md pb-24 flex items-center justify-center flex-col gap-4 text-center px-4">
+        <div className="w-16 h-16 bg-surface-container rounded-full flex items-center justify-center mb-2">
+          <span className="material-symbols-outlined text-error text-3xl">no_accounts</span>
+        </div>
+        <p className="text-on-surface font-bold text-lg">
+          {error === 'Driver profile not found' ? 'Not Assigned to a Fleet' : 'Failed to Load Dashboard'}
+        </p>
+        <p className="text-on-surface-variant text-sm max-w-[300px] mb-4">
+          {error === 'Driver profile not found' 
+            ? "Your account is not linked to any active fleet. Please ask your Fleet Manager to send you a Driver Invite Link." 
+            : error}
+        </p>
+        <div className="flex gap-4">
+          <button onClick={() => window.location.reload()} className="px-4 py-2 bg-primary text-on-primary rounded font-bold uppercase tracking-wider text-sm hover:opacity-90 transition-all">
+            Retry
+          </button>
+          <button onClick={handleLogout} className="px-4 py-2 bg-surface-container border border-outline-variant text-on-surface rounded font-bold uppercase tracking-wider text-sm hover:bg-surface-container-high transition-all">
+            Log Out
+          </button>
+        </div>
       </div>
     );
   }
