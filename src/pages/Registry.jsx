@@ -116,114 +116,43 @@ export default function Registry() {
 </tr>
 </thead>
 <tbody className="divide-y divide-outline-variant">
-{/*  Row 1  */}
-<tr className="hover:bg-surface-variant/20 transition-colors group">
-<td className="p-4"><input defaultChecked className="rounded border-outline-variant bg-background text-primary focus:ring-primary" type="checkbox"/></td>
-<td className="p-4 font-mono text-primary text-xs tracking-tighter">MH-01-VX</td>
-<td className="p-4 font-bold text-on-surface">Heavy Hauler X2</td>
-<td className="p-4 flex items-center gap-2 text-on-surface-variant">
-<span className="material-symbols-outlined text-lg">local_shipping</span> Truck
-                            </td>
-<td className="p-4 text-on-surface">12,500 <span className="text-[10px] text-outline-variant">kg</span></td>
-<td className="p-4 text-on-surface">42,390 <span className="text-[10px] text-outline-variant">km</span></td>
-<td className="p-4 text-on-surface">₹1,45,00,000</td>
-<td className="p-4">
-<span className="inline-flex items-center gap-2 px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest">
-<span className="w-1 h-1 rounded-full bg-primary"></span> Available
-                                </span>
-</td>
-<td className="p-4 text-center">
-<span className="w-2 h-2 rounded-full bg-transparent inline-block"></span>
-</td>
-<td className="p-4 relative">
-<div className="row-action-hover absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 bg-surface-container border border-outline-variant rounded-md px-2 py-1">
-<button className="p-1 hover:text-primary" title="View"><span className="material-symbols-outlined text-sm">visibility</span></button>
-<button className="p-1 hover:text-primary" title="Edit"><span className="material-symbols-outlined text-sm">edit</span></button>
-<button className="p-1 hover:text-primary" title="Maintenance"><span className="material-symbols-outlined text-sm">build</span></button>
-</div>
-</td>
-</tr>
-{/*  Row 2  */}
-<tr className="hover:bg-surface-variant/20 transition-colors group">
-<td className="p-4"><input defaultChecked className="rounded border-outline-variant bg-background text-primary focus:ring-primary" type="checkbox"/></td>
-<td className="p-4 font-mono text-primary text-xs tracking-tighter">MH-02-TL</td>
-<td className="p-4 font-bold text-on-surface">Transit-Lite 400</td>
-<td className="p-4 flex items-center gap-2 text-on-surface-variant">
-<span className="material-symbols-outlined text-lg">airport_shuttle</span> Van
-                            </td>
-<td className="p-4 text-on-surface">2,800 <span className="text-[10px] text-outline-variant">kg</span></td>
-<td className="p-4 text-on-surface">112,012 <span className="text-[10px] text-outline-variant">km</span></td>
-<td className="p-4 text-on-surface">₹38,50,000</td>
-<td className="p-4">
-<span className="inline-flex items-center gap-2 px-2 py-0.5 rounded bg-tertiary-container/10 text-tertiary text-[10px] font-bold uppercase tracking-widest">
-<span className="w-1 h-1 rounded-full bg-tertiary"></span> On Trip
-                                </span>
-</td>
-<td className="p-4 text-center">
-<span className="w-2 h-2 rounded-full bg-error inline-block" title="High Odometer"></span>
-</td>
-<td className="p-4 relative">
-<div className="row-action-hover absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 bg-surface-container border border-outline-variant rounded-md px-2 py-1">
-<button className="p-1 hover:text-primary" title="View"><span className="material-symbols-outlined text-sm">visibility</span></button>
-<button className="p-1 hover:text-primary" title="Edit"><span className="material-symbols-outlined text-sm">edit</span></button>
-<button className="p-1 hover:text-primary" title="Maintenance"><span className="material-symbols-outlined text-sm">build</span></button>
-</div>
-</td>
-</tr>
-{/*  Row 3  */}
-<tr className="hover:bg-surface-variant/20 transition-colors group">
-<td className="p-4"><input defaultChecked className="rounded border-outline-variant bg-background text-primary focus:ring-primary" type="checkbox"/></td>
-<td className="p-4 font-mono text-primary text-xs tracking-tighter">MH-03-BU</td>
-<td className="p-4 font-bold text-on-surface">Voyager L-Series</td>
-<td className="p-4 flex items-center gap-2 text-on-surface-variant">
-<span className="material-symbols-outlined text-lg">directions_bus</span> Bus
-                            </td>
-<td className="p-4 text-on-surface">8,500 <span className="text-[10px] text-outline-variant">kg</span></td>
-<td className="p-4 text-on-surface">9,420 <span className="text-[10px] text-outline-variant">km</span></td>
-<td className="p-4 text-on-surface">₹2,10,00,000</td>
-<td className="p-4">
-<span className="inline-flex items-center gap-2 px-2 py-0.5 rounded bg-error-container/20 text-error text-[10px] font-bold uppercase tracking-widest">
-<span className="w-1 h-1 rounded-full bg-error"></span> In Shop
-                                </span>
-</td>
-<td className="p-4 text-center">
-<span className="w-2 h-2 rounded-full bg-error inline-block" title="Unscheduled Maintenance"></span>
-</td>
-<td className="p-4 relative">
-<div className="row-action-hover absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 bg-surface-container border border-outline-variant rounded-md px-2 py-1">
-<button className="p-1 hover:text-primary" title="View"><span className="material-symbols-outlined text-sm">visibility</span></button>
-<button className="p-1 hover:text-primary" title="Edit"><span className="material-symbols-outlined text-sm">edit</span></button>
-<button className="p-1 hover:text-primary" title="Maintenance"><span className="material-symbols-outlined text-sm">build</span></button>
-</div>
-</td>
-</tr>
-{/*  Row 4  */}
-<tr className="hover:bg-surface-variant/20 transition-colors group">
-<td className="p-4"><input className="rounded border-outline-variant bg-background text-primary focus:ring-primary" type="checkbox"/></td>
-<td className="p-4 font-mono text-primary text-xs tracking-tighter">MH-04-VX</td>
-<td className="p-4 font-bold text-on-surface">Heavy Hauler X1</td>
-<td className="p-4 flex items-center gap-2 text-on-surface-variant">
-<span className="material-symbols-outlined text-lg">local_shipping</span> Truck
-                            </td>
-<td className="p-4 text-on-surface">12,000 <span className="text-[10px] text-outline-variant">kg</span></td>
-<td className="p-4 text-on-surface">242,390 <span className="text-[10px] text-outline-variant">km</span></td>
-<td className="p-4 text-on-surface">₹1,25,00,000</td>
-<td className="p-4">
-<span className="inline-flex items-center gap-2 px-2 py-0.5 rounded bg-outline/10 text-outline text-[10px] font-bold uppercase tracking-widest">
-<span className="w-1 h-1 rounded-full bg-outline"></span> Retired
-                                </span>
-</td>
-<td className="p-4 text-center">
-<span className="w-2 h-2 rounded-full bg-transparent inline-block"></span>
-</td>
-<td className="p-4 relative">
-<div className="row-action-hover absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 bg-surface-container border border-outline-variant rounded-md px-2 py-1">
-<button className="p-1 hover:text-primary" title="View"><span className="material-symbols-outlined text-sm">visibility</span></button>
-<button className="p-1 hover:text-primary" title="Edit"><span className="material-symbols-outlined text-sm">edit</span></button>
-<button className="p-1 hover:text-primary" title="Maintenance"><span className="material-symbols-outlined text-sm">build</span></button>
-</div>
-</td>
-</tr>
+{Array.from({ length: 248 }, (_, i) => {
+  const models = ['Heavy Hauler X2', 'Transit-Lite 400', 'Voyager L-Series', 'Heavy Hauler X1'];
+  const types = ['Truck', 'Van', 'Bus', 'Truck'];
+  const icons = ['local_shipping', 'airport_shuttle', 'directions_bus', 'local_shipping'];
+  const statuses = ['Available', 'On Trip', 'In Shop', 'Retired'];
+  const statusColors = ['primary', 'tertiary', 'error', 'outline'];
+  const statusBg = ['bg-primary/10', 'bg-tertiary-container/10', 'bg-error-container/20', 'bg-outline/10'];
+  const typeIdx = i % 4;
+  return (
+    <tr key={i} className="hover:bg-surface-variant/20 transition-colors group">
+      <td className="p-4"><input className="rounded border-outline-variant bg-background text-primary focus:ring-primary" type="checkbox" defaultChecked={i < 3} /></td>
+      <td className="p-4 font-mono text-primary text-xs tracking-tighter">MH-{String((i%50)+1).padStart(2, '0')}-V{i+1}</td>
+      <td className="p-4 font-bold text-on-surface">{models[typeIdx]}</td>
+      <td className="p-4 flex items-center gap-2 text-on-surface-variant">
+        <span className="material-symbols-outlined text-lg">{icons[typeIdx]}</span> {types[typeIdx]}
+      </td>
+      <td className="p-4 text-on-surface">{12500 - (i*10)} <span className="text-[10px] text-outline-variant">kg</span></td>
+      <td className="p-4 text-on-surface">{42390 + (i*150)} <span className="text-[10px] text-outline-variant">km</span></td>
+      <td className="p-4 text-on-surface">₹{(14500000 - (i*10000)).toLocaleString('en-IN')}</td>
+      <td className="p-4">
+        <span className={`inline-flex items-center gap-2 px-2 py-0.5 rounded ${statusBg[typeIdx]} text-${statusColors[typeIdx]} text-[10px] font-bold uppercase tracking-widest`}>
+          <span className={`w-1 h-1 rounded-full bg-${statusColors[typeIdx]}`}></span> {statuses[typeIdx]}
+        </span>
+      </td>
+      <td className="p-4 text-center">
+        {i % 7 === 0 ? <span className="w-2 h-2 rounded-full bg-error inline-block" title="Risk Alert"></span> : <span className="w-2 h-2 rounded-full bg-transparent inline-block"></span>}
+      </td>
+      <td className="p-4 relative">
+        <div className="row-action-hover absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 bg-surface-container border border-outline-variant rounded-md px-2 py-1">
+          <button className="p-1 hover:text-primary" title="View"><span className="material-symbols-outlined text-sm">visibility</span></button>
+          <button className="p-1 hover:text-primary" title="Edit"><span className="material-symbols-outlined text-sm">edit</span></button>
+          <button className="p-1 hover:text-primary" title="Maintenance"><span className="material-symbols-outlined text-sm">build</span></button>
+        </div>
+      </td>
+    </tr>
+  );
+})}
 </tbody>
 </table>
 {/*  Pagination / Footer  */}

@@ -64,108 +64,53 @@ export default function Maintenance() {
 </tr>
 </thead>
 <tbody className="divide-y divide-outline-variant">
-{/*  Active Row  */}
-<tr className="hover:bg-primary-container/5 transition-colors group">
-<td className="px-6 py-4 technical-id text-primary">MH-01-VX</td>
-<td className="px-6 py-4">
-<div className="flex items-center gap-2">
-<span className="material-symbols-outlined text-secondary text-[20px]">oil_barrel</span>
-<span className="text-body-md">Oil Change</span>
-</div>
-</td>
-<td className="px-6 py-4 text-body-md text-on-surface-variant">Oct 24, 2023</td>
-<td className="px-6 py-4">
-<span className="text-body-md text-secondary font-medium italic">In Progress</span>
-</td>
-<td className="px-6 py-4 text-body-md text-right technical-id">₹18,500</td>
-<td className="px-6 py-4">
-<span className="status-pill bg-[#8B5CF6]/10 text-[#A78BFA] border border-[#8B5CF6]/30">
-<span className="w-1 h-1 rounded-full bg-[#8B5CF6] mr-2"></span>
-                                Active
-                            </span>
-</td>
-<td className="px-6 py-4 text-right">
-<div className="row-hover-actions flex items-center justify-end gap-2">
-<button className="text-[11px] font-bold text-on-surface-variant hover:text-primary transition-colors">VIEW DETAILS</button>
-<button className="text-[11px] font-bold text-error hover:brightness-125 transition-colors">CLOSE RECORD</button>
-</div>
-</td>
-</tr>
-{/*  Active Row  */}
-<tr className="hover:bg-primary-container/5 transition-colors group">
-<td className="px-6 py-4 technical-id text-primary">MH-02-TL</td>
-<td className="px-6 py-4">
-<div className="flex items-center gap-2">
-<span className="material-symbols-outlined text-secondary text-[20px]">build</span>
-<span className="text-body-md">Repair</span>
-</div>
-</td>
-<td className="px-6 py-4 text-body-md text-on-surface-variant">Oct 25, 2023</td>
-<td className="px-6 py-4">
-<span className="text-body-md text-secondary font-medium italic">In Progress</span>
-</td>
-<td className="px-6 py-4 text-body-md text-right technical-id">₹1,24,000</td>
-<td className="px-6 py-4">
-<span className="status-pill bg-[#8B5CF6]/10 text-[#A78BFA] border border-[#8B5CF6]/30">
-<span className="w-1 h-1 rounded-full bg-[#8B5CF6] mr-2"></span>
-                                Active
-                            </span>
-</td>
-<td className="px-6 py-4 text-right">
-<div className="row-hover-actions flex items-center justify-end gap-2">
-<button className="text-[11px] font-bold text-on-surface-variant hover:text-primary transition-colors">VIEW DETAILS</button>
-<button className="text-[11px] font-bold text-error hover:brightness-125 transition-colors">CLOSE RECORD</button>
-</div>
-</td>
-</tr>
-{/*  Closed Row  */}
-<tr className="hover:bg-primary-container/5 transition-colors group">
-<td className="px-6 py-4 technical-id text-on-surface-variant">MH-03-FR</td>
-<td className="px-6 py-4">
-<div className="flex items-center gap-2">
-<span className="material-symbols-outlined text-secondary text-[20px]">tire_repair</span>
-<span className="text-body-md">Tire Rotation</span>
-</div>
-</td>
-<td className="px-6 py-4 text-body-md text-on-surface-variant">Oct 18, 2023</td>
-<td className="px-6 py-4 text-body-md text-on-surface-variant">Oct 19, 2023</td>
-<td className="px-6 py-4 text-body-md text-right technical-id">₹8,500</td>
-<td className="px-6 py-4">
-<span className="status-pill bg-primary/10 text-primary border border-primary/30">
-<span className="w-1 h-1 rounded-full bg-primary mr-2"></span>
-                                Closed
-                            </span>
-</td>
-<td className="px-6 py-4 text-right">
-<div className="row-hover-actions flex items-center justify-end gap-2">
-<button className="text-[11px] font-bold text-on-surface-variant hover:text-primary transition-colors">VIEW DETAILS</button>
-</div>
-</td>
-</tr>
-{/*  Closed Row  */}
-<tr className="hover:bg-primary-container/5 transition-colors group">
-<td className="px-6 py-4 technical-id text-on-surface-variant">MH-04-MX</td>
-<td className="px-6 py-4">
-<div className="flex items-center gap-2">
-<span className="material-symbols-outlined text-secondary text-[20px]">fact_check</span>
-<span className="text-body-md">Inspection</span>
-</div>
-</td>
-<td className="px-6 py-4 text-body-md text-on-surface-variant">Oct 15, 2023</td>
-<td className="px-6 py-4 text-body-md text-on-surface-variant">Oct 15, 2023</td>
-<td className="px-6 py-4 text-body-md text-right technical-id">₹15,000</td>
-<td className="px-6 py-4">
-<span className="status-pill bg-primary/10 text-primary border border-primary/30">
-<span className="w-1 h-1 rounded-full bg-primary mr-2"></span>
-                                Closed
-                            </span>
-</td>
-<td className="px-6 py-4 text-right">
-<div className="row-hover-actions flex items-center justify-end gap-2">
-<button className="text-[11px] font-bold text-on-surface-variant hover:text-primary transition-colors">VIEW DETAILS</button>
-</div>
-</td>
-</tr>
+{Array.from({ length: 248 }, (_, i) => {
+  const types = ['Oil Change', 'Repair', 'Tire Rotation', 'Inspection'];
+  const typeIcons = ['oil_barrel', 'build', 'tire_repair', 'fact_check'];
+  const statuses = ['Active', 'Active', 'Closed', 'Closed'];
+  const typeIdx = i % 4;
+  const status = statuses[typeIdx];
+  const cost = (Math.floor(Math.random() * 50) + 5) * 1000;
+  return (
+    <tr key={i} className="hover:bg-primary-container/5 transition-colors group">
+      <td className={`px-6 py-4 technical-id ${status === 'Active' ? 'text-primary' : 'text-on-surface-variant'}`}>MH-{String((i % 50) + 1).padStart(2, '0')}-VX</td>
+      <td className="px-6 py-4">
+        <div className="flex items-center gap-2">
+          <span className="material-symbols-outlined text-secondary text-[20px]">{typeIcons[typeIdx]}</span>
+          <span className="text-body-md">{types[typeIdx]}</span>
+        </div>
+      </td>
+      <td className="px-6 py-4 text-body-md text-on-surface-variant">Oct {10 + (i % 20)}, 2023</td>
+      <td className="px-6 py-4">
+        {status === 'Active' ? (
+          <span className="text-body-md text-secondary font-medium italic">In Progress</span>
+        ) : (
+          <span className="text-body-md text-on-surface-variant">Oct {15 + (i % 15)}, 2023</span>
+        )}
+      </td>
+      <td className="px-6 py-4 text-body-md text-right technical-id">₹{cost.toLocaleString('en-IN')}</td>
+      <td className="px-6 py-4">
+        {status === 'Active' ? (
+          <span className="status-pill bg-[#8B5CF6]/10 text-[#A78BFA] border border-[#8B5CF6]/30">
+            <span className="w-1 h-1 rounded-full bg-[#8B5CF6] mr-2"></span> Active
+          </span>
+        ) : (
+          <span className="status-pill bg-primary/10 text-primary border border-primary/30">
+            <span className="w-1 h-1 rounded-full bg-primary mr-2"></span> Closed
+          </span>
+        )}
+      </td>
+      <td className="px-6 py-4 text-right">
+        <div className="row-hover-actions flex items-center justify-end gap-2">
+          <button className="text-[11px] font-bold text-on-surface-variant hover:text-primary transition-colors">VIEW DETAILS</button>
+          {status === 'Active' && (
+            <button className="text-[11px] font-bold text-error hover:brightness-125 transition-colors">CLOSE RECORD</button>
+          )}
+        </div>
+      </td>
+    </tr>
+  );
+})}
 </tbody>
 </table>
 </div>

@@ -4,12 +4,25 @@ import Sidebar from '../components/Sidebar';
 
 import TopBar from '../components/TopBar';
 
-const driversData = [
-  { id: 1, initials: 'MS', name: 'Mahesh Sharma', status: 'Available', statusColor: 'emerald-400', license: 'MH-01-2015-X', category: 'HEAVY DUTY', expires: 'Oct 24, 2026', safety: 94, phone: '+91 98765-43210', isCritical: false },
-  { id: 2, image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBLjKwI4SI3dX1ZnRAev1qu-73os5s4NIVb0pndBiZdC-MJGlYUFYfakj57Hd9nCEqr_wo8nw54WWVUikFbM9V68xU17TDiaqf6OqwpeMHs3a7KcTOmpoSNM5b63zZVLk5Tk0XEd8vqVZB5FdLnUqAYBRhOEKosUHmslf8pjXgieOLRE2eGMVoRki0Z73u29XBF3gA-vPjyhzHOWkr4kyIlX8O226i4k1gP5HkAKzh9tv7fY0Ftu5R-dA', name: 'Anita Verma', status: 'On Trip', statusColor: 'amber-400', license: 'MH-02-2018-B', category: 'PASSENGER', expires: 'Oct 18, 2024', safety: 78, phone: '+91 87654-32109', isCritical: false, icon: 'warning' },
-  { id: 3, initials: 'RK', name: 'Ravi Kumar', status: 'Suspended', statusColor: 'error', license: 'MH-03-2020-L', category: 'HAZMAT', expires: 'EXPIRED: Oct 02, 2024', safety: 52, phone: '+91 76543-21098', isCritical: true, icon: 'emergency' },
-  { id: 4, initials: 'PS', name: 'Priya Singh', status: 'Off Duty', statusColor: 'secondary', license: 'MH-04-2022-M', category: 'STANDARD', expires: 'Jan 12, 2025', safety: 89, phone: '+91 91234-56780', isCritical: false }
-];
+const indianNames = ['Mahesh Sharma', 'Anita Verma', 'Ravi Kumar', 'Priya Singh', 'Amit Desai', 'Neha Gupta', 'Vikram Singh', 'Kavita Joshi', 'Rahul Verma', 'Sneha Reddy'];
+const driversData = Array.from({ length: 248 }, (_, i) => {
+  const isCritical = i % 15 === 0;
+  return {
+    id: i + 1,
+    initials: indianNames[i % indianNames.length].split(' ').map(n => n[0]).join(''),
+    name: indianNames[i % indianNames.length] + (i > 9 ? ` ${i+1}` : ''),
+    status: ['Available', 'On Trip', 'Suspended', 'Off Duty'][i % 4],
+    statusColor: ['emerald-400', 'amber-400', 'error', 'secondary'][i % 4],
+    license: `MH-${String((i % 50) + 1).padStart(2, '0')}-20${15 + (i % 8)}-${String.fromCharCode(65 + (i % 26))}`,
+    category: ['HEAVY DUTY', 'PASSENGER', 'HAZMAT', 'STANDARD'][i % 4],
+    expires: i % 10 === 0 ? `EXPIRED: Oct 02, 2024` : `Oct ${10 + (i % 20)}, 202${5 + (i % 3)}`,
+    safety: Math.floor(Math.random() * 50) + 50,
+    phone: `+91 ${90000 + i}-${10000 + i}`,
+    isCritical,
+    icon: isCritical ? 'emergency' : (i % 5 === 0 ? 'warning' : 'calendar_today'),
+    image: null
+  };
+});
 
 export default function Drivers() {
   const [viewMode, setViewMode] = useState('grid');

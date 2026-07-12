@@ -72,101 +72,44 @@ export default function Risk() {
 </div>
 </div>
 <div className="flex-1 overflow-y-auto custom-scrollbar p-1">
-{/*  List Item: Marcus Sterling  */}
-<div className="flex items-center gap-6 p-4 border-b border-outline-variant hover:bg-surface-container-highest/50 transition-colors group">
-<div className="risk-ring">
-<svg className="w-full h-full">
-<circle cx="24" cy="24" fill="none" r="21" stroke="#2a313a" strokeWidth="3"></circle>
-<circle cx="24" cy="24" fill="none" r="21" stroke="#ffb4ab" strokeDasharray="131.95" strokeDashoffset="15.83" strokeWidth="3"></circle>
-</svg>
-<span className="text-error font-kpi-value text-body-md font-bold">88</span>
-</div>
-<div className="flex-1">
-<div className="flex items-center gap-2 mb-1">
-<span className="material-symbols-outlined text-outline text-[20px]">person</span>
-<span className="font-headline-sm text-white">Mahesh Sharma</span>
-<span className="font-label-caps text-[10px] px-2 py-0.5 rounded border border-outline-variant text-outline bg-surface-container-lowest">ID: DR-MH-4402</span>
-</div>
-<div className="flex gap-2">
-<span className="tag-red font-label-caps text-[10px] px-2 py-0.5 rounded uppercase">License expires in 4 days</span>
-<span className="tag-amber font-label-caps text-[10px] px-2 py-0.5 rounded uppercase">Safety score dropped 12pts</span>
-</div>
-</div>
-<button className="bg-primary-container text-on-primary-container px-6 py-2 rounded-sm font-label-caps text-label-caps uppercase font-bold hover:brightness-110 active:scale-95 transition-all">
-                                Renew License
-                            </button>
-</div>
-{/*  List Item: VX-901  */}
-<div className="flex items-center gap-6 p-4 border-b border-outline-variant hover:bg-surface-container-highest/50 transition-colors group">
-<div className="risk-ring">
-<svg className="w-full h-full">
-<circle cx="24" cy="24" fill="none" r="21" stroke="#2a313a" strokeWidth="3"></circle>
-<circle cx="24" cy="24" fill="none" r="21" stroke="#ffb4ab" strokeDasharray="131.95" strokeDashoffset="23.75" strokeWidth="3"></circle>
-</svg>
-<span className="text-error font-kpi-value text-body-md font-bold">82</span>
-</div>
-<div className="flex-1">
-<div className="flex items-center gap-2 mb-1">
-<span className="material-symbols-outlined text-outline text-[20px]">directions_bus</span>
-<span className="font-headline-sm text-white">MH-01-VX</span>
-<span className="font-label-caps text-[10px] px-2 py-0.5 rounded border border-outline-variant text-outline bg-surface-container-lowest">Heavy Transit</span>
-</div>
-<div className="flex gap-2">
-<span className="tag-red font-label-caps text-[10px] px-2 py-0.5 rounded uppercase">Overdue maintenance 18 days</span>
-<span className="tag-cyan font-label-caps text-[10px] px-2 py-0.5 rounded uppercase">Brake Pad Wear: 92%</span>
-</div>
-</div>
-<button className="bg-primary-container text-on-primary-container px-6 py-2 rounded-sm font-label-caps text-label-caps uppercase font-bold hover:brightness-110 active:scale-95 transition-all">
-                                Schedule Maintenance
-                            </button>
-</div>
-{/*  List Item: Elena Rodriguez  */}
-<div className="flex items-center gap-6 p-4 border-b border-outline-variant hover:bg-surface-container-highest/50 transition-colors group">
-<div className="risk-ring">
-<svg className="w-full h-full">
-<circle cx="24" cy="24" fill="none" r="21" stroke="#2a313a" strokeWidth="3"></circle>
-<circle cx="24" cy="24" fill="none" r="21" stroke="#ffb865" strokeDasharray="131.95" strokeDashoffset="60.69" strokeWidth="3"></circle>
-</svg>
-<span className="text-tertiary font-kpi-value text-body-md font-bold">54</span>
-</div>
-<div className="flex-1">
-<div className="flex items-center gap-2 mb-1">
-<span className="material-symbols-outlined text-outline text-[20px]">person</span>
-<span className="font-headline-sm text-white">Pooja Patil</span>
-<span className="font-label-caps text-[10px] px-2 py-0.5 rounded border border-outline-variant text-outline bg-surface-container-lowest">ID: DR-MH-9912</span>
-</div>
-<div className="flex gap-2">
-<span className="tag-amber font-label-caps text-[10px] px-2 py-0.5 rounded uppercase">Excessive Idling Detected</span>
-<span className="tag-cyan font-label-caps text-[10px] px-2 py-0.5 rounded uppercase">Route Variance Alert</span>
-</div>
-</div>
-<button className="bg-primary-container text-on-primary-container px-6 py-2 rounded-sm font-label-caps text-label-caps uppercase font-bold hover:brightness-110 active:scale-95 transition-all">
-                                Reassign Trip
-                            </button>
-</div>
-{/*  List Item: BX-224  */}
-<div className="flex items-center gap-6 p-4 border-b border-outline-variant hover:bg-surface-container-highest/50 transition-colors group">
-<div className="risk-ring">
-<svg className="w-full h-full">
-<circle cx="24" cy="24" fill="none" r="21" stroke="#2a313a" strokeWidth="3"></circle>
-<circle cx="24" cy="24" fill="none" r="21" stroke="#ffb865" strokeDasharray="131.95" strokeDashoffset="66.00" strokeWidth="3"></circle>
-</svg>
-<span className="text-tertiary font-kpi-value text-body-md font-bold">50</span>
-</div>
-<div className="flex-1">
-<div className="flex items-center gap-2 mb-1">
-<span className="material-symbols-outlined text-outline text-[20px]">directions_bus</span>
-<span className="font-headline-sm text-white">MH-02-BX</span>
-<span className="font-label-caps text-[10px] px-2 py-0.5 rounded border border-outline-variant text-outline bg-surface-container-lowest">Logistics Van</span>
-</div>
-<div className="flex gap-2">
-<span className="tag-amber font-label-caps text-[10px] px-2 py-0.5 rounded uppercase">Fuel Anomaly Detected (+15%)</span>
-</div>
-</div>
-<button className="bg-primary-container text-on-primary-container px-6 py-2 rounded-sm font-label-caps text-label-caps uppercase font-bold hover:brightness-110 active:scale-95 transition-all">
-                                Inspect Fuel System
-                            </button>
-</div>
+{Array.from({ length: 248 }, (_, i) => {
+  const scores = [88, 82, 54, 50, 42, 30];
+  const score = scores[i % scores.length] || Math.floor(Math.random() * 100);
+  const isDriver = i % 2 === 0;
+  const isCritical = score >= 75;
+  const color = isCritical ? 'error' : (score >= 50 ? 'tertiary' : 'primary');
+  const hex = isCritical ? '#ffb4ab' : (score >= 50 ? '#ffb865' : '#62f3ec');
+  return (
+    <div key={i} className="flex items-center gap-6 p-4 border-b border-outline-variant hover:bg-surface-container-highest/50 transition-colors group">
+      <div className="risk-ring">
+        <svg className="w-full h-full">
+          <circle cx="24" cy="24" fill="none" r="21" stroke="#2a313a" strokeWidth="3"></circle>
+          <circle cx="24" cy="24" fill="none" r="21" stroke={hex} strokeDasharray="131.95" strokeDashoffset={131.95 * (1 - score/100)} strokeWidth="3"></circle>
+        </svg>
+        <span className={`text-${color} font-kpi-value text-body-md font-bold`}>{score}</span>
+      </div>
+      <div className="flex-1">
+        <div className="flex items-center gap-2 mb-1">
+          <span className="material-symbols-outlined text-outline text-[20px]">{isDriver ? 'person' : 'directions_bus'}</span>
+          <span className="font-headline-sm text-white">{isDriver ? `Driver ${i+1}` : `MH-${String((i%50)+1).padStart(2, '0')}-VX`}</span>
+          <span className="font-label-caps text-[10px] px-2 py-0.5 rounded border border-outline-variant text-outline bg-surface-container-lowest">
+            ID: {isDriver ? `DR-${i+1}` : `Truck`}
+          </span>
+        </div>
+        <div className="flex gap-2">
+          {isCritical ? (
+             <span className="tag-red font-label-caps text-[10px] px-2 py-0.5 rounded uppercase">Critical Alert</span>
+          ) : (
+             <span className="tag-amber font-label-caps text-[10px] px-2 py-0.5 rounded uppercase">Warning Alert</span>
+          )}
+        </div>
+      </div>
+      <button className="bg-primary-container text-on-primary-container px-6 py-2 rounded-sm font-label-caps text-label-caps uppercase font-bold hover:brightness-110 active:scale-95 transition-all">
+          Review
+      </button>
+    </div>
+  );
+})}
 </div>
 </section>
 </div>

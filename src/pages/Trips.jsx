@@ -54,95 +54,50 @@ export default function Trips() {
 <span className="bg-surface-container-highest text-on-surface px-2 py-0.5 rounded text-[10px] font-bold">12 Trips</span>
 </div>
 <div className="space-y-4">
-{/*  Card 1  */}
-<div className="trip-card relative group bg-[#131A22] border border-[#1F2A35] p-4 rounded-lg hover:border-primary/40 transition-all cursor-pointer">
-<div className="flex justify-between items-start mb-3">
-<span className="text-[10px] font-bold text-on-surface-variant">TRP-MH-01</span>
-<span className="material-symbols-outlined text-[16px] text-on-surface-variant">more_vert</span>
-</div>
-<div className="flex items-center gap-3 mb-4">
-<div className="flex flex-col items-center gap-1">
-<span className="w-2 h-2 rounded-full border border-primary"></span>
-<div className="w-0.5 h-6 bg-outline-variant"></div>
-<span className="w-2 h-2 bg-primary rounded-full"></span>
-</div>
-<div className="flex-1 space-y-2">
-<p className="text-xs font-bold truncate">JNPT Port, Navi Mumbai</p>
-<p className="text-xs font-bold truncate">Andheri East MIDC</p>
-</div>
-</div>
-<div className="grid grid-cols-2 gap-3 mb-4">
-<div className="flex items-center gap-2">
-<span className="material-symbols-outlined text-[14px] text-primary">local_shipping</span>
-<span className="text-[11px] font-medium">MH-01-VX</span>
-</div>
-<div className="flex items-center gap-2">
-<img className="w-4 h-4 rounded-full border border-outline-variant" data-alt="A small circular professional headshot avatar of a truck driver in a dark uniform with soft blue lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrjgxGlexN77L7yb-9lYYbUepX6pJiF6Boj5u2FwyOJFOKPiSCPzFbiZRwKxGlUV3o5kf7y58G-0OQimEegXMHArtFs6PGGBHA1w5AmCkK9u7YZyqmf7cqT8CoM5PbMEIPKx0m0v45yv7hUBVx75tSgYNq0jfXhEFTST3T1ZCP8We9-nLZEBG_cnBnasijuSR3MtVUQfhUvTlES_2BqLzEl7SfBxeB85Q-VVK4PdwbD4upyaYm8OEpOQ"/>
-<span className="text-[11px] font-medium">Eshan Thakkar</span>
-</div>
-</div>
-<div className="space-y-1">
-<div className="flex justify-between text-[10px] font-bold">
-<span className="text-on-surface-variant uppercase">Cargo Load</span>
-<span className="text-primary">82%</span>
-</div>
-<div className="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
-<div className="h-full bg-primary" style={{width: "82%", }}></div>
-</div>
-</div>
-<div className="mt-4 flex justify-between items-center text-[11px]">
-<span className="text-on-surface-variant">Est: 420km</span>
-<span className="text-on-surface-variant font-mono">14:00 Today</span>
-</div>
-{/*  Dispatch Hover Button  */}
-<div className="dispatch-overlay absolute inset-0 bg-[#0B0F14]/80 opacity-0 transition-opacity flex items-center justify-center rounded-lg backdrop-blur-[2px]">
-<button className="bg-primary text-on-primary font-bold px-6 py-2 rounded uppercase text-[12px] tracking-wider active:scale-95 transition-transform">Dispatch Mission</button>
-</div>
-</div>
-{/*  Card 2  */}
-<div className="trip-card relative group bg-[#131A22] border border-[#1F2A35] p-4 rounded-lg hover:border-primary/40 transition-all cursor-pointer">
-<div className="flex justify-between items-start mb-3">
-<span className="text-[10px] font-bold text-on-surface-variant">TRP-MH-02</span>
-<span className="material-symbols-outlined text-[16px] text-on-surface-variant">more_vert</span>
-</div>
-<div className="flex items-center gap-3 mb-4">
-<div className="flex flex-col items-center gap-1">
-<span className="w-2 h-2 rounded-full border border-primary"></span>
-<div className="w-0.5 h-6 bg-outline-variant"></div>
-<span className="w-2 h-2 bg-primary rounded-full"></span>
-</div>
-<div className="flex-1 space-y-2">
-<p className="text-xs font-bold truncate">Bhiwandi Hub</p>
-<p className="text-xs font-bold truncate">Thane West Terminal</p>
-</div>
-</div>
-<div className="grid grid-cols-2 gap-3 mb-4">
-<div className="flex items-center gap-2">
-<span className="material-symbols-outlined text-[14px] text-primary">airport_shuttle</span>
-<span className="text-[11px] font-medium">MH-02-VN</span>
-</div>
-<div className="flex items-center gap-2">
-<img className="w-4 h-4 rounded-full border border-outline-variant" data-alt="Close-up professional avatar of a female logistics driver with a focused expression, neon green secondary lighting in a futuristic tech setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDp9qkHqnp6h1iV_xTzZm2mMsgJC24RSp_kLMxXbLESgBRdIvb1s20caPVSNp7bzS_hey_00iJF6YzRxy3_cuKxUPXDqNb0TxnxpvGaiIREyPVkciXDUPbk3n0Tsy2s_usFbp0kOUlB-0Tx-yk67le11Y0B_w4wgriCyEEFIVMV5eT7V4WYH6P7cpz7B7XqZM9kHts0_cYPI0XYRGpIMlhuPADRIKtUz6H53eMHAX9vTG7HPSa4u-MJig"/>
-<span className="text-[11px] font-medium">Smita Jadhav</span>
-</div>
-</div>
-<div className="space-y-1">
-<div className="flex justify-between text-[10px] font-bold">
-<span className="text-on-surface-variant uppercase">Cargo Load</span>
-<span className="text-error font-bold">95%</span>
-</div>
-<div className="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
-<div className="h-full bg-error" style={{width: "95%", }}></div>
-</div>
-</div>
-<div className="mt-4 flex justify-between items-center text-[11px]">
-<span className="text-on-surface-variant">Est: 180km</span>
-<span className="text-on-surface-variant font-mono">ASAP</span>
-</div>
-<div className="dispatch-overlay absolute inset-0 bg-[#0B0F14]/80 opacity-0 transition-opacity flex items-center justify-center rounded-lg backdrop-blur-[2px]">
-<button className="bg-primary text-on-primary font-bold px-6 py-2 rounded uppercase text-[12px] tracking-wider">Dispatch Mission</button>
-</div>
-</div>
+{Array.from({ length: 120 }, (_, i) => (
+  <div key={i} className="trip-card relative group bg-[#131A22] border border-[#1F2A35] p-4 rounded-lg hover:border-primary/40 transition-all cursor-pointer">
+    <div className="flex justify-between items-start mb-3">
+      <span className="text-[10px] font-bold text-on-surface-variant">TRP-MH-{String(i+1).padStart(3, '0')}</span>
+      <span className="material-symbols-outlined text-[16px] text-on-surface-variant">more_vert</span>
+    </div>
+    <div className="flex items-center gap-3 mb-4">
+      <div className="flex flex-col items-center gap-1">
+        <span className="w-2 h-2 rounded-full border border-primary"></span>
+        <div className="w-0.5 h-6 bg-outline-variant"></div>
+        <span className="w-2 h-2 bg-primary rounded-full"></span>
+      </div>
+      <div className="flex-1 space-y-2">
+        <p className="text-xs font-bold truncate">Location {i+1}A</p>
+        <p className="text-xs font-bold truncate">Location {i+1}B</p>
+      </div>
+    </div>
+    <div className="grid grid-cols-2 gap-3 mb-4">
+      <div className="flex items-center gap-2">
+        <span className="material-symbols-outlined text-[14px] text-primary">local_shipping</span>
+        <span className="text-[11px] font-medium">MH-{(i % 50) + 1}-VX</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <span className="text-[11px] font-medium">Driver {i+1}</span>
+      </div>
+    </div>
+    <div className="space-y-1">
+      <div className="flex justify-between text-[10px] font-bold">
+        <span className="text-on-surface-variant uppercase">Cargo Load</span>
+        <span className="text-primary">{50 + (i % 50)}%</span>
+      </div>
+      <div className="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+        <div className="h-full bg-primary" style={{width: `${50 + (i % 50)}%`}}></div>
+      </div>
+    </div>
+    <div className="mt-4 flex justify-between items-center text-[11px]">
+      <span className="text-on-surface-variant">Est: {100 + (i * 10)}km</span>
+      <span className="text-on-surface-variant font-mono">14:00 Today</span>
+    </div>
+    <div className="dispatch-overlay absolute inset-0 bg-[#0B0F14]/80 opacity-0 transition-opacity flex items-center justify-center rounded-lg backdrop-blur-[2px]">
+      <button className="bg-primary text-on-primary font-bold px-6 py-2 rounded uppercase text-[12px] tracking-wider active:scale-95 transition-transform">Dispatch Mission</button>
+    </div>
+  </div>
+))}
 </div>
 </div>
 {/*  COLUMN: Dispatched  */}
@@ -155,44 +110,44 @@ export default function Trips() {
 <span className="bg-surface-container-highest text-on-surface px-2 py-0.5 rounded text-[10px] font-bold">8 Trips</span>
 </div>
 <div className="space-y-4">
-{/*  Active Card  */}
-<div className="bg-[#131A22] border-l-2 border-[#FBBF24] border-t border-r border-b border-[#1F2A35] p-4 rounded-lg relative overflow-hidden">
-<div className="absolute top-0 right-0 p-2">
-<span className="animate-pulse w-2 h-2 rounded-full bg-[#FBBF24] inline-block"></span>
-</div>
-<div className="flex justify-between items-start mb-3">
-<span className="text-[10px] font-bold text-[#FBBF24]">EN ROUTE</span>
-<span className="material-symbols-outlined text-[16px] text-on-surface-variant">map</span>
-</div>
-<div className="flex items-center gap-3 mb-4">
-<div className="flex-1 space-y-1">
-<p className="text-xs font-bold truncate">JNPT Port</p>
-<div className="flex items-center gap-2">
-<div className="flex-1 h-[1px] bg-outline-variant relative">
-<span className="material-symbols-outlined text-[10px] absolute left-1/2 -top-1.5 -translate-x-1/2 text-primary" style={{fontVariationSettings: "'FILL' 1", }}>local_shipping</span>
-</div>
-</div>
-<p className="text-xs font-bold truncate">Pune Station</p>
-</div>
-</div>
-<div className="grid grid-cols-2 gap-3 mb-4">
-<div className="flex items-center gap-2">
-<span className="material-symbols-outlined text-[14px] text-primary">local_shipping</span>
-<span className="text-[11px] font-medium">MH-03-VX</span>
-</div>
-<div className="flex items-center gap-2">
-<img className="w-4 h-4 rounded-full" data-alt="Avatar headshot of a male driver, tactical fleet uniform, sharp cinematic lighting, technical background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjqYczdzUaC1MkdfXloGhm-Owa5NCWXmB_pVGpL_6kTbQXeu7qSNbOwnxbIk1s20zhqJNWERAyNwhT1DxrMUm0i_MK1w5McURfGdIv8sKHuKkm7hkOiEWeLDH5j8sOCJ2k18xLpsqa9e1QTnC5PF0pDzyZMEL-qT38a_agC4J4D4slk8tlymvbIO20idpmIDfo5rJIVaZEbHsWrx-v5l88J6zcrDVO3KKpk60q2vIHKI6_RpY20OuQUg"/>
-<span className="text-[11px] font-medium">Manish Varma</span>
-</div>
-</div>
-<div className="flex justify-between items-center pt-3 border-t border-outline-variant/30">
-<div className="text-[10px]">
-<p className="text-on-surface-variant uppercase">Remaining</p>
-<p className="text-on-surface font-mono">112km / 1.5h</p>
-</div>
-<button className="text-[10px] font-bold text-primary uppercase hover:underline" onclick="openCompleteModal()">Complete</button>
-</div>
-</div>
+{Array.from({ length: 80 }, (_, i) => (
+  <div key={i} className="bg-[#131A22] border-l-2 border-[#FBBF24] border-t border-r border-b border-[#1F2A35] p-4 rounded-lg relative overflow-hidden">
+    <div className="absolute top-0 right-0 p-2">
+      <span className="animate-pulse w-2 h-2 rounded-full bg-[#FBBF24] inline-block"></span>
+    </div>
+    <div className="flex justify-between items-start mb-3">
+      <span className="text-[10px] font-bold text-[#FBBF24]">EN ROUTE</span>
+      <span className="material-symbols-outlined text-[16px] text-on-surface-variant">map</span>
+    </div>
+    <div className="flex items-center gap-3 mb-4">
+      <div className="flex-1 space-y-1">
+        <p className="text-xs font-bold truncate">Source {i+1}</p>
+        <div className="flex items-center gap-2">
+          <div className="flex-1 h-[1px] bg-outline-variant relative">
+            <span className="material-symbols-outlined text-[10px] absolute left-1/2 -top-1.5 -translate-x-1/2 text-primary" style={{fontVariationSettings: "'FILL' 1", }}>local_shipping</span>
+          </div>
+        </div>
+        <p className="text-xs font-bold truncate">Destination {i+1}</p>
+      </div>
+    </div>
+    <div className="grid grid-cols-2 gap-3 mb-4">
+      <div className="flex items-center gap-2">
+        <span className="material-symbols-outlined text-[14px] text-primary">local_shipping</span>
+        <span className="text-[11px] font-medium">MH-{(i % 50) + 1}-VX</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <span className="text-[11px] font-medium">Driver {i+1}</span>
+      </div>
+    </div>
+    <div className="flex justify-between items-center pt-3 border-t border-outline-variant/30">
+      <div className="text-[10px]">
+        <p className="text-on-surface-variant uppercase">Remaining</p>
+        <p className="text-on-surface font-mono">{10 + (i % 200)}km / {1 + (i % 5)}h</p>
+      </div>
+      <button className="text-[10px] font-bold text-primary uppercase hover:underline" onClick={() => {}}>Complete</button>
+    </div>
+  </div>
+))}
 </div>
 </div>
 {/*  COLUMN: Completed  */}
@@ -205,20 +160,22 @@ export default function Trips() {
 <span className="bg-surface-container-highest text-on-surface px-2 py-0.5 rounded text-[10px] font-bold">45 Trips</span>
 </div>
 <div className="space-y-4 opacity-70 hover:opacity-100 transition-opacity">
-<div className="bg-[#131A22] border border-[#1F2A35] p-4 rounded-lg">
-<div className="flex justify-between items-start mb-2">
-<span className="text-[10px] font-bold text-[#34D399]">LOGGED</span>
-<span className="text-[10px] text-on-surface-variant">2h ago</span>
-</div>
-<p className="text-xs font-bold mb-3">Bhiwandi Hub → JNPT Port</p>
-<div className="flex items-center justify-between text-[11px] text-on-surface-variant">
-<div className="flex items-center gap-1">
-<span className="material-symbols-outlined text-[14px]">history</span>
-<span>340km</span>
-</div>
-<span>Driver: Thakkar</span>
-</div>
-</div>
+{Array.from({ length: 45 }, (_, i) => (
+  <div key={i} className="bg-[#131A22] border border-[#1F2A35] p-4 rounded-lg">
+    <div className="flex justify-between items-start mb-2">
+      <span className="text-[10px] font-bold text-[#34D399]">LOGGED</span>
+      <span className="text-[10px] text-on-surface-variant">{i+1}h ago</span>
+    </div>
+    <p className="text-xs font-bold mb-3">Location {i} → Location {i+1}</p>
+    <div className="flex items-center justify-between text-[11px] text-on-surface-variant">
+      <div className="flex items-center gap-1">
+        <span className="material-symbols-outlined text-[14px]">history</span>
+        <span>{100 + i*10}km</span>
+      </div>
+      <span>Driver: D-{i+1}</span>
+    </div>
+  </div>
+))}
 </div>
 </div>
 {/*  COLUMN: Cancelled  */}
@@ -231,14 +188,16 @@ export default function Trips() {
 <span className="bg-surface-container-highest text-on-surface px-2 py-0.5 rounded text-[10px] font-bold">3 Trips</span>
 </div>
 <div className="space-y-4">
-<div className="bg-[#131A22]/40 border border-[#F87171]/30 p-4 rounded-lg grayscale">
-<div className="flex justify-between items-start mb-2">
-<span className="text-[10px] font-bold text-[#F87171]">CANCELLED</span>
-<span className="material-symbols-outlined text-[16px] text-[#F87171]">error_outline</span>
-</div>
-<p className="text-xs font-bold mb-1">Andheri MIDC → JNPT Port</p>
-<p className="text-[10px] text-[#F87171]/70 italic">Reason: Vehicle Maintenance Required</p>
-</div>
+{Array.from({ length: 3 }, (_, i) => (
+  <div key={i} className="bg-[#131A22]/40 border border-[#F87171]/30 p-4 rounded-lg grayscale">
+    <div className="flex justify-between items-start mb-2">
+      <span className="text-[10px] font-bold text-[#F87171]">CANCELLED</span>
+      <span className="material-symbols-outlined text-[16px] text-[#F87171]">error_outline</span>
+    </div>
+    <p className="text-xs font-bold mb-1">Loc A → Loc B</p>
+    <p className="text-[10px] text-[#F87171]/70 italic">Reason: Vehicle Maintenance Required</p>
+  </div>
+))}
 </div>
 </div>
 {/*  Column Placeholder  */}
