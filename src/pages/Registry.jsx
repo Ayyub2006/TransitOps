@@ -1,11 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
-
 import TopBar from '../components/TopBar';
+import { fetchApi } from '../utils/api';
+import ViewVehicleModal from '../components/ViewVehicleModal';
+import EditVehicleModal from '../components/EditVehicleModal';
+import MaintenanceModal from '../components/MaintenanceModal';
 
 export default function Registry() {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  const [vehicles, setVehicles] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Modal states
+  const [viewModalOpen, setViewModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [maintenanceModalOpen, setMaintenanceModalOpen] = useState(false);
+  const [selectedVehicle, setSelectedVehicle] = useState(null);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const data = await fetchApi('/vehicles');
+        setVehicles(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadData();
+  }, []);
+
+  const handleAction = (action, vehicle) => {
+    setSelectedVehicle(vehicle);
+    if (action === 'view') setViewModalOpen(true);
+    if (action === 'edit') setEditModalOpen(true);
+    if (action === 'maintenance') setMaintenanceModalOpen(true);
+  };
+
+  const handleEditSave = (updatedVehicle) => {
+    // Optimistic update
+    setVehicles(vehicles.map(v => v.id === updatedVehicle.id ? updatedVehicle : v));
+    // In a real app, you'd PATCH to /api/vehicles/:id here
+  };
+
+  const handleMaintenanceSave = () => {
+    if (selectedVehicle) {
+      setVehicles(vehicles.map(v => v.id === selectedVehicle.id ? { ...v, status: 'In Shop' } : v));
+    }
+  };
 
   return (
     <div className="min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
@@ -116,28 +160,29 @@ export default function Registry() {
 </tr>
 </thead>
 <tbody className="divide-y divide-outline-variant">
-{Array.from({ length: 248 }, (_, i) => {
-  const models = ['Heavy Hauler X2', 'Transit-Lite 400', 'Voyager L-Series', 'Heavy Hauler X1'];
-  const types = ['Truck', 'Van', 'Bus', 'Truck'];
-  const icons = ['local_shipping', 'airport_shuttle', 'directions_bus', 'local_shipping'];
-  const statuses = ['Available', 'On Trip', 'In Shop', 'Retired'];
-  const statusColors = ['primary', 'tertiary', 'error', 'outline'];
-  const statusBg = ['bg-primary/10', 'bg-tertiary-container/10', 'bg-error-container/20', 'bg-outline/10'];
-  const typeIdx = i % 4;
+{loading ? (
+  <tr>
+    <td colSpan="10" className="p-8 text-center text-on-surface-variant animate-pulse">Loading vehicles...</td>
+  </tr>
+) : vehicles.map((v, i) => {
+  const typeIcons = { 'Truck': 'local_shipping', 'Van': 'airport_shuttle', 'Bus': 'directions_bus', 'Utility': 'local_shipping' };
+  const statusColors = { 'Available': 'primary', 'On Trip': 'tertiary', 'In Shop': 'error', 'Retired': 'outline' };
+  const statusBg = { 'Available': 'bg-primary/10', 'On Trip': 'bg-tertiary-container/10', 'In Shop': 'bg-error-container/20', 'Retired': 'bg-outline/10' };
+  
   return (
-    <tr key={i} className="hover:bg-surface-variant/20 transition-colors group">
-      <td className="p-4"><input className="rounded border-outline-variant bg-background text-primary focus:ring-primary" type="checkbox" defaultChecked={i < 3} /></td>
-      <td className="p-4 font-mono text-primary text-xs tracking-tighter">MH-{String((i%50)+1).padStart(2, '0')}-V{i+1}</td>
-      <td className="p-4 font-bold text-on-surface">{models[typeIdx]}</td>
+    <tr key={v.id} className="hover:bg-surface-variant/20 transition-colors group">
+      <td className="p-4"><input className="rounded border-outline-variant bg-background text-primary focus:ring-primary" type="checkbox" /></td>
+      <td className="p-4 font-mono text-primary text-xs tracking-tighter">{v.registration_number}</td>
+      <td className="p-4 font-bold text-on-surface">{v.name_model}</td>
       <td className="p-4 flex items-center gap-2 text-on-surface-variant">
-        <span className="material-symbols-outlined text-lg">{icons[typeIdx]}</span> {types[typeIdx]}
+        <span className="material-symbols-outlined text-lg">{typeIcons[v.type] || 'directions_car'}</span> {v.type}
       </td>
-      <td className="p-4 text-on-surface">{12500 - (i*10)} <span className="text-[10px] text-outline-variant">kg</span></td>
-      <td className="p-4 text-on-surface">{42390 + (i*150)} <span className="text-[10px] text-outline-variant">km</span></td>
-      <td className="p-4 text-on-surface">₹{(14500000 - (i*10000)).toLocaleString('en-IN')}</td>
+      <td className="p-4 text-on-surface">{v.max_load_capacity} <span className="text-[10px] text-outline-variant">kg</span></td>
+      <td className="p-4 text-on-surface">{Number(v.odometer).toLocaleString()} <span className="text-[10px] text-outline-variant">km</span></td>
+      <td className="p-4 text-on-surface">₹{Number(v.acquisition_cost).toLocaleString('en-IN')}</td>
       <td className="p-4">
-        <span className={`inline-flex items-center gap-2 px-2 py-0.5 rounded ${statusBg[typeIdx]} text-${statusColors[typeIdx]} text-[10px] font-bold uppercase tracking-widest`}>
-          <span className={`w-1 h-1 rounded-full bg-${statusColors[typeIdx]}`}></span> {statuses[typeIdx]}
+        <span className={`inline-flex items-center gap-2 px-2 py-0.5 rounded ${statusBg[v.status] || 'bg-outline/10'} text-${statusColors[v.status] || 'outline'} text-[10px] font-bold uppercase tracking-widest`}>
+          <span className={`w-1 h-1 rounded-full bg-${statusColors[v.status] || 'outline'}`}></span> {v.status}
         </span>
       </td>
       <td className="p-4 text-center">
@@ -145,9 +190,9 @@ export default function Registry() {
       </td>
       <td className="p-4 relative">
         <div className="row-action-hover absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 bg-surface-container border border-outline-variant rounded-md px-2 py-1">
-          <button className="p-1 hover:text-primary" title="View"><span className="material-symbols-outlined text-sm">visibility</span></button>
-          <button className="p-1 hover:text-primary" title="Edit"><span className="material-symbols-outlined text-sm">edit</span></button>
-          <button className="p-1 hover:text-primary" title="Maintenance"><span className="material-symbols-outlined text-sm">build</span></button>
+          <button className="p-1 hover:text-primary" title="View" onClick={() => handleAction('view', v)}><span className="material-symbols-outlined text-sm">visibility</span></button>
+          <button className="p-1 hover:text-primary" title="Edit" onClick={() => handleAction('edit', v)}><span className="material-symbols-outlined text-sm">edit</span></button>
+          <button className="p-1 hover:text-primary" title="Maintenance" onClick={() => handleAction('maintenance', v)}><span className="material-symbols-outlined text-sm">build</span></button>
         </div>
       </td>
     </tr>
@@ -239,6 +284,11 @@ export default function Registry() {
 <p className="text-center text-[10px] text-outline-variant mt-3 uppercase font-bold tracking-widest">Requires Supervisor Approval</p>
 </div>
 </div>
+</div>
+{/* Modals */}
+<ViewVehicleModal isOpen={viewModalOpen} onClose={() => setViewModalOpen(false)} vehicle={selectedVehicle} />
+<EditVehicleModal isOpen={editModalOpen} onClose={() => setEditModalOpen(false)} vehicle={selectedVehicle} onSave={handleEditSave} />
+<MaintenanceModal isOpen={maintenanceModalOpen} onClose={() => setMaintenanceModalOpen(false)} vehicle={selectedVehicle} onSave={handleMaintenanceSave} />
 </main>
 
 
