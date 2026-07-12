@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import TopBar from '../components/TopBar';
 import Sidebar from '../components/Sidebar';
+import DriverNav from '../components/DriverNav';
 import { getUserProfile, updateUserProfile } from '../services/userService';
 
 export default function Profile() {
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const isDriver = user.role === 'Driver';
   const [profile, setProfile] = useState({ name: '', email: '', picture: '', role_name: '' });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -57,16 +60,22 @@ export default function Profile() {
   };
 
   return (
-    <div className="flex h-screen bg-background text-on-background font-sans selection:bg-primary/30">
-      <Sidebar />
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
-        <TopBar>
-          <div className="flex items-center gap-4">
-            <h2 className="font-headline-sm text-headline-sm text-on-surface">My Profile</h2>
+    <div className={`flex min-h-screen bg-background text-on-background font-sans selection:bg-primary/30 ${isDriver ? 'pb-24 flex-col' : ''}`}>
+      {!isDriver && <Sidebar />}
+      <div className={`flex-1 flex flex-col min-w-0 overflow-hidden relative ${isDriver ? 'w-full max-w-lg mx-auto' : ''}`}>
+        {!isDriver ? (
+          <TopBar>
+            <div className="flex items-center gap-4">
+              <h2 className="font-headline-sm text-headline-sm text-on-surface">My Profile</h2>
+            </div>
+          </TopBar>
+        ) : (
+          <div className="bg-surface border-b border-outline-variant p-4 sticky top-0 z-40 flex justify-between items-center w-full">
+            <h1 className="text-xl font-bold font-headline-md text-primary">My Profile</h1>
           </div>
-        </TopBar>
+        )}
         
-        <main className="ml-0 lg:ml-[var(--spacing-sidebar-width)] mt-topbar-height p-6 min-h-[calc(100vh-64px)] bg-[#0b0f14]">
+        <main className={`${!isDriver ? 'lg:ml-[var(--spacing-sidebar-width)] mt-topbar-height p-6' : 'p-4'} min-h-[calc(100vh-64px)] bg-background flex-1`}>
           <div className="max-w-2xl mx-auto bg-surface-container border border-outline-variant rounded-xl p-8">
             <div className="flex items-center gap-6 mb-8 pb-8 border-b border-outline-variant">
               {profile.picture ? (
@@ -140,6 +149,7 @@ export default function Profile() {
           </div>
         </main>
       </div>
+      {isDriver && <DriverNav />}
     </div>
   );
 }

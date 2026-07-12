@@ -14,6 +14,8 @@ import Settings from './pages/Settings';
 import Join from './pages/Join';
 import Fleets from './pages/Fleets';
 import DriverDashboard from './pages/DriverDashboard';
+import DriverTrips from './pages/DriverTrips';
+import DriverNotifications from './pages/DriverNotifications';
 
 // Auth Guard Components
 const ProtectedRoute = ({ children, allowedRoles }) => {
@@ -67,11 +69,11 @@ export default function App() {
         <Route path="/manager/settings" element={<ProtectedRoute allowedRoles={['Fleet Manager']}><Settings /></ProtectedRoute>} />
         <Route path="/manager/fleets" element={<ProtectedRoute allowedRoles={['Fleet Manager']}><Fleets /></ProtectedRoute>} />
 
-        {/* Driver Routes (New shell to be built) */}
+        {/* Driver Routes */}
         <Route path="/driver/dashboard" element={<ProtectedRoute allowedRoles={['Driver']}><DriverDashboard /></ProtectedRoute>} />
-        {/* Temporary placeholders for Driver routes */}
-        
-        {/* Fallbacks */}
+        <Route path="/driver/trips" element={<ProtectedRoute allowedRoles={['Driver']}><DriverTrips /></ProtectedRoute>} />
+        <Route path="/driver/notifications" element={<ProtectedRoute allowedRoles={['Driver']}><DriverNotifications /></ProtectedRoute>} />
+        <Route path="/driver/profile" element={<ProtectedRoute allowedRoles={['Driver']}><Profile /></ProtectedRoute>} />
         <Route path="/dashboard" element={<Navigate to="/manager/dashboard" replace />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>

@@ -624,7 +624,88 @@ app.get('/api/analytics', async (req, res) => {
   }
 });
 
+app.get('/api/driver/my-dashboard', async (req, res) => {
+  try {
+    if (req.user.role !== 'Driver') return res.status(403).json({ error: 'Access restricted to drivers' });
+    
+    // Get driver details
+    const dRes = await pool.query(`
+      SELECT d.*, f.name as fleet_name 
+      FROM drivers d 
+      LEFT JOIN fleets f ON d.fleet_id = f.id 
+      WHERE d.user_id = $1
+    `, [req.user.id]);
+    
+    if (dRes.rows.length === 0) return res.status(404).json({ error: 'Driver profile not found' });
+    const driver = dRes.rows[0];
+    
+    // License expiry logic
+    let license_status_flag = 'ok';
+    const expiry = new Date(driver.license_expiry_date);
+    const now = new Date();
+    const daysUntilExpiry = (expiry - now) / (1000 * 60 * 60 * 24);
+    if (daysUntilExpiry < 14) license_status_flag = 'action_needed';
+    else if (daysUntilExpiry <= 30) license_status_flag = 'expiring_soon';
+
+    // Get current trip (Dispatched or Draft)
+    const tRes = await pool.query(`
+      SELECT t.*, v.registration_number, v.type as vehicle_type, v.max_load_capacity
+      FROM trips t
+      LEFT JOIN vehicles v ON t.vehicle_id = v.id
+      WHERE t.driver_id = $1 AND t.status IN ('Draft', 'Dispatched')
+      ORDER BY t.created_at DESC LIMIT 1
+    `, [driver.id]);
+
+    let current_trip = null;
+    if (tRes.rows.length > 0) {
+      const t = tRes.rows[0];
+      current_trip = {
+        id: t.id,
+        source: t.source,
+        destination: t.destination,
+        status: t.status,
+        cargo_weight: t.cargo_weight,
+        planned_distance: t.planned_distance,
+        vehicle: {
+          registration_number: t.registration_number,
+          type: t.vehicle_type,
+          max_load_capacity: t.max_load_capacity
+        },
+        can_dispatch: t.status === 'Draft' && license_status_flag !== 'action_needed' && driver.status !== 'Suspended',
+        can_complete: t.status === 'Dispatched',
+        can_cancel: true // Allow cancellation if active
+      };
+    }
+
+    // Get recent trips (Completed or Cancelled)
+    const recentRes = await pool.query(`
+      SELECT id, source, destination, status, completed_at, actual_distance
+      FROM trips
+      WHERE driver_id = $1 AND status IN ('Completed', 'Cancelled')
+      ORDER BY completed_at DESC NULLS LAST
+      LIMIT 3
+    `, [driver.id]);
+
+    // Notifications (mock for now since we don't have a notifications table yet)
+    const notifications = [];
+
+    res.json({
+      driver: {
+        name: driver.name,
+        status: driver.status,
+        license_expiry_date: driver.license_expiry_date,
+        license_status_flag,
+        fleet_name: driver.fleet_name
+      },
+      current_trip,
+      notifications,
+      recent_trips: recentRes.rows
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
- 
