@@ -44,11 +44,17 @@ export default function TopBar({ children, rightContent }) {
         {/* Dropdown Menu */}
         {dropdownOpen && (
           <div className="absolute top-full right-0 mt-2 w-48 bg-surface-container border border-outline-variant rounded-lg shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-            <button className="w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-container-highest transition-colors flex items-center gap-2">
+            <button 
+              onClick={() => { navigate('/profile'); setDropdownOpen(false); }}
+              className="w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-container-highest transition-colors flex items-center gap-2"
+            >
               <span className="material-symbols-outlined text-[18px]">person</span>
               Profile
             </button>
-            <button className="w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-container-highest transition-colors flex items-center gap-2">
+            <button 
+              onClick={() => { navigate('/settings'); setDropdownOpen(false); }}
+              className="w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-container-highest transition-colors flex items-center gap-2"
+            >
               <span className="material-symbols-outlined text-[18px]">settings</span>
               Settings
             </button>

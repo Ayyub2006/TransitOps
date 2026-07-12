@@ -92,6 +92,39 @@ app.post('/api/auth/google-login', async (req, res) => {
 app.use('/api', authenticateToken);
 
 // ==========================================
+// USERS / PROFILE
+// ==========================================
+
+app.get('/api/users/profile', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT u.id, u.name, u.email, u.picture, r.name as role_name 
+      FROM users u LEFT JOIN roles r ON u.role_id = r.id WHERE u.id = $1
+    `, [req.user.id]);
+    if (result.rows.length === 0) return res.status(404).json({ error: 'User not found' });
+    res.json(result.rows[0]);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.put('/api/users/profile', async (req, res) => {
+  const { name, picture } = req.body;
+  try {
+    const result = await pool.query(
+      "UPDATE users SET name = $1, picture = $2 WHERE id = $3 RETURNING id, name, email, picture",
+      [name, picture, req.user.id]
+    );
+    if (result.rows.length === 0) return res.status(404).json({ error: 'User not found' });
+    const user = result.rows[0];
+    user.role_name = req.user.role;
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// ==========================================
 // DASHBOARD & ANALYTICS
 // ==========================================
 
