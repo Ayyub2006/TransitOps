@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import TopBar from '../components/TopBar';
-import { fetchApi } from '../utils/api';
+import { fetchApi } from '../services/api';
 import ViewVehicleModal from '../components/ViewVehicleModal';
 import EditVehicleModal from '../components/EditVehicleModal';
 import MaintenanceModal from '../components/MaintenanceModal';
