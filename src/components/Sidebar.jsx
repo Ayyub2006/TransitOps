@@ -2,14 +2,15 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 const navItems = [
-  { path: '/dashboard', icon: 'dashboard', label: 'Command Center' },
-  { path: '/trips', icon: 'settings_input_component', label: 'Operations' },
-  { path: '/risk', icon: 'security', label: 'Safety' },
-  { path: '/maintenance', icon: 'build', label: 'Maintenance' },
-  { path: '/registry', icon: 'directions_bus', label: 'Vehicles' },
-  { path: '/drivers', icon: 'person', label: 'Drivers' },
-  { path: '/expenses', icon: 'account_balance_wallet', label: 'Expenses' },
-  { path: '/reports', icon: 'assessment', label: 'Reports' },
+  { path: '/manager/dashboard', icon: 'dashboard', label: 'Command Center' },
+  { path: '/manager/trips', icon: 'settings_input_component', label: 'Operations' },
+  { path: '/manager/risk', icon: 'security', label: 'Safety' },
+  { path: '/manager/maintenance', icon: 'build', label: 'Maintenance' },
+  { path: '/manager/registry', icon: 'directions_bus', label: 'Vehicles' },
+  { path: '/manager/drivers', icon: 'person', label: 'Drivers' },
+  { path: '/manager/expenses', icon: 'account_balance_wallet', label: 'Expenses' },
+  { path: '/manager/reports', icon: 'assessment', label: 'Reports' },
+  { path: '/manager/fleets', icon: 'corporate_fare', label: 'Fleets' },
 ];
 
 export default function Sidebar() {

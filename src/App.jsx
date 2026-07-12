@@ -11,6 +11,9 @@ import Risk from './pages/Risk';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
+import Join from './pages/Join';
+import Fleets from './pages/Fleets';
+import DriverDashboard from './pages/DriverDashboard';
 
 // Auth Guard Components
 const ProtectedRoute = ({ children, allowedRoles }) => {
@@ -45,6 +48,9 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         
+        {/* Public Routes */}
+        <Route path="/join/:code" element={<Join />} />
+        
         {/* Redirect root based on role if logged in, else login */}
         <Route path="/" element={<ProtectedRoute><Navigate to="/manager/dashboard" replace /></ProtectedRoute>} />
         
@@ -59,10 +65,10 @@ export default function App() {
         <Route path="/manager/risk" element={<ProtectedRoute allowedRoles={['Fleet Manager', 'Safety Officer']}><Risk /></ProtectedRoute>} />
         <Route path="/manager/profile" element={<ProtectedRoute allowedRoles={['Fleet Manager', 'Safety Officer', 'Financial Analyst']}><Profile /></ProtectedRoute>} />
         <Route path="/manager/settings" element={<ProtectedRoute allowedRoles={['Fleet Manager']}><Settings /></ProtectedRoute>} />
-        {/* /manager/fleets will be added in Phase 3 */}
+        <Route path="/manager/fleets" element={<ProtectedRoute allowedRoles={['Fleet Manager']}><Fleets /></ProtectedRoute>} />
 
         {/* Driver Routes (New shell to be built) */}
-        <Route path="/driver/dashboard" element={<ProtectedRoute allowedRoles={['Driver']}><div>Driver Dashboard</div></ProtectedRoute>} />
+        <Route path="/driver/dashboard" element={<ProtectedRoute allowedRoles={['Driver']}><DriverDashboard /></ProtectedRoute>} />
         {/* Temporary placeholders for Driver routes */}
         
         {/* Fallbacks */}

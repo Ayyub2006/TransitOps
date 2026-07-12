@@ -4,8 +4,15 @@ export const USE_MOCK_API = false;
 
 export const fetchApi = async (endpoint, options = {}) => {
   const token = localStorage.getItem('token');
+  const activeFleetId = localStorage.getItem('active_fleet_id');
   
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+  let url = `${API_BASE_URL}${endpoint}`;
+  if (activeFleetId) {
+    const separator = url.includes('?') ? '&' : '?';
+    url = `${url}${separator}fleet_id=${activeFleetId}`;
+  }
+
+  const response = await fetch(url, {
     ...options,
     headers: {
       'Content-Type': 'application/json',
