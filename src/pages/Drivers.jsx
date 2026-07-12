@@ -82,7 +82,7 @@ export default function Drivers() {
 <span className="font-headline-sm text-primary">MS</span>
 </div>
 <div>
-<h3 className="font-headline-sm text-on-surface group-hover:text-primary transition-colors">Marcus Sterling</h3>
+<h3 className="font-headline-sm text-on-surface group-hover:text-primary transition-colors">Mahesh Sharma</h3>
 <div className="flex items-center gap-1.5">
 <div className="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
 <span className="text-[10px] font-label-caps text-emerald-400 uppercase">Available</span>
@@ -93,7 +93,7 @@ export default function Drivers() {
 </div>
 <div className="space-y-3 mb-6">
 <div className="flex justify-between items-center">
-<span className="text-[11px] font-mono text-outline">TX-9921-X</span>
+<span className="text-[11px] font-mono text-outline">MH-01-2015-X</span>
 <span className="text-[10px] bg-outline-variant/30 px-2 py-0.5 rounded text-on-surface-variant font-label-caps">HEAVY DUTY</span>
 </div>
 <div className="flex items-center gap-2 text-xs text-on-surface-variant">
@@ -110,7 +110,7 @@ export default function Drivers() {
 <div className="h-full bg-emerald-400 w-[94%]"></div>
 </div>
 <div className="flex justify-between items-center mt-6 pt-4 border-t border-outline-variant/30">
-<span className="text-xs text-outline">+1 555-0129</span>
+<span className="text-xs text-outline">+91 98765-43210</span>
 <a className="text-xs text-primary font-label-caps hover:underline" href="#" onClick={(e) => e.preventDefault()}>VIEW PROFILE</a>
 </div>
 </div>
@@ -123,7 +123,7 @@ export default function Drivers() {
 <img className="w-full h-full object-cover" data-alt="A professional portrait of a delivery driver with short hair and a focused expression, wearing a high-tech logistics uniform, soft volumetric lighting in a command center setting, dark slate tones with subtle cyan highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLjKwI4SI3dX1ZnRAev1qu-73os5s4NIVb0pndBiZdC-MJGlYUFYfakj57Hd9nCEqr_wo8nw54WWVUikFbM9V68xU17TDiaqf6OqwpeMHs3a7KcTOmpoSNM5b63zZVLk5Tk0XEd8vqVZB5FdLnUqAYBRhOEKosUHmslf8pjXgieOLRE2eGMVoRki0Z73u29XBF3gA-vPjyhzHOWkr4kyIlX8O226i4k1gP5HkAKzh9tv7fY0Ftu5R-dA"/>
 </div>
 <div>
-<h3 className="font-headline-sm text-on-surface group-hover:text-primary transition-colors">Elena Vance</h3>
+<h3 className="font-headline-sm text-on-surface group-hover:text-primary transition-colors">Anita Verma</h3>
 <div className="flex items-center gap-1.5">
 <div className="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
 <span className="text-[10px] font-label-caps text-amber-400 uppercase">On Trip</span>
@@ -134,7 +134,7 @@ export default function Drivers() {
 </div>
 <div className="space-y-3 mb-6">
 <div className="flex justify-between items-center">
-<span className="text-[11px] font-mono text-outline">NY-4481-B</span>
+<span className="text-[11px] font-mono text-outline">MH-02-2018-B</span>
 <span className="text-[10px] bg-outline-variant/30 px-2 py-0.5 rounded text-on-surface-variant font-label-caps">PASSENGER</span>
 </div>
 <div className="flex items-center gap-2 text-xs text-amber-400 font-medium">
@@ -151,7 +151,7 @@ export default function Drivers() {
 <div className="h-full bg-amber-400 w-[78%]"></div>
 </div>
 <div className="flex justify-between items-center mt-6 pt-4 border-t border-outline-variant/30">
-<span className="text-xs text-outline">+1 555-8821</span>
+<span className="text-xs text-outline">+91 87654-32109</span>
 <a className="text-xs text-primary font-label-caps hover:underline" href="#" onClick={(e) => e.preventDefault()}>VIEW PROFILE</a>
 </div>
 </div>
@@ -161,10 +161,10 @@ export default function Drivers() {
 <div className="flex justify-between items-start mb-4">
 <div className="flex gap-4">
 <div className="w-12 h-12 rounded-full border border-outline-variant bg-surface-container flex items-center justify-center overflow-hidden">
-<span className="font-headline-sm text-error">JR</span>
+<span className="font-headline-sm text-error">RK</span>
 </div>
 <div>
-<h3 className="font-headline-sm text-on-surface group-hover:text-primary transition-colors">Jaxson Reed</h3>
+<h3 className="font-headline-sm text-on-surface group-hover:text-primary transition-colors">Ravi Kumar</h3>
 <div className="flex items-center gap-1.5">
 <div className="w-1.5 h-1.5 rounded-full bg-error"></div>
 <span className="text-[10px] font-label-caps text-error uppercase">Suspended</span>
@@ -175,7 +175,7 @@ export default function Drivers() {
 </div>
 <div className="space-y-3 mb-6">
 <div className="flex justify-between items-center">
-<span className="text-[11px] font-mono text-outline">CA-0012-L</span>
+<span className="text-[11px] font-mono text-outline">MH-03-2020-L</span>
 <span className="text-[10px] bg-error/10 border border-error/20 px-2 py-0.5 rounded text-error font-label-caps">HAZMAT</span>
 </div>
 <div className="flex items-center gap-2 text-xs text-error font-bold">
@@ -192,7 +192,7 @@ export default function Drivers() {
 <div className="h-full bg-error w-[52%]"></div>
 </div>
 <div className="flex justify-between items-center mt-6 pt-4 border-t border-outline-variant/30">
-<span className="text-xs text-outline">+1 555-4002</span>
+<span className="text-xs text-outline">+91 76543-21098</span>
 <a className="text-xs text-primary font-label-caps hover:underline" href="#" onClick={(e) => e.preventDefault()}>VIEW PROFILE</a>
 </div>
 </div>
@@ -202,10 +202,10 @@ export default function Drivers() {
 <div className="flex justify-between items-start mb-4">
 <div className="flex gap-4">
 <div className="w-12 h-12 rounded-full border border-outline-variant bg-surface-container flex items-center justify-center overflow-hidden">
-<span className="font-headline-sm text-outline">SM</span>
+<span className="font-headline-sm text-outline">PS</span>
 </div>
 <div>
-<h3 className="font-headline-sm text-on-surface group-hover:text-primary transition-colors">Sarah Moss</h3>
+<h3 className="font-headline-sm text-on-surface group-hover:text-primary transition-colors">Priya Singh</h3>
 <div className="flex items-center gap-1.5">
 <div className="w-1.5 h-1.5 rounded-full bg-secondary"></div>
 <span className="text-[10px] font-label-caps text-secondary uppercase">Off Duty</span>
@@ -216,7 +216,7 @@ export default function Drivers() {
 </div>
 <div className="space-y-3 mb-6">
 <div className="flex justify-between items-center">
-<span className="text-[11px] font-mono text-outline">OR-5520-M</span>
+<span className="text-[11px] font-mono text-outline">MH-04-2022-M</span>
 <span className="text-[10px] bg-outline-variant/30 px-2 py-0.5 rounded text-on-surface-variant font-label-caps">STANDARD</span>
 </div>
 <div className="flex items-center gap-2 text-xs text-on-surface-variant">
@@ -233,7 +233,7 @@ export default function Drivers() {
 <div className="h-full bg-primary w-[89%]"></div>
 </div>
 <div className="flex justify-between items-center mt-6 pt-4 border-t border-outline-variant/30">
-<span className="text-xs text-outline">+1 555-7733</span>
+<span className="text-xs text-outline">+91 91234-56780</span>
 <a className="text-xs text-primary font-label-caps hover:underline" href="#" onClick={(e) => e.preventDefault()}>VIEW PROFILE</a>
 </div>
 </div>
@@ -258,12 +258,12 @@ export default function Drivers() {
 <div className="space-y-4">
 <label className="block">
 <span className="text-xs font-label-caps text-outline uppercase mb-2 block">Full Legal Name</span>
-<input className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 text-sm focus:ring-0 transition-all" placeholder="e.g. Jonathan Doe" type="text"/>
+<input className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 text-sm focus:ring-0 transition-all" placeholder="e.g. Ramesh Patel" type="text"/>
 </label>
 <div className="grid grid-cols-2 gap-4">
 <label>
 <span className="text-xs font-label-caps text-outline uppercase mb-2 block">License Number</span>
-<input className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 text-sm font-mono" placeholder="TX-0000-X" type="text"/>
+<input className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 text-sm font-mono" placeholder="MH-0000-X" type="text"/>
 </label>
 <label>
 <span className="text-xs font-label-caps text-outline uppercase mb-2 block">License Category</span>
@@ -293,7 +293,7 @@ export default function Drivers() {
 </div>
 <label className="block">
 <span className="text-xs font-label-caps text-outline uppercase mb-2 block">Contact Number</span>
-<input className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 text-sm" placeholder="+1 (000) 000-0000" type="tel"/>
+<input className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 text-sm" placeholder="+91 00000-00000" type="tel"/>
 </label>
 </div>
 {/*  Safety Score Simulation  */}

@@ -2,11 +2,42 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import { getKPIs } from '../services/dashboardService';
+import { getVehicleStatus, getTripsData, getFuelTrend, getExpenseDistribution } from '../services/analyticsService';
+import {
+  PieChart, Pie, Cell, Tooltip as RechartsTooltip, Legend, ResponsiveContainer,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid,
+  LineChart, Line
+} from 'recharts';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+
+const createMarkerIcon = (colorClass, shadowColor) => {
+  return L.divIcon({
+    className: 'custom-leaflet-marker',
+    html: `<div class="w-3 h-3 ${colorClass} rounded-full border-2 border-[var(--color-surface)] shadow-[0_0_10px_${shadowColor}]"></div>`,
+    iconSize: [12, 12],
+    iconAnchor: [6, 6]
+  });
+};
+
+const markersData = [
+  { id: 1, pos: [19.0760, 72.8777], color: 'bg-emerald-400', shadow: 'rgba(52,211,153,0.8)', label: 'Vehicle MH-01 (Online)' },
+  { id: 2, pos: [19.0522, 72.9005], color: 'bg-amber-400', shadow: 'rgba(251,191,36,0.8)', label: 'Vehicle MH-02 (Delayed)' },
+  { id: 3, pos: [19.0176, 72.8562], color: 'bg-red-400', shadow: 'rgba(248,113,113,0.8)', label: 'Vehicle MH-03 (Warning)' },
+  { id: 4, pos: [19.1136, 72.8697], color: 'bg-primary', shadow: 'rgba(98,243,236,0.8)', label: 'Vehicle MH-04 (Active)' },
+  { id: 5, pos: [18.9220, 72.8347], color: 'bg-purple-400', shadow: 'rgba(167,139,250,0.8)', label: 'Vehicle MH-05 (Maintenance)' }
+];
 
 export default function Dashboard() {
   const [kpis, setKpis] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [analytics, setAnalytics] = useState({
+    vehicleStatus: [], tripsData: [], fuelTrend: [], expenseDistribution: []
+  });
+  const [analyticsLoading, setAnalyticsLoading] = useState(true);
 
   useEffect(() => {
     const fetchKPIs = async () => {
@@ -20,7 +51,23 @@ export default function Dashboard() {
         setLoading(false);
       }
     };
+
+    const fetchAnalyticsData = async () => {
+      try {
+        setAnalyticsLoading(true);
+        const [vs, td, ft, ed] = await Promise.all([
+          getVehicleStatus(), getTripsData(), getFuelTrend(), getExpenseDistribution()
+        ]);
+        setAnalytics({ vehicleStatus: vs, tripsData: td, fuelTrend: ft, expenseDistribution: ed });
+      } catch (err) {
+        console.error("Failed to fetch analytics:", err);
+      } finally {
+        setAnalyticsLoading(false);
+      }
+    };
+
     fetchKPIs();
+    fetchAnalyticsData();
   }, []);
 
   return (
@@ -171,27 +218,30 @@ export default function Dashboard() {
 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-400"></span> Warning</span>
 </div>
 </div>
-<div className="relative rounded-xl border border-outline-variant bg-surface-container-lowest overflow-hidden h-[480px]">
-<img className="w-full h-full object-cover opacity-60 grayscale brightness-50" data-location="San Francisco" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDY3zWgvBh1JLumrrlnObGHvruJ8uJIdEEF2wezrkxJC8T8PQplZBNqt3MCAl2EtE9Um19rYMunMDwmKg7Rvryvc0Cr8Hvq9taU9_z669ntpsZHLuE_0a91H85PnFPU1AFfV1aO_1EAg9Jc98d5tbQFBFtvosnTcEZmzqMxD2_Q0XFAM8f-BK5uT5fdtQvUzuo4-4r5b6g69GP9HHE__WXeVf32Pvl5bIbgq0ILXqjKQqg8xpHH_XYhzg"/>
-{/*  Overlay Markers  */}
-<div className="absolute top-1/4 left-1/3 w-3 h-3 bg-emerald-400 rounded-full border-2 border-surface map-marker shadow-[0_0_10px_rgba(52,211,153,0.8)]"></div>
-<div className="absolute top-1/2 left-1/2 w-3 h-3 bg-amber-400 rounded-full border-2 border-surface map-marker shadow-[0_0_10px_rgba(251,191,36,0.8)]"></div>
-<div className="absolute bottom-1/3 right-1/4 w-3 h-3 bg-red-400 rounded-full border-2 border-surface map-marker shadow-[0_0_10px_rgba(248,113,113,0.8)]"></div>
-<div className="absolute top-1/3 right-1/2 w-3 h-3 bg-primary rounded-full border-2 border-surface map-marker shadow-[0_0_10px_rgba(98,243,236,0.8)]"></div>
-<div className="absolute bottom-1/4 left-1/4 w-3 h-3 bg-purple-400 rounded-full border-2 border-surface map-marker shadow-[0_0_10px_rgba(167,139,250,0.8)]"></div>
-{/*  Legend  */}
-<div className="absolute bottom-4 right-4 p-3 bg-surface/80 backdrop-blur-md border border-outline-variant rounded-lg">
-<div className="text-[10px] font-label-caps text-on-surface-variant mb-2">COORD: 37.7749° N, 122.4194° W</div>
-<div className="h-24 w-32 rounded bg-surface-container-lowest border border-outline-variant/30 flex items-center justify-center">
-<span className="text-[10px] opacity-20">GRID DATA LOADED</span>
-</div>
-</div>
-{/*  Map Controls  */}
-<div className="absolute top-4 right-4 flex flex-col gap-1">
-<button className="w-8 h-8 bg-surface border border-outline-variant rounded flex items-center justify-center hover:bg-surface-variant transition-colors"><span className="material-symbols-outlined text-sm">add</span></button>
-<button className="w-8 h-8 bg-surface border border-outline-variant rounded flex items-center justify-center hover:bg-surface-variant transition-colors"><span className="material-symbols-outlined text-sm">remove</span></button>
-<button className="w-8 h-8 bg-surface border border-outline-variant mt-2 rounded flex items-center justify-center hover:bg-surface-variant transition-colors"><span className="material-symbols-outlined text-sm">my_location</span></button>
-</div>
+<div className="relative rounded-xl border border-outline-variant bg-surface-container-lowest overflow-hidden h-[480px] z-0">
+  <MapContainer center={[19.0760, 72.8777]} zoom={12} style={{ height: '100%', width: '100%', background: '#0e1514' }} zoomControl={false}>
+    <TileLayer
+      url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    />
+    {markersData.map(m => (
+      <Marker key={m.id} position={m.pos} icon={createMarkerIcon(m.color, m.shadow)}>
+        <Popup>
+          <div className="font-body-md text-on-surface bg-surface-container px-2 py-1 rounded">
+            <strong>{m.label}</strong>
+          </div>
+        </Popup>
+      </Marker>
+    ))}
+  </MapContainer>
+  
+  {/* Legend Overlay */}
+  <div className="absolute bottom-4 right-4 p-3 bg-surface/80 backdrop-blur-md border border-outline-variant rounded-lg z-[1000] pointer-events-none">
+    <div className="text-[10px] font-label-caps text-on-surface-variant mb-2">COORD: 19.0760° N, 72.8777° E</div>
+    <div className="h-10 w-32 rounded bg-surface-container-lowest border border-outline-variant/30 flex items-center justify-center">
+      <span className="text-[10px] opacity-50">LIVE TRACKING (MUMBAI)</span>
+    </div>
+  </div>
 </div>
 </div>
 {/*  FLEET RISK RADAR  */}
@@ -218,7 +268,7 @@ export default function Dashboard() {
 </div>
 </div>
 <div className="flex justify-between items-center mt-3">
-<span className="text-[10px] bg-red-500/10 text-red-400 px-2 py-0.5 rounded border border-red-500/20">Route #402</span>
+<span className="text-[10px] bg-red-500/10 text-red-400 px-2 py-0.5 rounded border border-red-500/20">Route #402 (Andheri)</span>
 <a className="text-[10px] font-bold text-primary flex items-center gap-1 hover:underline" href="#" onClick={(e) => e.preventDefault()}>REVIEW <span className="material-symbols-outlined text-[10px]">arrow_forward</span></a>
 </div>
 </div>
@@ -227,7 +277,7 @@ export default function Dashboard() {
 <div className="absolute left-0 top-0 bottom-0 w-1 bg-red-400 risk-bar transition-all duration-300"></div>
 <div className="flex justify-between items-start mb-2">
 <div>
-<p className="text-sm font-bold">Vehicle B-229</p>
+<p className="text-sm font-bold">Vehicle MH-229</p>
 <p className="text-[10px] text-on-surface-variant">Brake Pressure Anomaly</p>
 </div>
 <div className="text-right">
@@ -245,7 +295,7 @@ export default function Dashboard() {
 <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500 risk-bar transition-all duration-300"></div>
 <div className="flex justify-between items-start mb-2">
 <div>
-<p className="text-sm font-bold">Sara J.</p>
+<p className="text-sm font-bold">Priya S.</p>
 <p className="text-[10px] text-on-surface-variant">Route Deviation Warning</p>
 </div>
 <div className="text-right">
@@ -254,7 +304,7 @@ export default function Dashboard() {
 </div>
 </div>
 <div className="flex justify-between items-center mt-3">
-<span className="text-[10px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded border border-amber-500/20">Shuttle X-1</span>
+<span className="text-[10px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded border border-amber-500/20">Shuttle X-1 (Bandra)</span>
 <a className="text-[10px] font-bold text-primary flex items-center gap-1 hover:underline" href="#" onClick={(e) => e.preventDefault()}>REVIEW <span className="material-symbols-outlined text-[10px]">arrow_forward</span></a>
 </div>
 </div>
@@ -263,7 +313,7 @@ export default function Dashboard() {
 <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-400 risk-bar transition-all duration-300"></div>
 <div className="flex justify-between items-start mb-2">
 <div>
-<p className="text-sm font-bold">Station C-Prime</p>
+<p className="text-sm font-bold">Dadar Hub</p>
 <p className="text-[10px] text-on-surface-variant">Congestion Threshold Exceeded</p>
 </div>
 <div className="text-right">
@@ -280,104 +330,96 @@ export default function Dashboard() {
 </div>
 </div>
 {/*  BOTTOM CHARTS SECTION  */}
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-{/*  Utilization Chart  */}
-<div className="bg-surface-container border border-outline-variant p-6 rounded-xl">
-<div className="flex items-center justify-between mb-6">
-<h3 className="font-headline-sm text-headline-sm">Fleet Utilization Trend</h3>
-<span className="text-[10px] font-label-caps text-on-surface-variant">LAST 7 DAYS</span>
-</div>
-<div className="h-48 w-full flex items-end gap-2 px-2 relative">
-{/*  Simplified SVG Chart  */}
-<svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-<path className="opacity-50" d="M0 160 Q 50 120, 100 140 T 200 80 T 300 110 T 400 60 T 500 90 T 600 40 T 700 70" fill="none" stroke="#62f3ec" strokeWidth="2"></path>
-<path className="opacity-10" d="M0 160 Q 50 120, 100 140 T 200 80 T 300 110 T 400 60 T 500 90 T 600 40 T 700 70 L 700 192 L 0 192 Z" fill="url(#grad)"></path>
-<defs>
-<lineargradient id="grad" x1="0%" x2="0%" y1="0%" y2="100%">
-<stop offset="0%" style={{stopColor: "#62f3ec", stopOpacity: "1", }}></stop>
-<stop offset="100%" style={{stopColor: "#62f3ec", stopOpacity: "0", }}></stop>
-</lineargradient>
-</defs>
-</svg>
-{/*  Grid Lines  */}
-<div className="absolute inset-0 flex flex-col justify-between opacity-10 pointer-events-none">
-<div className="border-b border-white w-full"></div>
-<div className="border-b border-white w-full"></div>
-<div className="border-b border-white w-full"></div>
-<div className="border-b border-white w-full"></div>
-</div>
-{/*  Hover Interaction Layer  */}
-<div className="absolute inset-0 flex">
-<div className="flex-1 hover:bg-primary/5 transition-colors border-r border-white/5"></div>
-<div className="flex-1 hover:bg-primary/5 transition-colors border-r border-white/5"></div>
-<div className="flex-1 hover:bg-primary/5 transition-colors border-r border-white/5"></div>
-<div className="flex-1 hover:bg-primary/5 transition-colors border-r border-white/5"></div>
-<div className="flex-1 hover:bg-primary/5 transition-colors border-r border-white/5"></div>
-<div className="flex-1 hover:bg-primary/5 transition-colors border-r border-white/5"></div>
-<div className="flex-1 hover:bg-primary/5 transition-colors"></div>
-</div>
-</div>
-<div className="flex justify-between mt-4 text-[10px] text-on-surface-variant font-bold">
-<span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
-</div>
-</div>
-{/*  Breakdown Chart  */}
-<div className="bg-surface-container border border-outline-variant p-6 rounded-xl flex flex-col">
-<div className="flex items-center justify-between mb-6">
-<h3 className="font-headline-sm text-headline-sm">Trip Status Breakdown</h3>
-<span className="material-symbols-outlined text-on-surface-variant cursor-pointer">more_horiz</span>
-</div>
-<div className="flex items-center justify-between flex-1">
-{/*  Donut Chart  */}
-<div className="relative w-32 h-32">
-<svg className="w-full h-full -rotate-90">
-{/*  Completed  */}
-<circle className="text-primary" cx="64" cy="64" fill="transparent" r="50" stroke="currentColor" strokeDasharray="314" strokeDashoffset="100" strokeWidth="12"></circle>
-{/*  Dispatched  */}
-<circle className="text-amber-400" cx="64" cy="64" fill="transparent" r="50" stroke="currentColor" strokeDasharray="314" strokeDashoffset="240" strokeWidth="12"></circle>
-{/*  Draft  */}
-<circle className="text-slate-400" cx="64" cy="64" fill="transparent" r="50" stroke="currentColor" strokeDasharray="314" strokeDashoffset="280" strokeWidth="12"></circle>
-{/*  Cancelled  */}
-<circle className="text-red-400" cx="64" cy="64" fill="transparent" r="50" stroke="currentColor" strokeDasharray="314" strokeDashoffset="305" strokeWidth="12"></circle>
-</svg>
-<div className="absolute inset-0 flex flex-col items-center justify-center">
-<span className="text-xl font-bold">428</span>
-<span className="text-[8px] text-on-surface-variant uppercase tracking-widest">TOTAL</span>
-</div>
-</div>
-{/*  Legend  */}
-<div className="flex-1 pl-12 space-y-3">
-<div className="flex items-center justify-between text-xs">
-<div className="flex items-center gap-2">
-<span className="w-2 h-2 rounded-full bg-primary"></span>
-<span>Completed</span>
-</div>
-<span className="font-bold">65%</span>
-</div>
-<div className="flex items-center justify-between text-xs">
-<div className="flex items-center gap-2">
-<span className="w-2 h-2 rounded-full bg-amber-400"></span>
-<span>Dispatched</span>
-</div>
-<span className="font-bold">22%</span>
-</div>
-<div className="flex items-center justify-between text-xs">
-<div className="flex items-center gap-2">
-<span className="w-2 h-2 rounded-full bg-slate-400"></span>
-<span>Draft</span>
-</div>
-<span className="font-bold">9%</span>
-</div>
-<div className="flex items-center justify-between text-xs">
-<div className="flex items-center gap-2">
-<span className="w-2 h-2 rounded-full bg-red-400"></span>
-<span>Cancelled</span>
-</div>
-<span className="font-bold">4%</span>
-</div>
-</div>
-</div>
-</div>
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  
+  {/* Chart 1: Vehicle Status Pie Chart */}
+  <div className="bg-surface-container border border-outline-variant p-6 rounded-xl h-[360px] flex flex-col">
+    <h3 className="font-headline-sm text-headline-sm mb-4">Vehicle Status</h3>
+    <div className="flex-1 w-full min-h-0">
+      {analyticsLoading ? (
+        <div className="w-full h-full flex items-center justify-center text-primary animate-pulse font-bold">Loading Chart...</div>
+      ) : (
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie data={analytics.vehicleStatus} cx="50%" cy="50%" innerRadius={70} outerRadius={100} paddingAngle={5} dataKey="value">
+              {analytics.vehicleStatus.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.color} />
+              ))}
+            </Pie>
+            <RechartsTooltip contentStyle={{ backgroundColor: '#1a2120', borderColor: '#3c4948', color: '#dde4e2', borderRadius: '8px' }} itemStyle={{ color: '#dde4e2' }} />
+            <Legend verticalAlign="bottom" height={36} wrapperStyle={{ fontSize: '12px', color: '#dde4e2', paddingTop: '10px' }} />
+          </PieChart>
+        </ResponsiveContainer>
+      )}
+    </div>
+  </div>
+
+  {/* Chart 2: Trips Bar Chart */}
+  <div className="bg-surface-container border border-outline-variant p-6 rounded-xl h-[360px] flex flex-col">
+    <h3 className="font-headline-sm text-headline-sm mb-4">Trips per Day</h3>
+    <div className="flex-1 w-full min-h-0">
+      {analyticsLoading ? (
+        <div className="w-full h-full flex items-center justify-center text-primary animate-pulse font-bold">Loading Chart...</div>
+      ) : (
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={analytics.tripsData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#3c4948" vertical={false} />
+            <XAxis dataKey="day" stroke="#859492" fontSize={12} tickLine={false} axisLine={false} />
+            <YAxis stroke="#859492" fontSize={12} tickLine={false} axisLine={false} />
+            <RechartsTooltip contentStyle={{ backgroundColor: '#1a2120', borderColor: '#3c4948', color: '#dde4e2', borderRadius: '8px' }} cursor={{ fill: '#2f3635' }} />
+            <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
+            <Bar dataKey="completed" name="Completed" fill="#62f3ec" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="cancelled" name="Cancelled" fill="#f87171" radius={[4, 4, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      )}
+    </div>
+  </div>
+
+  {/* Chart 3: Fuel Trend Line Chart */}
+  <div className="bg-surface-container border border-outline-variant p-6 rounded-xl h-[360px] flex flex-col">
+    <h3 className="font-headline-sm text-headline-sm mb-4">Fuel Consumption Trend</h3>
+    <div className="flex-1 w-full min-h-0">
+      {analyticsLoading ? (
+        <div className="w-full h-full flex items-center justify-center text-primary animate-pulse font-bold">Loading Chart...</div>
+      ) : (
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={analytics.fuelTrend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#3c4948" vertical={false} />
+            <XAxis dataKey="time" stroke="#859492" fontSize={12} tickLine={false} axisLine={false} />
+            <YAxis stroke="#859492" fontSize={12} tickLine={false} axisLine={false} />
+            <RechartsTooltip contentStyle={{ backgroundColor: '#1a2120', borderColor: '#3c4948', color: '#dde4e2', borderRadius: '8px' }} />
+            <Line type="monotone" dataKey="consumption" name="Consumption (L)" stroke="#fbbf24" strokeWidth={3} dot={{ r: 4, fill: '#fbbf24', strokeWidth: 0 }} activeDot={{ r: 6 }} />
+          </LineChart>
+        </ResponsiveContainer>
+      )}
+    </div>
+  </div>
+
+  {/* Chart 4: Expense Distribution Bar Chart */}
+  <div className="bg-surface-container border border-outline-variant p-6 rounded-xl h-[360px] flex flex-col">
+    <h3 className="font-headline-sm text-headline-sm mb-4">Expense Distribution</h3>
+    <div className="flex-1 w-full min-h-0">
+      {analyticsLoading ? (
+        <div className="w-full h-full flex items-center justify-center text-primary animate-pulse font-bold">Loading Chart...</div>
+      ) : (
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart layout="vertical" data={analytics.expenseDistribution} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#3c4948" horizontal={false} />
+            <XAxis type="number" stroke="#859492" fontSize={12} tickLine={false} axisLine={false} />
+            <YAxis dataKey="category" type="category" stroke="#859492" fontSize={12} tickLine={false} axisLine={false} width={80} />
+            <RechartsTooltip contentStyle={{ backgroundColor: '#1a2120', borderColor: '#3c4948', color: '#dde4e2', borderRadius: '8px' }} cursor={{ fill: '#2f3635' }} />
+            <Bar dataKey="amount" name="Amount (₹)" radius={[0, 4, 4, 0]}>
+              {analytics.expenseDistribution.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.color} />
+              ))}
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      )}
+    </div>
+  </div>
+
 </div>
 </main>
 </div>
