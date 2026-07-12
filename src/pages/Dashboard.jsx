@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
+import TopBar from '../components/TopBar';
 import { getKPIs } from '../services/dashboardService';
 import { getVehicleStatus, getTripsData, getFuelTrend, getExpenseDistribution } from '../services/analyticsService';
 import {
@@ -34,16 +35,6 @@ export default function Dashboard() {
   const [kpis, setKpis] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  
-  const userString = localStorage.getItem('user');
-  const user = userString ? JSON.parse(userString) : null;
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    navigate('/login');
-  };
 
   const [analytics, setAnalytics] = useState({
     vehicleStatus: [], tripsData: [], fuelTrend: [], expenseDistribution: []
@@ -89,65 +80,23 @@ export default function Dashboard() {
 {/*  MAIN WRAPPER  */}
 <div className="ml-0 lg:ml-[var(--spacing-sidebar-width)] flex flex-col">
 {/*  TOP APP BAR  */}
-<header className="fixed top-0 right-0 h-topbar-height w-full lg:w-[calc(100%-var(--spacing-sidebar-width))] bg-surface border-b border-outline-variant z-40 flex justify-between items-center px-gutter">
-<div className="flex items-center gap-4 flex-wrap">
-<div className="flex items-center gap-2">
-<span className="font-headline-sm text-headline-sm font-bold text-primary">TransitOps Fleet</span>
-</div>
-<div className="flex items-center gap-6">
-<a className="font-label-caps text-label-caps text-primary border-b-2 border-primary pb-1" href="#" onClick={(e) => e.preventDefault()}>Live Tracking</a>
-<a className="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#" onClick={(e) => e.preventDefault()}>Schedules</a>
-</div>
-</div>
-<div className="flex items-center gap-6">
-<div className="px-3 py-1 bg-surface-container-high border border-outline-variant rounded-full flex items-center gap-2">
-<div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
-<span className="font-label-caps text-label-caps text-on-surface">Clearance: L3</span>
-</div>
-<div className="flex items-center gap-4 relative">
-<button className="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer">notifications</button>
-<div 
-  className="flex items-center gap-3 pl-4 border-l border-outline-variant cursor-pointer hover:opacity-80 transition-opacity"
-  onClick={() => setDropdownOpen(!dropdownOpen)}
->
-<div className="text-right">
-<p className="text-xs font-bold leading-none truncate max-w-[120px]">{user ? user.name : 'Operator'}</p>
-<p className="text-[10px] text-on-surface-variant uppercase tracking-widest">{user ? user.role : 'Chief Operator'}</p>
-</div>
-{user && user.picture ? (
-  <img className="w-8 h-8 rounded-full border border-primary/50 object-cover" src={user.picture} alt="Profile" />
-) : (
-  <div className="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold">
-    {user && user.name ? user.name.charAt(0) : 'U'}
+<TopBar>
+  <div className="flex items-center gap-4 flex-wrap">
+    <div className="flex items-center gap-2">
+      <span className="font-headline-sm text-headline-sm font-bold text-primary">TransitOps Fleet</span>
+    </div>
+    <div className="flex items-center gap-6 hidden md:flex">
+      <a className="font-label-caps text-label-caps text-primary border-b-2 border-primary pb-1" href="#" onClick={(e) => e.preventDefault()}>Live Tracking</a>
+      <a className="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#" onClick={(e) => e.preventDefault()}>Schedules</a>
+    </div>
   </div>
-)}
-<span className="material-symbols-outlined text-on-surface-variant text-sm">expand_more</span>
-</div>
-
-{/* Dropdown Menu */}
-{dropdownOpen && (
-  <div className="absolute top-full right-0 mt-2 w-48 bg-surface-container border border-outline-variant rounded-lg shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-    <button className="w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-container-highest transition-colors flex items-center gap-2">
-      <span className="material-symbols-outlined text-[18px]">person</span>
-      Profile
-    </button>
-    <button className="w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-container-highest transition-colors flex items-center gap-2">
-      <span className="material-symbols-outlined text-[18px]">settings</span>
-      Settings
-    </button>
-    <div className="h-[1px] bg-outline-variant/30 my-1"></div>
-    <button 
-      onClick={handleLogout}
-      className="w-full text-left px-4 py-2 text-sm text-error hover:bg-error/10 transition-colors flex items-center gap-2"
-    >
-      <span className="material-symbols-outlined text-[18px]">logout</span>
-      Logout
-    </button>
+  <div className="flex items-center gap-6 hidden sm:flex ml-4">
+    <div className="px-3 py-1 bg-surface-container-high border border-outline-variant rounded-full flex items-center gap-2">
+      <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+      <span className="font-label-caps text-label-caps text-on-surface">Clearance: L3</span>
+    </div>
   </div>
-)}
-</div>
-</div>
-</header>
+</TopBar>
 {/*  CONTENT CANVAS  */}
 <main className="mt-topbar-height p-gutter pb-20 space-y-6">
 {/*  KPI STRIP  */}
@@ -264,8 +213,8 @@ export default function Dashboard() {
 <div className="relative rounded-xl border border-outline-variant bg-surface-container-lowest overflow-hidden h-[480px] z-0">
   <MapContainer center={[19.0760, 72.8777]} zoom={12} style={{ height: '100%', width: '100%', background: '#0e1514' }} zoomControl={false}>
     <TileLayer
-      url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+      url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+      attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
     />
     {markersData.map(m => (
       <Marker key={m.id} position={m.pos} icon={createMarkerIcon(m.color, m.shadow)}>

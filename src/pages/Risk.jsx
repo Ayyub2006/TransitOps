@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 
+import TopBar from '../components/TopBar';
+
 export default function Risk() {
   return (
     <div className="min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
@@ -9,45 +11,30 @@ export default function Risk() {
 {/*  SideNavBar (Authority: JSON & Style Guidance)  */}
 <Sidebar />
 {/*  Main Workspace  */}
-<main className="flex-1 ml-0 lg:ml-[var(--spacing-sidebar-width)] min-h-screen flex flex-col technical-bg">
+<main className="flex-1 ml-0 lg:ml-[260px] min-h-screen flex flex-col technical-bg">
 {/*  TopNavBar (Authority: JSON & Style Guidance)  */}
-<header className="fixed top-0 right-0 left-sidebar-width h-[64px] z-50 bg-surface border-b border-outline-variant flex justify-between items-center px-container-margin">
-<div className="flex items-center gap-6">
-<span className="font-headline-md text-headline-md font-bold text-primary tracking-tight">TransitOps</span>
-<div className="h-6 w-px bg-outline-variant"></div>
-<div className="flex items-center bg-surface-container-high px-4 py-1.5 rounded border border-outline-variant gap-3 w-[400px]">
-<span className="material-symbols-outlined text-outline text-sm">search</span>
-<input className="bg-transparent border-none focus:ring-0 text-body-md font-body-md w-full placeholder:text-outline-variant" placeholder="Search Risk Nodes..." type="text"/>
-</div>
-</div>
-<div className="flex items-center gap-4">
-{/*  Risk Alert Ticker  */}
-<div className="hidden xl:flex items-center gap-3 bg-error-container/20 px-4 py-1 rounded border border-error/30 animate-pulse">
-<span className="material-symbols-outlined text-error text-[18px]">warning</span>
-<span className="text-error font-label-caps text-label-caps uppercase">3 Critical Anomalies Detected</span>
-</div>
-<div className="flex items-center gap-2">
-<button className="p-2 text-on-surface-variant hover:bg-surface-container-highest rounded transition-colors active:scale-95">
-<span className="material-symbols-outlined">notifications</span>
-</button>
-<button className="p-2 text-on-surface-variant hover:bg-surface-container-highest rounded transition-colors active:scale-95">
-<span className="material-symbols-outlined">emergency_home</span>
-</button>
-<button className="p-2 text-on-surface-variant hover:bg-surface-container-highest rounded transition-colors active:scale-95">
-<span className="material-symbols-outlined">settings</span>
-</button>
-</div>
-<div className="flex items-center gap-3 ml-2 pl-4 border-l border-outline-variant">
-<div className="text-right">
-<p className="text-body-md font-bold leading-none">Ops. Center</p>
-<p className="text-label-caps text-[10px] text-primary">AUTHORIZED</p>
-</div>
-<div className="w-10 h-10 rounded-full bg-primary/20 border border-primary flex items-center justify-center overflow-hidden">
-<img className="w-full h-full object-cover" data-alt="Close-up portrait of a professional transit operations manager in a high-tech command center. He is wearing a modern headset and dark apparel, with soft cyan lighting reflecting off his face from the dashboard monitors. The background is a blurred array of digital displays and glowing status indicators." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhty8NTj5XEtqFNZ1cWoAwLuSIEkOqw2sLlD9jJeV1GhjxVIp2Zaypz-zg2NEn1fe-jlI2xXbBWkn_bSoJdz8lw3W4v_99qeH26PBMcSPymuJQWaRUS9r8qfTKK8L_QVhPro-wlbl5mgp9YeIK7dlUwTq-6EqXTdjw_lZIPKNJ-_FZoXeP9DooHmecSEX3TaJ0neKA_4-R9idQofaG2040fVzcbk2JTYW8DVV748w6_fU-w0x0kvEOQg"/>
-</div>
-</div>
-</div>
-</header>
+<TopBar rightContent={
+  <>
+    {/*  Risk Alert Ticker  */}
+    <div className="hidden xl:flex items-center gap-3 bg-error-container/20 px-4 py-1 rounded border border-error/30 animate-pulse mr-2">
+      <span className="material-symbols-outlined text-error text-[18px]">warning</span>
+      <span className="text-error font-label-caps text-label-caps uppercase">3 Critical Anomalies Detected</span>
+    </div>
+    <button className="p-2 text-on-surface-variant hover:bg-surface-container-highest rounded transition-colors active:scale-95 hidden sm:block">
+      <span className="material-symbols-outlined">emergency_home</span>
+    </button>
+    <div className="h-6 w-[1px] bg-outline-variant mx-2 hidden sm:block"></div>
+  </>
+}>
+  <div className="flex items-center gap-6">
+    <span className="font-headline-md text-headline-md font-bold text-primary tracking-tight hidden sm:block">TransitOps</span>
+    <div className="h-6 w-px bg-outline-variant hidden sm:block"></div>
+    <div className="flex items-center bg-surface-container-high px-4 py-1.5 rounded border border-outline-variant gap-3 w-full max-w-[400px]">
+      <span className="material-symbols-outlined text-outline text-sm">search</span>
+      <input className="bg-transparent border-none focus:ring-0 text-body-md font-body-md w-full placeholder:text-outline-variant" placeholder="Search Risk Nodes..." type="text"/>
+    </div>
+  </div>
+</TopBar>
 {/*  Content Area  */}
 <div className="mt-[64px] p-container-margin min-h-[calc(100vh-64px)] overflow-x-hidden flex gap-gutter">
 {/*  Left Column: Main List  */}

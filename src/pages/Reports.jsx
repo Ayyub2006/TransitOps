@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 
+import TopBar from '../components/TopBar';
+
 export default function Reports() {
   return (
     <div className="min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
@@ -9,43 +11,35 @@ export default function Reports() {
 {/*  SideNavBar  */}
 <Sidebar />
 {/*  Main Content Area  */}
-<main className="ml-0 lg:ml-[var(--spacing-sidebar-width)] flex-1 flex flex-col overflow-hidden relative">
+<main className="ml-0 lg:ml-[260px] flex-1 flex flex-col overflow-hidden relative mt-[64px]">
 {/*  TopNavBar  */}
-<header className="min-h-topbar-height w-full flex flex-wrap justify-between items-center px-gutter py-3 gap-4 bg-surface/95 backdrop-blur-md border-b border-outline-variant z-30">
-<div className="flex items-center gap-6">
-<h1 className="font-headline-md text-headline-md font-bold text-primary tracking-tighter">REPORTS &amp; ANALYTICS</h1>
-<div className="hidden md:flex items-center gap-2 bg-surface-container border border-outline-variant px-3 py-1.5 rounded">
-<span className="material-symbols-outlined text-on-surface-variant text-sm">calendar_month</span>
-<span className="font-label-caps text-on-surface-variant whitespace-nowrap">OCT 1, 2023 - OCT 31, 2023</span>
-<span className="material-symbols-outlined text-on-surface-variant text-sm">expand_more</span>
-</div>
-<div className="hidden md:flex items-center gap-2 bg-surface-container border border-outline-variant px-3 py-1.5 rounded">
-<span className="material-symbols-outlined text-on-surface-variant text-sm">filter_alt</span>
-<span className="font-label-caps text-on-surface-variant whitespace-nowrap">ALL VEHICLES</span>
-<span className="material-symbols-outlined text-on-surface-variant text-sm">expand_more</span>
-</div>
-</div>
-<div className="flex items-center gap-4">
-<button className="flex items-center gap-2 border border-outline px-4 py-2 rounded font-label-caps hover:bg-surface-variant/30 transition-colors whitespace-nowrap">
-<span className="material-symbols-outlined text-sm">picture_as_pdf</span>
-                    EXPORT PDF
-                </button>
-<button className="flex items-center gap-2 bg-primary-container text-on-primary-container px-4 py-2 rounded font-label-caps font-bold hover:opacity-90 transition-opacity whitespace-nowrap">
-<span className="material-symbols-outlined text-sm">table_view</span>
-                    EXPORT CSV
-                </button>
-<div className="h-6 w-[1px] bg-outline-variant mx-2"></div>
-<button className="p-2 text-on-surface-variant hover:text-primary transition-colors">
-<span className="material-symbols-outlined">notifications</span>
-</button>
-<button className="p-2 text-on-surface-variant hover:text-primary transition-colors">
-<span className="material-symbols-outlined">settings</span>
-</button>
-<div className="w-8 h-8 rounded-full border border-primary/50 p-0.5 overflow-hidden">
-<img className="w-full h-full object-cover rounded-full" data-alt="A professional portrait of a fleet operation commander in a dark navy uniform, studio lighting, technical blue background, high contrast, sharp details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH-f-Ds0EHTxC76Ef1c3mL0gDYwpt3DUl3DFk1DUnhSXteG5KuvrKJGFCKZObmYRY0PLpxqYEOkwW3b4XBF78trJBAglB0FdLCdASJBqfMmeQg2iXTj0Z9V3TmEyQZxUN4JqQATOJ3FtGZ6VsFqLWC2anTcklvklPcxq8I5OvU4wmUQA1e0zqtfELmHNZ06RHyekOojACvBieToc45Q30jTVSFTZHK-xJl7q2DczvOm7xwcGBFuF6fiQ"/>
-</div>
-</div>
-</header>
+<TopBar rightContent={
+  <>
+    <button className="hidden lg:flex items-center gap-2 border border-outline px-4 py-1.5 rounded font-label-caps hover:bg-surface-variant/30 transition-colors whitespace-nowrap">
+      <span className="material-symbols-outlined text-sm">picture_as_pdf</span>
+      EXPORT PDF
+    </button>
+    <button className="hidden md:flex items-center gap-2 bg-primary-container text-on-primary-container px-4 py-1.5 rounded font-label-caps font-bold hover:opacity-90 transition-opacity whitespace-nowrap">
+      <span className="material-symbols-outlined text-sm">table_view</span>
+      EXPORT CSV
+    </button>
+    <div className="h-6 w-[1px] bg-outline-variant mx-2 hidden sm:block"></div>
+  </>
+}>
+  <div className="flex items-center gap-6">
+    <h1 className="font-headline-md text-headline-md font-bold text-primary tracking-tighter">REPORTS &amp; ANALYTICS</h1>
+    <div className="hidden xl:flex items-center gap-2 bg-surface-container border border-outline-variant px-3 py-1.5 rounded">
+      <span className="material-symbols-outlined text-on-surface-variant text-sm">calendar_month</span>
+      <span className="font-label-caps text-on-surface-variant whitespace-nowrap">OCT 1, 2023 - OCT 31, 2023</span>
+      <span className="material-symbols-outlined text-on-surface-variant text-sm">expand_more</span>
+    </div>
+    <div className="hidden xl:flex items-center gap-2 bg-surface-container border border-outline-variant px-3 py-1.5 rounded">
+      <span className="material-symbols-outlined text-on-surface-variant text-sm">filter_alt</span>
+      <span className="font-label-caps text-on-surface-variant whitespace-nowrap">ALL VEHICLES</span>
+      <span className="material-symbols-outlined text-on-surface-variant text-sm">expand_more</span>
+    </div>
+  </div>
+</TopBar>
 {/*  Risk Alert Ticker (Top Bar Integration)  */}
 <div className="w-full h-8 bg-surface-container-low border-b border-outline-variant/30 flex items-center px-gutter overflow-hidden z-20 shrink-0">
 <div className="flex items-center gap-2 text-error mr-6 whitespace-nowrap">

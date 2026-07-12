@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 
+import TopBar from '../components/TopBar';
+
 export default function Trips() {
   return (
     <div className="min-h-screen overflow-x-hidden dark text-on-surface bg-background font-body-md">
@@ -9,31 +11,22 @@ export default function Trips() {
 {/*  Sidebar Navigation  */}
 <Sidebar />
 {/*  Top App Bar  */}
-<header className="fixed top-0 right-0 h-topbar-height w-full lg:w-[calc(100%-var(--spacing-sidebar-width))] border-b border-outline-variant bg-surface flex justify-between items-center px-gutter z-40">
-<div className="flex items-center gap-4 flex-wrap">
-<div className="relative">
-<span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
-<input className="bg-surface-container border border-outline-variant rounded-full pl-10 pr-4 py-1.5 w-80 text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="Search mission, driver, or tag..." type="text"/>
-</div>
-<nav className="flex gap-6">
-<a className="font-label-caps text-label-caps text-primary border-b-2 border-primary pb-1" href="#" onClick={(e) => e.preventDefault()}>Live Tracking</a>
-<a className="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#" onClick={(e) => e.preventDefault()}>Schedules</a>
-</nav>
-</div>
-<div className="flex items-center gap-4">
-<div className="px-3 py-1 bg-surface-container-highest border border-outline-variant rounded text-[11px] font-bold tracking-tighter">
-                CLEARANCE: L3
-            </div>
-<button className="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:scale-95">notifications</button>
-<div className="flex items-center gap-3 pl-4 border-l border-outline-variant">
-<div className="text-right">
-<p className="font-headline-sm text-[12px] leading-tight">Eshan Thakkar</p>
-<p className="text-[10px] text-on-surface-variant uppercase">Senior Dispatcher</p>
-</div>
-<img className="w-8 h-8 rounded-full border border-primary/50 object-cover" data-alt="A portrait of a professional fleet operations manager in a dark tech-focused environment, dramatic rim lighting with cyan highlights, wearing a tactical modern headset, high-end enterprise aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIkP8BuIx4GJucq-V72TUMYQOmK0Upxx7afYMnN1MLUNyVLNQ5y1TkwGBZqwN57SdvbL6mHEYAOWnoOBdrFujV4Vdj_Umy6vKMiV85VJN0DGtxKvcd_Vyxny8sPRvgHXQc6_KtuJtK3MeAHHj4R5GCIdaTWx_vwHNsny5jpeLlGNJq5AcmyXyl_q5zTVfiPmzbo-m4iEbUL4QSfCqMpoKIjhh12PYBRxmO_Yv21KhofVoVsqWnNN3wcQ"/>
-</div>
-</div>
-</header>
+<TopBar rightContent={
+  <div className="px-3 py-1 bg-surface-container-highest border border-outline-variant rounded text-[11px] font-bold tracking-tighter hidden sm:block mr-2">
+    CLEARANCE: L3
+  </div>
+}>
+  <div className="flex items-center gap-4 flex-wrap">
+    <div className="relative">
+      <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+      <input className="bg-surface-container border border-outline-variant rounded-full pl-10 pr-4 py-1.5 w-64 md:w-80 text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="Search mission, driver, or tag..." type="text"/>
+    </div>
+    <nav className="hidden lg:flex gap-6">
+      <a className="font-label-caps text-label-caps text-primary border-b-2 border-primary pb-1" href="#" onClick={(e) => e.preventDefault()}>Live Tracking</a>
+      <a className="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#" onClick={(e) => e.preventDefault()}>Schedules</a>
+    </nav>
+  </div>
+</TopBar>
 {/*  Main Content Canvas  */}
 <main className="ml-0 lg:ml-[var(--spacing-sidebar-width)] mt-topbar-height p-6 min-h-[calc(100vh-64px)] overflow-x-auto bg-[#0b0f14]">
 {/*  Dashboard Header  */}

@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 
+import TopBar from '../components/TopBar';
+
 export default function Registry() {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
 
@@ -11,29 +13,24 @@ export default function Registry() {
 {/*  Persistent SideNavBar  */}
 <Sidebar />
 {/*  Main Content Area  */}
-<main className="ml-0 lg:ml-[var(--spacing-sidebar-width)] flex-grow flex flex-col relative h-full">
+<main className="ml-0 lg:ml-[260px] flex-grow flex flex-col relative h-full">
 {/*  TopNavBar  */}
-<header className="h-topbar-height w-full bg-surface-container-high border-b border-outline-variant flex justify-between items-center px-container-margin z-40">
-<div className="flex items-center gap-6">
-<h1 className="font-headline-sm text-headline-sm font-black text-primary tracking-tight">TransitOps</h1>
-<div className="hidden md:flex gap-4">
-<a className="text-on-surface-variant font-medium hover:text-primary transition-all" href="#" onClick={(e) => e.preventDefault()}>Live Alerts</a>
-<a className="text-on-surface-variant font-medium hover:text-primary transition-all" href="#" onClick={(e) => e.preventDefault()}>Active Missions</a>
-</div>
-</div>
-<div className="flex items-center gap-4">
-<button className="bg-error/10 text-error border border-error/30 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest hover:bg-error/20 transition-all active:scale-95">
-                    Emergency Stop
-                </button>
-<div className="h-6 w-[1px] bg-outline-variant"></div>
-<button className="p-2 text-on-surface-variant hover:text-primary transition-colors">
-<span className="material-symbols-outlined">notifications</span>
-</button>
-<button className="p-2 text-on-surface-variant hover:text-primary transition-colors">
-<span className="material-symbols-outlined">account_circle</span>
-</button>
-</div>
-</header>
+<TopBar rightContent={
+  <>
+    <button className="bg-error/10 text-error border border-error/30 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest hover:bg-error/20 transition-all active:scale-95 hidden sm:block">
+      Emergency Stop
+    </button>
+    <div className="h-6 w-[1px] bg-outline-variant hidden sm:block mx-2"></div>
+  </>
+}>
+  <div className="flex items-center gap-6">
+    <h1 className="font-headline-sm text-headline-sm font-black text-primary tracking-tight">TransitOps</h1>
+    <div className="hidden md:flex gap-4">
+      <a className="text-on-surface-variant font-medium hover:text-primary transition-all" href="#" onClick={(e) => e.preventDefault()}>Live Alerts</a>
+      <a className="text-on-surface-variant font-medium hover:text-primary transition-all" href="#" onClick={(e) => e.preventDefault()}>Active Missions</a>
+    </div>
+  </div>
+</TopBar>
 {/*  Viewport  */}
 <div className="flex-grow p-container-margin overflow-y-auto overflow-x-hidden relative">
 {/*  Header Section  */}

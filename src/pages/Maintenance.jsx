@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 
+import TopBar from '../components/TopBar';
+
 export default function Maintenance() {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
 
@@ -11,31 +13,16 @@ export default function Maintenance() {
 {/*  Sidebar (Shared Component Style)  */}
 <Sidebar />
 {/*  Top App Bar (Shared Component Style)  */}
-<header className="fixed top-0 right-0 h-[64px] z-40 flex items-center justify-between w-[calc(100%-260px)] px-container-margin ml-[260px] bg-surface-dim border-b border-outline-variant">
-<div className="flex items-center gap-4">
-<span className="font-headline-sm text-headline-sm font-black text-primary tracking-tight">Maintenance Command</span>
-<div className="h-4 w-[1px] bg-outline-variant"></div>
-<div className="flex items-center text-error gap-2">
-<span className="material-symbols-outlined text-[16px]" style={{fontVariationSettings: "'FILL' 1", }}>warning</span>
-<span className="font-label-caps text-[10px]">2 HIGH RISK VEHICLES DETECTED</span>
-</div>
-</div>
-<div className="flex items-center gap-6">
-<div className="flex items-center gap-2">
-<button className="material-symbols-outlined p-2 text-on-surface-variant hover:text-primary transition-all active:scale-95">notifications</button>
-<button className="material-symbols-outlined p-2 text-on-surface-variant hover:text-primary transition-all active:scale-95">settings</button>
-</div>
-<div className="flex items-center gap-3 pl-4 border-l border-outline-variant">
-<div className="text-right">
-<p className="font-label-caps text-[11px] text-on-surface">Amit Chavda</p>
-<p className="font-label-caps text-[9px] text-primary">OPERATIONAL LEAD</p>
-</div>
-<div className="w-8 h-8 rounded bg-primary-container/20 border border-primary/30 flex items-center justify-center overflow-hidden">
-<img className="w-full h-full object-cover" data-alt="A portrait of a professional fleet operations manager in a dimly lit, high-tech command center. He is wearing a dark navy technical jacket. The background features blurred screens with glowing cyan data visualizations and maps. The lighting is cold and atmospheric with a cyan rim light across his features, conveying authority and focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMWLHIFa5-l-Cxq_VBU8GC3RSzX7RrOh2QB6ha135lNHZoHhR2mVfLvdH3edsC86qx08U3xNpqZu3oHAvzJQLIQ_YeVidADGeU9DT0PTwo3P5IanHFy0ZywC--V8RuNYZE-mCi4NKjYYI9Y6IAvnoC3ubmjIsppox4qOdb_xzLgVvacl-Gy1rwy5jEDcJJGfdBFzvkW91tPaBJHTa3uNvjwnBnmLzbuJIfpVoNS9_dXGo8wLQRsDWB3w"/>
-</div>
-</div>
-</div>
-</header>
+<TopBar>
+  <div className="flex items-center gap-4">
+    <span className="font-headline-sm text-headline-sm font-black text-primary tracking-tight">Maintenance Command</span>
+    <div className="h-4 w-[1px] bg-outline-variant hidden sm:block"></div>
+    <div className="hidden sm:flex items-center text-error gap-2">
+      <span className="material-symbols-outlined text-[16px]" style={{fontVariationSettings: "'FILL' 1", }}>warning</span>
+      <span className="font-label-caps text-[10px]">2 HIGH RISK VEHICLES DETECTED</span>
+    </div>
+  </div>
+</TopBar>
 {/*  Main Content Area  */}
 <main className="ml-[260px] mt-[64px] p-container-margin h-[calc(100vh-64px)] overflow-y-auto">
 {/*  Content Header / Filter Bar  */}
