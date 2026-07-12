@@ -28,7 +28,7 @@ export default function Trips() {
   </div>
 </TopBar>
 {/*  Main Content Canvas  */}
-<main className="ml-0 lg:ml-[var(--spacing-sidebar-width)] mt-topbar-height p-6 min-h-[calc(100vh-64px)] overflow-x-auto bg-[#0b0f14]">
+<main className="ml-0 lg:ml-[var(--spacing-sidebar-width)] mt-topbar-height p-6 min-h-[calc(100vh-64px)] overflow-x-hidden bg-[#0b0f14]">
 {/*  Dashboard Header  */}
 <div className="mb-8 flex justify-between items-end">
 <div>
@@ -43,7 +43,7 @@ export default function Trips() {
 </div>
 </div>
 {/*  Kanban Board  */}
-<div className="flex gap-6 pb-6 overflow-x-auto h-full items-start">
+<div className="flex flex-wrap gap-6 pb-6 h-full items-start">
 {/*  COLUMN: Draft  */}
 <div className="kanban-column flex-shrink-0 w-80">
 <div className="flex items-center justify-between mb-4 px-2">
