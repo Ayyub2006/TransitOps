@@ -58,6 +58,13 @@ export default function TopBar({ children, rightContent }) {
               <span className="material-symbols-outlined text-[18px]">settings</span>
               Settings
             </button>
+            <button 
+              onClick={() => { navigate('/trips'); setDropdownOpen(false); }}
+              className="w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-container-highest transition-colors flex items-center gap-2"
+            >
+              <span className="material-symbols-outlined text-[18px]">calendar_today</span>
+              Schedule
+            </button>
             <div className="h-[1px] bg-outline-variant/30 my-1"></div>
             <button 
               onClick={handleLogout}
