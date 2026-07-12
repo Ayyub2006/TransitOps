@@ -4,6 +4,7 @@ import Sidebar from '../components/Sidebar';
 import TopBar from '../components/TopBar';
 import { getKPIs } from '../services/dashboardService';
 import { getVehicleStatus, getTripsData, getFuelTrend, getExpenseDistribution } from '../services/analyticsService';
+import { getInsights } from '../services/aiService';
 import {
   PieChart, Pie, Cell, Tooltip as RechartsTooltip, Legend, ResponsiveContainer,
   BarChart, Bar, XAxis, YAxis, CartesianGrid,
@@ -42,6 +43,9 @@ export default function Dashboard() {
   });
   const [analyticsLoading, setAnalyticsLoading] = useState(true);
 
+  const [insights, setInsights] = useState([]);
+  const [insightsLoading, setInsightsLoading] = useState(true);
+
   useEffect(() => {
     const fetchKPIs = async () => {
       try {
@@ -69,8 +73,21 @@ export default function Dashboard() {
       }
     };
 
+    const fetchInsightsData = async () => {
+      try {
+        setInsightsLoading(true);
+        const data = await getInsights();
+        setInsights(data);
+      } catch (err) {
+        console.error("Failed to fetch insights:", err);
+      } finally {
+        setInsightsLoading(false);
+      }
+    };
+
     fetchKPIs();
     fetchAnalyticsData();
+    fetchInsightsData();
   }, []);
 
   return (
@@ -182,7 +199,7 @@ export default function Dashboard() {
   <div className="min-w-[180px] bg-surface-container border border-outline-variant p-4 rounded-lg flex items-center justify-between glow-cyan transition-all">
   <div>
   <p className="font-label-caps text-label-caps text-on-surface-variant">Utilization %</p>
-  <span className="font-kpi-value text-kpi-value">{kpis.fleetUtilization}</span>
+  <span className={`font-kpi-value text-kpi-value ${kpis.fleetUtilization >= 75 ? 'text-emerald-400' : (kpis.fleetUtilization < 50 ? 'text-red-400' : 'text-primary')}`}>{kpis.fleetUtilization}%</span>
   </div>
   <div className="relative w-12 h-12 flex items-center justify-center">
   <svg className="w-full h-full -rotate-90">
@@ -191,9 +208,85 @@ export default function Dashboard() {
   </svg>
   </div>
   </div>
+  {/*  Card 8: Total Operational Cost  */}
+  <div className="min-w-[180px] bg-surface-container border border-outline-variant p-4 rounded-lg flex items-center justify-between glow-cyan transition-all">
+    <div>
+      <p className="font-label-caps text-label-caps text-on-surface-variant">Operational Cost</p>
+      <span className="font-kpi-value text-kpi-value text-primary">₹{(kpis.totalOperationalCost || 0).toLocaleString('en-IN', { maximumFractionDigits: 0 })}</span>
+    </div>
+  </div>
+  {/*  Card 9: Fuel Efficiency  */}
+  <div className="min-w-[180px] bg-surface-container border border-outline-variant p-4 rounded-lg flex items-center justify-between glow-cyan transition-all">
+    <div>
+      <p className="font-label-caps text-label-caps text-on-surface-variant">Fuel Efficiency</p>
+      <span className={`font-kpi-value text-kpi-value ${kpis.fuelEfficiency >= 10 ? 'text-emerald-400' : (kpis.fuelEfficiency < 5 ? 'text-red-400' : 'text-primary')}`}>
+        {kpis.fuelEfficiency} <span className="text-sm font-bold opacity-60">km/L</span>
+      </span>
+    </div>
+  </div>
+  {/*  Card 10: ROI  */}
+  <div className="min-w-[180px] bg-surface-container border border-outline-variant p-4 rounded-lg flex items-center justify-between glow-cyan transition-all">
+    <div>
+      <p className="font-label-caps text-label-caps text-on-surface-variant">Fleet ROI</p>
+      <span className={`font-kpi-value text-kpi-value ${kpis.roi >= 15 ? 'text-emerald-400' : (kpis.roi < 5 ? 'text-red-400' : 'text-primary')}`}>
+        {kpis.roi}%
+      </span>
+    </div>
+  </div>
   </>
 )}
 </section>
+
+{/*  AI INSIGHTS SECTION  */}
+<section className="mt-2 mb-6">
+  <div className="flex items-center gap-2 mb-4">
+    <span className="material-symbols-outlined text-primary text-xl">auto_awesome</span>
+    <h2 className="font-headline-sm text-headline-sm">AI Insights</h2>
+  </div>
+  
+  {insightsLoading ? (
+    <div className="flex gap-4 overflow-x-auto pb-2 custom-scrollbar">
+      <div className="min-w-[280px] h-[80px] bg-surface-container border border-outline-variant rounded-xl animate-pulse"></div>
+      <div className="min-w-[280px] h-[80px] bg-surface-container border border-outline-variant rounded-xl animate-pulse"></div>
+      <div className="min-w-[280px] h-[80px] bg-surface-container border border-outline-variant rounded-xl animate-pulse"></div>
+    </div>
+  ) : (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {insights.map((insight) => {
+        const colorMap = {
+          warning: 'text-amber-400 bg-amber-400/10 border-amber-400/30 glow-amber',
+          success: 'text-emerald-400 bg-emerald-400/10 border-emerald-400/30 glow-emerald',
+          danger: 'text-red-400 bg-red-400/10 border-red-400/30 glow-red',
+          info: 'text-primary bg-primary/10 border-primary/30 glow-cyan',
+        };
+        const iconColorMap = {
+          warning: 'text-amber-400',
+          success: 'text-emerald-400',
+          danger: 'text-red-400',
+          info: 'text-primary',
+        };
+        
+        const parts = insight.text.split(insight.highlight);
+        
+        return (
+          <div key={insight.id} className={`p-4 rounded-xl border flex items-start gap-4 transition-all hover:scale-[1.02] cursor-pointer ${colorMap[insight.type]}`}>
+            <div className={`p-2 rounded-lg bg-surface-container-highest ${iconColorMap[insight.type]}`}>
+              <span className="material-symbols-outlined">{insight.icon}</span>
+            </div>
+            <div>
+              <p className="text-sm text-on-surface leading-snug">
+                {parts[0]}
+                <span className={`font-bold ${iconColorMap[insight.type]}`}>{insight.highlight}</span>
+                {parts[1]}
+              </p>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  )}
+</section>
+
 {/*  MIDDLE SECTION: MAP & RISK RADAR  */}
 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 {/*  FLEET MAP  */}
@@ -341,7 +434,10 @@ export default function Dashboard() {
     <h3 className="font-headline-sm text-headline-sm mb-4">Vehicle Status</h3>
     <div className="flex-1 w-full min-h-0">
       {analyticsLoading ? (
-        <div className="w-full h-full flex items-center justify-center text-primary animate-pulse font-bold">Loading Chart...</div>
+        <div className="w-full h-full flex flex-col justify-end space-y-2 p-4 animate-pulse">
+          <div className="w-full h-4/5 bg-surface-container-high rounded-lg"></div>
+          <div className="w-full h-4 bg-surface-container-high rounded mx-auto w-1/2"></div>
+        </div>
       ) : (
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
@@ -363,7 +459,10 @@ export default function Dashboard() {
     <h3 className="font-headline-sm text-headline-sm mb-4">Trips per Day</h3>
     <div className="flex-1 w-full min-h-0">
       {analyticsLoading ? (
-        <div className="w-full h-full flex items-center justify-center text-primary animate-pulse font-bold">Loading Chart...</div>
+        <div className="w-full h-full flex flex-col justify-end space-y-2 p-4 animate-pulse">
+          <div className="w-full h-4/5 bg-surface-container-high rounded-lg"></div>
+          <div className="w-full h-4 bg-surface-container-high rounded mx-auto w-1/2"></div>
+        </div>
       ) : (
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={analytics.tripsData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
@@ -385,7 +484,10 @@ export default function Dashboard() {
     <h3 className="font-headline-sm text-headline-sm mb-4">Fuel Consumption Trend</h3>
     <div className="flex-1 w-full min-h-0">
       {analyticsLoading ? (
-        <div className="w-full h-full flex items-center justify-center text-primary animate-pulse font-bold">Loading Chart...</div>
+        <div className="w-full h-full flex flex-col justify-end space-y-2 p-4 animate-pulse">
+          <div className="w-full h-4/5 bg-surface-container-high rounded-lg"></div>
+          <div className="w-full h-4 bg-surface-container-high rounded mx-auto w-1/2"></div>
+        </div>
       ) : (
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={analytics.fuelTrend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
@@ -405,7 +507,10 @@ export default function Dashboard() {
     <h3 className="font-headline-sm text-headline-sm mb-4">Expense Distribution</h3>
     <div className="flex-1 w-full min-h-0">
       {analyticsLoading ? (
-        <div className="w-full h-full flex items-center justify-center text-primary animate-pulse font-bold">Loading Chart...</div>
+        <div className="w-full h-full flex flex-col justify-end space-y-2 p-4 animate-pulse">
+          <div className="w-full h-4/5 bg-surface-container-high rounded-lg"></div>
+          <div className="w-full h-4 bg-surface-container-high rounded mx-auto w-1/2"></div>
+        </div>
       ) : (
         <ResponsiveContainer width="100%" height="100%">
           <BarChart layout="vertical" data={analytics.expenseDistribution} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
