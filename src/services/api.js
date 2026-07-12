@@ -1,32 +1,28 @@
-// Base API configuration
-
 export const API_BASE_URL = '/api';
 
-// This flag allows you to easily toggle between mock data and real API calls
-export const USE_MOCK_API = true;
+export const USE_MOCK_API = false;
 
-/**
- * A wrapper for making API requests.
- * Once you're ready to use the real API, this will handle fetch/axios calls.
- */
 export const fetchApi = async (endpoint, options = {}) => {
-  // Example implementation for the future:
-  /*
+  const token = localStorage.getItem('token');
+  
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...options,
     headers: {
       'Content-Type': 'application/json',
-      // Include authorization headers (e.g. from localStorage) here
+      ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
       ...options.headers,
     }
   });
   
   if (!response.ok) {
-    throw new Error(`API error: ${response.statusText}`);
+    const errText = await response.text();
+    let errMessage = response.statusText;
+    try {
+      const parsed = JSON.parse(errText);
+      if (parsed.error) errMessage = parsed.error;
+    } catch (e) {}
+    throw new Error(errMessage);
   }
   
   return response.json();
-  */
-  
-  throw new Error("fetchApi is not fully implemented for real API calls yet.");
 };
